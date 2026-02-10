@@ -210,12 +210,12 @@ Everything on this site represents <b>my personal experiences, opinions, and wha
 </div>
 </div>
 
-<label class="disclaimer-check" id="disclaimerCheck" onclick="toggleDisclaimer()">
+<div class="disclaimer-check" id="disclaimerCheck">
 <input type="checkbox" id="disclaimerCb">
 <div class="checkmark"></div>
 <span>I understand this is not financial or legal advice and is for educational purposes only</span>
-</label>
-<button class="disclaimer-btn" id="disclaimerBtn" onclick="acceptDisclaimer()">Please complete all fields above</button>
+</div>
+<button class="disclaimer-btn" id="disclaimerBtn">Please complete all fields above</button>
 <div id="dSubmitting" style="display:none;text-align:center;padding:12px;font-size:13px;color:var(--ac)">
 <span style="display:inline-block;animation:pulse 1s infinite">⏳</span> Verifying your information...
 </div>
@@ -540,6 +540,15 @@ function toggleDisclaimer(){
 document.addEventListener('DOMContentLoaded',()=>{
   ['dName','dEmail'].forEach(id=>{
     document.getElementById(id)?.addEventListener('input',()=>{hideError();checkFormReady()});
+  });
+  // Checkbox click
+  document.getElementById('disclaimerCheck').addEventListener('click',function(e){
+    e.preventDefault();
+    toggleDisclaimer();
+  });
+  // Button click
+  document.getElementById('disclaimerBtn').addEventListener('click',function(){
+    acceptDisclaimer();
   });
 });
 
