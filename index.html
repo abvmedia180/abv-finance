@@ -93,10 +93,39 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .tooltip{font-size:10px;color:var(--mt);font-style:italic;margin-top:4px}
 .ft{margin-top:32px;padding:24px;border-top:1px solid var(--bd);text-align:center}
 .ft .v{font-size:11px;color:var(--mt);margin-bottom:8px}.ft .d{font-size:10px;color:rgba(255,255,255,.2);line-height:1.8;max-width:600px;margin:0 auto}
-@media(max-width:768px){.hero{padding:28px 12px 20px}.con{padding:0 10px}.cg{grid-template-columns:1fr}.rg{grid-template-columns:repeat(2,1fr)}.chart-wrap{height:250px}.nb{padding:0 6px}.nt{padding:9px 8px;font-size:10.5px}.dbox{padding:20px 16px}.fg{flex-direction:column}}
+@media(max-width:768px){
+.hero{padding:28px 12px 20px}
+.con{padding:0 10px}
+.cg{grid-template-columns:1fr}
+.rg{grid-template-columns:repeat(2,1fr)}
+.tbl{font-size:11px}
+.tbl th,.tbl td{padding:6px 4px}
+.chart-wrap{height:250px}.nb{padding:0 6px}.nt{padding:9px 8px;font-size:10.5px}.dbox{padding:20px 16px}.fg{flex-direction:column}}
 @media(max-width:900px){.con div[style*='repeat(3,1fr)']{grid-template-columns:1fr 1fr!important}}
-@media(max-width:600px){.con div[style*='repeat(3,1fr)']{grid-template-columns:1fr!important}}
+@media(max-width:600px){
+.con div[style*='repeat(3,1fr)']{grid-template-columns:1fr!important}
+.rg{grid-template-columns:1fr!important}
+}
 input[type=range]{height:6px;border-radius:3px}
+@media(max-width:480px){
+.ninput,.nselect,input[type=number],input[type=range],select{font-size:16px!important}
+.hero h1{font-size:22px}
+.hero .ts{font-size:12px}
+.nt{font-size:11px;padding:8px 10px;white-space:nowrap}
+.card{padding:14px}
+.ct{font-size:16px}
+.rc-v{font-size:18px}
+.rc-l{font-size:10px}
+.ic-b{font-size:12px}
+.tbl{font-size:10px}
+.tbl th,.tbl td{padding:4px 3px}
+div[style*='grid-template-columns:1fr 1fr']{grid-template-columns:1fr!important}
+div[style*='grid-template-columns:1fr 60px']{grid-template-columns:1fr 60px!important}
+div[style*='grid-template-columns:1fr auto']{grid-template-columns:1fr!important}
+div[style*='grid-template-columns:repeat(auto-fit']{grid-template-columns:1fr!important}
+.fg{flex-direction:column}
+.tg button{font-size:10px;padding:4px 6px}
+}
 </style></head>
 <body>
 <!-- DISCLAIMER (hidden for testing) -->
@@ -146,7 +175,7 @@ input[type=range]{height:6px;border-radius:3px}
 <div class="ct">Your Numbers</div>
 <div class="igrp"><label>Starting Amount ($)</label><input type="number" class="ninput" id="cI" value="0" min="0" step="100" oninput="runCalc()"><div class="tooltip">How much you have to invest right now</div></div>
 <div class="slider-group"><div class="slider-label"><span class="sn">Monthly Contribution</span><span class="sv" id="cMV">$500</span></div><input type="range" id="cM" min="0" max="5000" value="500" step="25" oninput="runCalc()"><div class="tooltip">How much you'll invest every month automatically</div></div>
-<div class="slider-group"><div class="slider-label"><span class="sn">Your Current Age</span><span class="sv" id="cAgeV">31</span></div><input type="range" id="cAge" min="18" max="65" value="31" step="1" oninput="runCalc()"></div>
+<div class="slider-group"><div class="slider-label"><span class="sn">Your Current Age</span><span class="sv" id="cAgeV">21</span></div><input type="range" id="cAge" min="18" max="65" value="21" step="1" oninput="runCalc()"></div>
 <div class="slider-group"><div class="slider-label"><span class="sn">Target Age</span><span class="sv" id="cRetAgeV">65</span></div><input type="range" id="cRetAge" min="40" max="90" value="65" step="1" oninput="runCalc()"><div class="tooltip">When you want to see results — retirement or any goal</div></div>
 <div style="margin-bottom:12px"><div style="font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--mt);margin-bottom:6px">Expected Annual Return</div>
 <div class="tg" id="cRateGroup"><button data-v="7">Conservative 7%</button><button class="on" data-v="10">Average 10%</button><button data-v="12">Optimistic 12%</button></div>
@@ -185,45 +214,45 @@ input[type=range]{height:6px;border-radius:3px}
 <div class="ct">Your Accounts & Assets</div>
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
 <div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border:1px solid var(--bd)"><div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">💵 CASH & EQUIVALENTS</div>
-<div style="display:grid;grid-template-columns:1fr 60px;gap:6px;align-items:end" class="igrp"><div><label>Checking</label><input type="number" class="ninput" id="nwCashChk" value="5000" min="0" oninput="runNW()"></div><div><label>Rate %</label><input type="number" class="ninput" id="nwChkR" value="0" min="0" max="10" step="0.5" oninput="runNW()" style="width:100%"></div></div>
-<div style="display:grid;grid-template-columns:1fr 60px;gap:6px;align-items:end" class="igrp"><div><label>CDs / Treasuries</label><input type="number" class="ninput" id="nwCashCD" value="0" min="0" oninput="runNW()"></div><div><label>Rate %</label><input type="number" class="ninput" id="nwCDR" value="3" min="0" max="10" step="0.5" oninput="runNW()" style="width:100%"></div></div>
-<div style="display:grid;grid-template-columns:1fr 60px;gap:6px;align-items:end" class="igrp"><div><label>HYSA</label><input type="number" class="ninput" id="nwCashHY" value="0" min="0" oninput="runNW()"></div><div><label>Rate %</label><input type="number" class="ninput" id="nwHYR" value="3" min="0" max="10" step="0.5" oninput="runNW()" style="width:100%"></div></div></div>
+<div style="display:grid;grid-template-columns:1fr 60px;gap:6px;align-items:end" class="igrp"><div><label>Checking</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwCashChk" value="0" min="0" oninput="fmtMoney(this);runNW()"></div><div><label>Rate %</label><input type="number" class="ninput" id="nwChkR" value="0" min="0" max="10" step="0.5" oninput="runNW()" style="width:100%"></div></div>
+<div style="display:grid;grid-template-columns:1fr 60px;gap:6px;align-items:end" class="igrp"><div><label>CDs / Treasuries</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwCashCD" value="0" min="0" oninput="fmtMoney(this);runNW()"></div><div><label>Rate %</label><input type="number" class="ninput" id="nwCDR" value="3" min="0" max="10" step="0.5" oninput="runNW()" style="width:100%"></div></div>
+<div style="display:grid;grid-template-columns:1fr 60px;gap:6px;align-items:end" class="igrp"><div><label>HYSA</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwCashHY" value="0" min="0" oninput="fmtMoney(this);runNW()"></div><div><label>Rate %</label><input type="number" class="ninput" id="nwHYR" value="3" min="0" max="10" step="0.5" oninput="runNW()" style="width:100%"></div></div></div>
 <div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border:1px solid var(--bd)"><div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">💼 RETIREMENT (401k, etc.)</div>
-<div class="igrp"><label>Current Balance</label><input type="number" class="ninput" id="nw401" value="50000" min="0" oninput="runNW()"></div>
-<div class="igrp"><label>Annual Salary</label><input type="number" class="ninput" id="nw401sal" value="150000" min="0" oninput="runNW()"></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px" class="igrp"><div><label>Your Contribution %</label><input type="number" class="ninput" id="nw401pct" value="15" min="0" max="100" step="1" oninput="runNW()"><div class="tooltip">% of salary you contribute</div></div><div><label>Employer Match %</label><input type="number" class="ninput" id="nw401mp" value="6" min="0" max="25" step="1" oninput="runNW()"><div class="tooltip">% of salary employer adds</div></div></div>
+<div class="igrp"><label>Current Balance</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nw401" value="0" min="0" oninput="fmtMoney(this);runNW()"></div>
+<div class="igrp"><label>Annual Salary</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nw401sal" value="0" min="0" oninput="fmtMoney(this);runNW()"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px" class="igrp"><div><label>Your Contribution %</label><input type="number" class="ninput" id="nw401pct" value="0" min="0" max="100" step="1" oninput="runNW()"><div class="tooltip">% of salary you contribute</div></div><div><label>Employer Match %</label><input type="number" class="ninput" id="nw401mp" value="0" min="0" max="25" step="1" oninput="runNW()"><div class="tooltip">% of salary employer adds</div></div></div>
 <div class="tooltip" style="margin-bottom:6px;padding:6px 8px;background:var(--bg3);border-radius:var(--Rs);border:1px solid var(--bd)"><b style="color:var(--am)">⚠️ IRS Caps:</b> Employee max is <b>$23,500/yr</b>. Total (you + employer) max is <b>$69,000/yr</b>. We automatically stop at these limits no matter what % you enter.</div>
 <div style="margin-bottom:4px"><div style="font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">Return Rate</div>
-<div class="tg nwrg" id="nw401rg"><button data-v="7">7%</button><button class="on" data-v="10">10%</button><button data-v="12">12%</button></div></div></div>
+<div class="tg nwrg" id="nw401rg"><button class="on" data-v="7">7%</button><button data-v="10">10%</button><button data-v="12">12%</button></div></div></div>
 <div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border:1px solid var(--bd)"><div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">🛡️ IRA</div>
-<div class="igrp"><label>Current Balance</label><input type="number" class="ninput" id="nwRoth" value="0" min="0" oninput="runNW()"></div>
-<div class="igrp"><label>Annual Contribution</label><input type="number" class="ninput" id="nwRothA" value="7000" min="0" max="8000" oninput="runNW()"><div class="tooltip">Max: $7,000/yr ($8,000 if 50+)</div></div>
+<div class="igrp"><label>Current Balance</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwRoth" value="0" min="0" oninput="fmtMoney(this);runNW()"></div>
+<div class="igrp"><label>Annual Contribution</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwRothA" value="0" min="0" max="8000" oninput="fmtMoney(this);runNW()"><div class="tooltip">Max: $7,000/yr ($8,000 if 50+)</div></div>
 <div style="margin-bottom:4px"><div style="font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">Return Rate</div>
-<div class="tg nwrg" id="nwRothRg"><button data-v="7">7%</button><button class="on" data-v="10">10%</button><button data-v="12">12%</button></div></div></div>
+<div class="tg nwrg" id="nwRothRg"><button class="on" data-v="7">7%</button><button data-v="10">10%</button><button data-v="12">12%</button></div></div></div>
 <div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border:1px solid var(--bd)"><div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">📈 BROKERAGE (Taxable)</div>
-<div class="igrp"><label>Current Balance</label><input type="number" class="ninput" id="nwBrok" value="0" min="0" oninput="runNW()"></div>
-<div class="igrp"><label>Monthly Contribution</label><input type="number" class="ninput" id="nwBrokM" value="500" min="0" oninput="runNW()"></div>
+<div class="igrp"><label>Current Balance</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwBrok" value="0" min="0" oninput="fmtMoney(this);runNW()"></div>
+<div class="igrp"><label>Monthly Contribution</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwBrokM" value="0" min="0" oninput="fmtMoney(this);runNW()"></div>
 <div style="margin-bottom:4px"><div style="font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">Return Rate</div>
-<div class="tg nwrg" id="nwBrokRg"><button data-v="7">7%</button><button class="on" data-v="10">10%</button><button data-v="12">12%</button></div></div></div>
+<div class="tg nwrg" id="nwBrokRg"><button class="on" data-v="7">7%</button><button data-v="10">10%</button><button data-v="12">12%</button></div></div></div>
 <div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border:1px solid var(--bd)"><div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">🏠 PRIMARY HOME</div>
-<div class="igrp"><label>Home Value</label><input type="number" class="ninput" id="nwHome" value="0" min="0" oninput="runNW()"></div>
-<div class="igrp"><label>Remaining Mortgage</label><input type="number" class="ninput" id="nwMort" value="0" min="0" oninput="runNW()"></div>
+<div class="igrp"><label>Home Value</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwHome" value="0" min="0" oninput="fmtMoney(this);runNW()"></div>
+<div class="igrp"><label>Remaining Mortgage</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwMort" value="0" min="0" oninput="fmtMoney(this);runNW()"></div>
 <div style="margin-bottom:4px"><div style="font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">Appreciation</div>
-<div class="tg nwrg" id="nwHomeRg"><button data-v="2">2% Conservative</button><button class="on" data-v="3">3% Base</button><button data-v="4">4% Optimistic</button></div>
+<div class="tg nwrg" id="nwHomeRg"><button class="on" data-v="2">2% Conservative</button><button data-v="3">3% Base</button><button data-v="4">4% Optimistic</button></div>
 <div class="tooltip">U.S. homes have appreciated ~3-4% annually over the long term.</div></div></div>
 <div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border:1px solid var(--bd)"><div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">🏢 INVESTMENT PROPERTY</div>
-<div class="igrp"><label>Property Value</label><input type="number" class="ninput" id="nwRE" value="0" min="0" oninput="runNW()"></div>
-<div class="igrp"><label>Remaining Debt</label><input type="number" class="ninput" id="nwREDebt" value="0" min="0" oninput="runNW()"></div>
+<div class="igrp"><label>Property Value</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwRE" value="0" min="0" oninput="fmtMoney(this);runNW()"></div>
+<div class="igrp"><label>Remaining Debt</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwREDebt" value="0" min="0" oninput="fmtMoney(this);runNW()"></div>
 <div style="margin-bottom:4px"><div style="font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">Appreciation</div>
-<div class="tg nwrg" id="nwRERg"><button data-v="2">2% Conservative</button><button class="on" data-v="3">3% Base</button><button data-v="4">4% Optimistic</button></div>
+<div class="tg nwrg" id="nwRERg"><button class="on" data-v="2">2% Conservative</button><button data-v="3">3% Base</button><button data-v="4">4% Optimistic</button></div>
 <div class="tooltip">Investment properties may appreciate faster depending on location and improvements.</div></div></div>
 </div>
 </div>
 <div style="padding:14px;background:var(--bg4);border-radius:var(--Rs);border:1px solid var(--bd);margin-top:12px"><div style="font-size:11px;font-weight:700;color:var(--rd);margin-bottom:10px">🎓 STUDENT LOANS</div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
-<div class="igrp"><label>Remaining Balance</label><input type="number" class="ninput" id="slBal" value="0" min="0" oninput="runSL()"></div>
+<div class="igrp"><label>Remaining Balance</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="slBal" value="0" min="0" oninput="fmtMoney(this);runSL()"></div>
 <div class="igrp"><label>Interest Rate %</label><input type="number" class="ninput" id="slRate" value="5.5" min="0" max="15" step="0.1" oninput="runSL()"></div>
-<div class="igrp"><label>Current Monthly Payment</label><input type="number" class="ninput" id="slPay" value="0" min="0" oninput="runSL()"></div>
+<div class="igrp"><label>Current Monthly Payment</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="slPay" value="0" min="0" oninput="fmtMoney(this);runSL()"></div>
 </div>
 <div class="igrp" style="margin-bottom:8px"><label>Or pay off in: <span id="slYrLabel" style="color:var(--ac);font-weight:700">10 years</span></label>
 <input type="range" id="slYrSlider" min="1" max="30" value="10" step="1" oninput="runSL()" style="width:100%;accent-color:var(--ac)"></div>
@@ -504,7 +533,7 @@ function runCalc(){
   var calcLabels=yd.map(function(y){var age=cAge+y.yr;return age%5===0||y.yr===Y?'Age '+age+' ('+(CY+y.yr)+')':''});
   
   if(calcChartObj)calcChartObj.destroy();var cc=getCC();
-  calcChartObj=new Chart(document.getElementById('calcChart'),{type:'line',data:{labels:calcLabels,datasets:[{label:'Total Balance',data:yd.map(function(y){return y.bal}),borderColor:cc.c2,backgroundColor:cc.c2b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Your Contributions',data:yd.map(function(y){return y.contrib}),borderColor:cc.c1,backgroundColor:cc.c1b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2}]},plugins:[],options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:cc.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:cc.wh,bodyColor:cc.mt,padding:12,cornerRadius:6,callbacks:{label:function(ctx){return ctx.dataset.label+': '+$f(ctx.parsed.y)}}}},scales:{x:{ticks:{color:cc.mt,font:{size:10},maxTicksLimit:12},grid:{color:cc.grid}},y:{ticks:{color:cc.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:cc.grid}}}}});
+  calcChartObj=new Chart(document.getElementById('calcChart'),{type:'line',data:{labels:calcLabels,datasets:[{label:'Total Balance',data:yd.map(function(y){return y.bal}),borderColor:cc.c2,backgroundColor:cc.c2b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Your Contributions',data:yd.map(function(y){return y.contrib}),borderColor:cc.c1,backgroundColor:cc.c1b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2}]},plugins:[],options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:cc.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:cc.wh,bodyColor:cc.mt,padding:12,cornerRadius:6,callbacks:{label:function(ctx){return ctx.dataset.label+': '+$f(ctx.parsed.y)}}}},scales:{x:{ticks:{color:cc.mt,maxTicksLimit:10,autoSkip:true,font:{size:10},maxTicksLimit:12},grid:{color:cc.grid}},y:{ticks:{color:cc.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:cc.grid}}}}});
   let ex='';
   if(ms.length){ex+='<div style="margin-top:12px"><div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt);margin-bottom:6px">Milestones</div>';ms.forEach(function(m){ex+='<div class="ms"><div class="ms-i">'+(m.t>=1e6?'\u{1F3C6}':'\u{1F3AF}')+'</div><div class="ms-t">Hit <b>'+$f(m.t)+'</b></div><div class="ms-v">Year '+m.yr+' &middot; '+(CY+m.yr)+' &middot; Age '+(cAge+m.yr)+'</div></div>'});ex+='</div>'}
   if(Y>5){ex+='<div style="padding:10px 12px;background:var(--rdd);border:1px solid rgba(255,82,82,.1);border-radius:var(--Rs);margin-top:10px"><div style="font-size:11px;font-weight:700;color:var(--rd);margin-bottom:3px">\u23F0 What If You Wait 5 Years?</div><div style="font-size:12px;color:var(--tx)">Starting at age '+(cAge+5)+' instead: <b>'+$f(wait.bal)+'</b> \u2014 that\'s <b style="color:var(--rd)">'+$f(cost)+' less</b>. Time is your biggest asset.</div></div>'}
@@ -544,15 +573,32 @@ function runRet(){
   var retLabels=yd.map(function(y){var a=age+y.yr;return a%5===0||y.yr===yrs?'Age '+a+' ('+(CY+y.yr)+')':''});
   
   if(retChartObj)retChartObj.destroy();var rc=getCC();
-  retChartObj=new Chart(document.getElementById('retChart'),{type:'line',data:{labels:retLabels,datasets:[{label:'Total Balance',data:yd.map(function(y){return y.bal}),borderColor:rc.c2,backgroundColor:rc.c2b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Your Contributions',data:yd.map(function(y){return y.contrib}),borderColor:rc.c1,backgroundColor:rc.c1b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2}]},plugins:[],options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:rc.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:rc.wh,bodyColor:rc.mt,padding:12,cornerRadius:6,callbacks:{label:function(ctx){return ctx.dataset.label+': '+$f(ctx.parsed.y)}}}},scales:{x:{ticks:{color:rc.mt,font:{size:10},maxTicksLimit:12},grid:{color:rc.grid}},y:{ticks:{color:rc.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:rc.grid}}}}});
+  retChartObj=new Chart(document.getElementById('retChart'),{type:'line',data:{labels:retLabels,datasets:[{label:'Total Balance',data:yd.map(function(y){return y.bal}),borderColor:rc.c2,backgroundColor:rc.c2b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Your Contributions',data:yd.map(function(y){return y.contrib}),borderColor:rc.c1,backgroundColor:rc.c1b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2}]},plugins:[],options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:rc.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:rc.wh,bodyColor:rc.mt,padding:12,cornerRadius:6,callbacks:{label:function(ctx){return ctx.dataset.label+': '+$f(ctx.parsed.y)}}}},scales:{x:{ticks:{color:rc.mt,maxTicksLimit:10,autoSkip:true,font:{size:10},maxTicksLimit:12},grid:{color:rc.grid}},y:{ticks:{color:rc.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:rc.grid}}}}});
 }
 
 // ========== NET WORTH BUILDER ==========
+
+function fmtMoney(el){
+  var pos=el.selectionStart;
+  var raw=el.value.replace(/,/g,'');
+  if(raw===''||raw==='-')return;
+  var num=parseFloat(raw);
+  if(isNaN(num))return;
+  var parts=raw.split('.');
+  var intPart=parts[0].replace(/[^0-9-]/g,'');
+  var formatted=parseInt(intPart).toLocaleString('en-US');
+  if(parts.length>1)formatted+='.'+parts[1];
+  var addedCommas=formatted.length-raw.length;
+  el.value=formatted;
+  var newPos=pos+addedCommas;
+  el.setSelectionRange(newPos,newPos);
+}
+function getNum(id){var el=document.getElementById(id);if(!el)return 0;return parseFloat(el.value.replace(/,/g,''))||0}
 function runSL(){
   if(!document.getElementById('slBal'))return;
-  var bal=+document.getElementById('slBal').value||0;
+  var bal=getNum('slBal');
   var rate=(+document.getElementById('slRate').value||0)/100;
-  var curPay=+document.getElementById('slPay').value||0;
+  var curPay=getNum('slPay');
   var targetYrs=+document.getElementById('slYrSlider').value||10;
   document.getElementById('slYrLabel').textContent=targetYrs+(targetYrs===1?' year':' years');
   
@@ -612,8 +658,8 @@ function runNW(){
   var cChk=+document.getElementById('nwCashChk').value||0,cCD=+document.getElementById('nwCashCD').value||0,cHY=+document.getElementById('nwCashHY').value||0;
   var rChk=(+document.getElementById('nwChkR').value||0)/100,rCD=(+document.getElementById('nwCDR').value||0)/100,rHY=(+document.getElementById('nwHYR').value||0)/100;
   // Retirement - % based with IRS caps
-  var b401=+document.getElementById('nw401').value||0;
-  var sal401=+document.getElementById('nw401sal').value||0;
+  var b401=getNum('nw401');
+  var sal401=getNum('nw401sal');
   var empPct=+document.getElementById('nw401pct').value||0;
   var matchPct=+document.getElementById('nw401mp').value||0;
   var empContrib=Math.min(sal401*(empPct/100),23500); // Cap employee at $23,500
@@ -621,15 +667,15 @@ function runNW(){
   var total401yr=Math.min(empContrib+empMatch,69000); // Cap total at $69,000
   var r401=(+(document.querySelector('#nw401rg .on')?.dataset.v||10))/100/12;
   // IRA
-  var bRoth=+document.getElementById('nwRoth').value||0,aRoth=+document.getElementById('nwRothA').value||0;
+  var bRoth=getNum('nwRoth'),aRoth=+document.getElementById('nwRothA').value||0;
   var rIRA=(+(document.querySelector('#nwRothRg .on')?.dataset.v||10))/100/12;
   // Brokerage
-  var bBrok=+document.getElementById('nwBrok').value||0,mBrok=+document.getElementById('nwBrokM').value||0;
+  var bBrok=getNum('nwBrok'),mBrok=+document.getElementById('nwBrokM').value||0;
   var rBrok=(+(document.querySelector('#nwBrokRg .on')?.dataset.v||10))/100/12;
   // Real Estate - read from buttons
-  var bHome=+document.getElementById('nwHome').value||0,mort=+document.getElementById('nwMort').value||0;
+  var bHome=getNum('nwHome'),mort=+document.getElementById('nwMort').value||0;
   var rHome=(+(document.querySelector('#nwHomeRg .on')?.dataset.v||3))/100;
-  var bRE=+document.getElementById('nwRE').value||0,reDebt=+document.getElementById('nwREDebt').value||0;
+  var bRE=getNum('nwRE'),reDebt=+document.getElementById('nwREDebt').value||0;
   var rRE=(+(document.querySelector('#nwRERg .on')?.dataset.v||3))/100;
   var nwAge=+document.getElementById('nwAge').value||31,nwTo=+document.getElementById('nwTo').value||65;
   var yrs=Math.max(nwTo-nwAge,1),projYrs=Math.max(90-nwAge,yrs);
@@ -640,16 +686,16 @@ function runNW(){
     for(var m=0;m<12;m++){v401=v401*(1+r401)+total401yr/12;vRoth=vRoth*(1+rIRA)+aRoth/12;vBrok=vBrok*(1+rBrok)+mBrok}
     vHome=vHome*(1+rHome);vRE=vRE*(1+rRE);
     var age=nwAge+y,yr=CY+y;
-    labels.push(age%5===0||y===yrs?'Age '+age+' ('+yr+')':'');
+    labels.push('Age '+age+' ('+yr+')');
     dTotal.push(vChk+vCD+vHY+v401+vRoth+vBrok+Math.max(0,vHome-mort)+Math.max(0,vRE-reDebt));
   }
-  var slBal=+document.getElementById('slBal').value||0;
+  var slBal=getNum('slBal');
   var totalCash=vChk+vCD+vHY;
   var totalAtTarget=dTotal[yrs-1]||0;
   var capHit=sal401*(empPct/100)>23500;
   var h='<div class="rg" style="margin-top:14px"><div class="rc"><div class="rc-l">Net Worth at Age '+nwTo+' ('+( CY+yrs)+')</div><div class="rc-v">'+$f(totalAtTarget)+'</div></div>';
-  h+='<div class="rc"><div class="rc-l">Retirement</div><div class="rc-v">'+$f(v401)+'</div><div class="rc-s">'+$f(total401yr)+'/yr going in</div></div>';
-  h+='<div class="rc"><div class="rc-l">IRA (Tax-Free)</div><div class="rc-v" style="color:var(--ac)">'+$f(vRoth)+'</div></div>';
+  
+  h+='<div class="rc"><div class="rc-l">IRA</div><div class="rc-v">'+$f(vRoth)+'</div></div>';
   h+='<div class="rc"><div class="rc-l">Cash</div><div class="rc-v">'+$f(totalCash)+'</div></div>';
   h+='<div class="rc"><div class="rc-l">Brokerage</div><div class="rc-v">'+$f(vBrok)+'</div></div>';
   var homeEquity=Math.max(0,vHome-mort),reEquity=Math.max(0,vRE-reDebt);
@@ -888,4 +934,15 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 
 </script>
+<div id="discModal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box">
+<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:12px;max-width:520px;width:100%;padding:32px;text-align:center">
+<div style="font-family:var(--disp);font-size:24px;font-weight:700;color:var(--wh);margin-bottom:16px">ABV Financial Intelligence</div>
+<div style="font-size:13px;color:var(--br);line-height:1.8;text-align:left;margin-bottom:20px">
+This platform was built as a personal project to help friends, family, and anyone interested in learning more about personal finance, investing, and retirement planning.<br><br>
+<b style="color:var(--wh)">This is not financial, investment, tax, or legal advice.</b> Everything on this site is for <b>informational and educational purposes only</b>. All projections are estimates based on simplified assumptions. Past performance does not guarantee future results.<br><br>
+Please consult a qualified professional before making any financial decisions. I built this because I believe everyone deserves access to clear, no-nonsense financial education.
+</div>
+<button onclick="document.getElementById('discModal').style.display='none'" style="background:var(--ac);color:#ffffff;border:none;padding:12px 40px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--body)">I Agree — This Is Not Financial Advice</button>
+</div>
+</div>
 </body></html
