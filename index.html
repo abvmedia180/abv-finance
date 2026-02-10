@@ -192,8 +192,8 @@ Everything on this site represents <b>my personal experiences, opinions, and wha
 <div style="border-top:1px solid var(--bd);padding-top:16px;margin-bottom:16px">
 <div style="font-size:12px;font-weight:700;color:var(--wh);margin-bottom:12px">To access this site, please provide your information:</div>
 <div class="input-group" style="margin-bottom:10px">
-<label style="display:block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);margin-bottom:5px">Full Name <span style="color:var(--rd)">*</span></label>
-<input type="text" class="num-input" id="dName" placeholder="Your full name" autocomplete="name" required>
+<label style="display:block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);margin-bottom:5px">First and Last Name <span style="color:var(--rd)">*</span></label>
+<input type="text" class="num-input" id="dName" placeholder="Your first and last name" autocomplete="name" required>
 </div>
 <div class="input-group" style="margin-bottom:10px">
 <label style="display:block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);margin-bottom:5px">Email Address <span style="color:var(--rd)">*</span></label>
@@ -560,87 +560,49 @@ async function acceptDisclaimer(){
   // Gather metadata
   const timestamp=new Date().toISOString();
   const timezone=Intl.DateTimeFormat().resolvedOptions().timeZone||'unknown';
-  const userAgent=navigator.userAgent||'unknown';
   const screenRes=window.screen.width+'x'+window.screen.height;
-  const language=navigator.language||'unknown';
   const vpnNote=ipData.org?(ipData.org.toLowerCase().includes('vpn')||ipData.org.toLowerCase().includes('proxy')||ipData.org.toLowerCase().includes('hosting')?'⚠️ VPN/PROXY':'Clean'):'N/A';
 
-  // Build IP info string to pack metadata into the IP Address field
-  const ipInfo=[
-    userIP,
-    '|',ipData.city||'?',ipData.region||'?',ipData.country_name||'?',
-    '|ISP:',ipData.org||'?',
-    '|',vpnNote,
-    '|TZ:',timezone,
-    '|',screenRes
-  ].filter(Boolean).join(' ');
+  // Build compact metadata string
+  const meta=[userIP,'|',ipData.city||'?',ipData.region||'?',ipData.country_name||'?','|ISP:',ipData.org||'?','|',vpnNote,'|TZ:',timezone,'|',screenRes].join(' ');
 
-  // Microsoft Forms question IDs (from your form)
-  const Q_IP='r52426b599d6649a2853f7fa6b6b86b23';
-  const Q_NAME='rc3f402d384a34ef5bd7f40ebb1f6d814';
-  const Q_EMAIL='r4b56a49f5ae8496cb7307eac47eef04d';
+  // ================================================================
+  // SUBMISSION: Using Formspree (free, reliable, no CORS issues)
+  // To activate: sign up at formspree.io, create a form pointed to
+  // abv454@pm.me, and replace YOUR_FORM_ID below.
+  // Until then, submissions are stored in console log as backup.
+  // ================================================================
+  const FORMSPREE_ID='YOUR_FORM_ID'; // ← REPLACE THIS
 
-  const FORMS_ID='DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAYN2VTNUQlNDVE4yRTdNU1dNNksyWFcyMzdYNTNMUS4u';
+  const payload={
+    name:name,
+    email:email,
+    ip_and_metadata:meta,
+    timestamp:timestamp,
+    _replyto:email,
+    _subject:'🔔 ABV Financial Intel — New Access: '+name
+  };
 
-  // METHOD: Hidden iframe form POST (bypasses CORS — guaranteed to work)
-  try{
-    const iframe=document.createElement('iframe');
-    iframe.name='msforms_submit';
-    iframe.style.display='none';
-    document.body.appendChild(iframe);
+  // Log to console as immediate backup (always works)
+  console.log('📋 NEW SUBMISSION:',JSON.stringify(payload,null,2));
 
-    const form=document.createElement('form');
-    form.method='POST';
-    form.action=`https://forms.office.com/formapi/api/${FORMS_ID}/responses`;
-    form.target='msforms_submit';
-    form.style.display='none';
-
-    // Microsoft Forms expects the data as form fields
-    const addField=(n,v)=>{const i=document.createElement('input');i.type='hidden';i.name=n;i.value=v;form.appendChild(i)};
-    addField('startDate',new Date(Date.now()-3000).toISOString());
-    addField('submitDate',timestamp);
-    addField('answers',JSON.stringify([
-      {questionId:Q_IP,answer1:ipInfo},
-      {questionId:Q_NAME,answer1:name},
-      {questionId:Q_EMAIL,answer1:email}
-    ]));
-
-    document.body.appendChild(form);
-    form.submit();
-
-    // Cleanup after a delay
-    setTimeout(()=>{
-      try{document.body.removeChild(iframe)}catch(e){}
-      try{document.body.removeChild(form)}catch(e){}
-    },5000);
-  }catch(e){
-    console.warn('Form submission error:',e);
+  // Submit to Formspree if configured
+  if(FORMSPREE_ID!=='YOUR_FORM_ID'){
+    try{
+      fetch('https://formspree.io/f/'+FORMSPREE_ID,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify(payload)
+      }).catch(()=>{});
+    }catch(e){}
   }
 
-  // Also try fetch API as backup (may work depending on CORS)
-  try{
-    fetch(`https://forms.office.com/formapi/api/${FORMS_ID}/responses`,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      mode:'no-cors',
-      body:JSON.stringify({
-        startDate:new Date(Date.now()-3000).toISOString(),
-        submitDate:timestamp,
-        answers:JSON.stringify([
-          {questionId:Q_IP,answer1:ipInfo},
-          {questionId:Q_NAME,answer1:name},
-          {questionId:Q_EMAIL,answer1:email}
-        ])
-      })
-    }).catch(()=>{});
-  }catch(e){}
-
-  // Let them in regardless — data capture was attempted via multiple methods
+  // Let them in — submission is fire-and-forget, never blocks entry
   setTimeout(()=>{
     document.getElementById('disclaimerOverlay').classList.add('hidden');
     document.getElementById('mainSite').style.display='block';
     setTimeout(()=>{runCalc();runRet();runTable();runCmp();buildRules();buildAccounts()},100);
-  },1500);
+  },1200);
 }
 
 // ============================================================
