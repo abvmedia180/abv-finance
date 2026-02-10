@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- ABV Financial Intelligence Platform V2.0 -->
+<!-- ABV Financial Intelligence Platform V3.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ABV Financial Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700;9..144,800&family=Fraunces:ital,opsz,wght@1,9..144,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700;9..144,800&family=Fraunces:ital,opsz,wght@1,9..144,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 /* ============================================================
@@ -33,21 +33,7 @@
    THEME B: AVC LUXURY
    Dark warm, cream/gold accent, Cormorant + Playfair
    ============================================================ */
-[data-theme="b"]{
-  --bg:#0a0a08;--bg2:#0f0f0c;--bg3:#151512;--bg4:#1c1c18;
-  --bd:#2a2a24;--bd2:#3a3a32;
-  --mt:#7a7a6e;--tx:#a8a898;--br:#d4d4c4;--wh:#f0efe6;
-  --ac:#c8a86e;--ac2:#b8944e;--acd:rgba(200,168,110,.06);--ac15:rgba(200,168,110,.15);
-  --chart-contrib:rgba(200,168,110,.6);--chart-interest:rgba(240,239,230,.5);
-  --chart-contrib-bg:rgba(200,168,110,.1);--chart-interest-bg:rgba(240,239,230,.08);
-  --R:4px;--Rs:3px;
-  --sans:'Inter',system-ui,sans-serif;
-  --disp:'Cormorant Garamond',Georgia,serif;
-  --heading:'Playfair Display',Georgia,serif;
-  --grid-line:rgba(255,255,255,.03);
-  --card-hover:rgba(200,168,110,.02);
-  --glow:rgba(200,168,110,.06);
-}
+
 
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100vh;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
@@ -76,6 +62,12 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 .dchk span{font-size:13px;font-weight:500;color:var(--br)}
 .ninput{background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);padding:10px 12px;font-size:14px;font-weight:500;color:var(--wh);width:100%;font-family:var(--sans);transition:border-color .2s}
 .ninput:hover,.ninput:focus{border-color:var(--ac);outline:none}
+.nselect{background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);padding:10px 12px;font-size:13px;font-weight:500;color:var(--wh);width:100%;font-family:var(--sans);cursor:pointer;-webkit-appearance:none}
+.nselect:hover,.nselect:focus{border-color:var(--ac);outline:none}
+.tg{display:inline-flex;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);overflow:hidden;margin-bottom:12px}
+.tg button{padding:7px 14px;font-size:11px;font-weight:600;font-family:var(--sans);border:none;cursor:pointer;transition:all .2s;background:transparent;color:var(--mt)}
+.tg button.on{background:var(--ac);color:var(--bg)}.tg button:hover:not(.on){color:var(--wh)}
+
 .igrp{margin-bottom:12px}
 .igrp label{display:block;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--mt);margin-bottom:5px}
 
@@ -92,7 +84,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 
 /* NAV */
 .nb{position:sticky;top:0;z-index:100;background:rgba(8,10,15,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);padding:0 16px}
-[data-theme="b"] .nb{background:rgba(10,10,8,.96)}
+
 .ni{max-width:1400px;margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
 .ni::-webkit-scrollbar{display:none}
 .nt{padding:11px 14px;font-size:12px;font-weight:600;color:var(--mt);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;user-select:none}
@@ -122,7 +114,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px}
 .rc{background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);padding:14px;text-align:center}
 .rc-l{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt);margin-bottom:5px}
-.rc-v{font-family:var(--disp);font-size:22px;font-weight:700;color:var(--ac)}
+.rc-v{font-family:var(--disp);font-size:22px;font-weight:700;color:var(--wh)}
 .rc-s{font-size:11px;color:var(--mt);margin-top:3px}
 
 /* CHART */
@@ -159,10 +151,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .pbar>div{height:100%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
 
 /* THEME SWITCHER */
-.theme-sw{position:fixed;bottom:20px;right:20px;z-index:200;display:flex;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--R);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.4)}
-.theme-sw button{padding:8px 16px;font-size:11px;font-weight:700;font-family:var(--sans);letter-spacing:.5px;border:none;cursor:pointer;transition:all .2s;background:transparent;color:var(--mt)}
-.theme-sw button.active{background:var(--ac);color:var(--bg)}
-.theme-sw button:hover:not(.active){color:var(--wh)}
+
+
+
 
 /* FOOTER */
 .ft{margin-top:32px;padding:24px;border-top:1px solid var(--bd);text-align:center}
@@ -178,14 +169,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .nb{padding:0 6px}
 .nt{padding:9px 10px;font-size:11px}
 .dbox{padding:20px 16px}
-.theme-sw{bottom:10px;right:10px}
+
 }
 </style>
 </head>
 <body data-theme="a">
 
 <!-- DISCLAIMER -->
-<div class="dov" id="dOv">
+<div class="dov hidden" id="dOv">
 <div class="dbox">
 <div class="dtitle">Important Disclaimer</div>
 <div class="dsub">Please Read Before Continuing</div>
@@ -218,7 +209,7 @@ Everything on this site represents <b>my personal experiences, opinions, and wha
 </div>
 
 <!-- MAIN SITE -->
-<div id="mainSite" style="display:none">
+<div id="mainSite">
 <div class="hero">
 <div class="htag">Financial Intelligence Platform</div>
 <h1>ABV <em>Financial Intelligence</em></h1>
@@ -227,8 +218,11 @@ Everything on this site represents <b>my personal experiences, opinions, and wha
 </div>
 
 <div class="nb"><div class="ni">
-<div class="nt a" data-s="calculator">Investment Calculator</div>
+<div class="nt a" data-s="tax">Tax Calculator</div>
+<div class="nt" data-s="calculator">Investment Calculator</div>
 <div class="nt" data-s="retirement">Retirement Planner</div>
+<div class="nt" data-s="networth">Net Worth Builder</div>
+<div class="nt" data-s="statecomp">State Comparison</div>
 <div class="nt" data-s="breakdown">Year-by-Year</div>
 <div class="nt" data-s="compare">Compare Scenarios</div>
 <div class="nt" data-s="rules">Abe's Rules</div>
@@ -237,8 +231,24 @@ Everything on this site represents <b>my personal experiences, opinions, and wha
 
 <div class="con">
 
+<!-- TAX CALCULATOR -->
+<div class="sec a" id="sec-tax">
+<div class="tl">Income Tax Engine</div><h2 class="tl2">Tax Calculator</h2>
+<p class="ts">See exactly how your income is taxed — federal, state, FICA. W-2, 1099, or S-Corp.</p>
+<div class="cg"><div><div class="card"><div class="ct">Your Income</div>
+<div class="igrp"><label>Gross Annual Income ($)</label><input type="number" class="ninput" id="txInc" value="250000" min="0" step="1000" oninput="runTax()"></div>
+<div class="igrp"><label>Filing Status</label><select class="nselect" id="txFS" onchange="runTax()"><option value="single">Single</option><option value="mfj">Married Filing Jointly</option><option value="mfs">Married Filing Separately</option><option value="hoh">Head of Household</option></select></div>
+<div class="igrp"><label>State</label><select class="nselect" id="txSt" onchange="runTax()"><option value="NY">New York</option><option value="NJ">New Jersey</option><option value="CT">Connecticut</option><option value="PA">Pennsylvania</option><option value="NC">North Carolina</option><option value="SC">South Carolina</option><option value="WV">West Virginia</option><option value="FL">Florida</option><option value="CA">California</option><option value="TX">Texas</option><option value="NV">Nevada</option><option value="WA">Washington</option><option value="IL">Illinois (Chicago)</option><option value="WY">Wyoming</option><option value="NM">New Mexico</option><option value="GA">Georgia</option></select></div>
+<div id="txNYCwrap"><div class="dchk" id="txNYC" style="margin-bottom:8px"><input type="checkbox"><div class="cm"></div><span style="font-size:12px">NYC Resident (additional city tax)</span></div></div>
+<div class="ct" style="margin-top:16px">Employment Type</div>
+<div class="tg" id="txType"><button class="on" data-v="w2">W-2</button><button data-v="1099">1099</button><button data-v="scorp">S-Corp</button></div>
+<div id="txScorpWrap" style="display:none"><div class="igrp"><label>S-Corp Salary ($)</label><input type="number" class="ninput" id="txScSal" value="100000" min="0" step="5000" oninput="runTax()"></div>
+<div class="note"><b>S-Corp:</b> Salary is subject to FICA. Distribution avoids 15.3% SE tax.</div></div>
+<div class="igrp"><label>Pre-Tax 401(k) ($)</label><input type="number" class="ninput" id="tx401k" value="0" min="0" max="69000" step="500" oninput="runTax()"></div>
+</div></div><div><div id="txRes"></div></div></div></div>
+
 <!-- CALCULATOR -->
-<div class="sec a" id="sec-calculator">
+<div class="sec" id="sec-calculator">
 <div class="tl">Compound Growth Engine</div>
 <h2 class="tl2">Investment Calculator</h2>
 <p class="ts">See how consistent investing and compound interest grow your money over time.</p>
@@ -286,6 +296,45 @@ Everything on this site represents <b>my personal experiences, opinions, and wha
 <div><div id="retRes"></div><div class="chart-wrap"><canvas id="retChart"></canvas></div></div>
 </div>
 </div>
+
+<!-- NET WORTH BUILDER -->
+<div class="sec" id="sec-networth">
+<div class="tl">Wealth Projection</div><h2 class="tl2">Net Worth Builder</h2>
+<p class="ts">Combine all accounts into one projection.</p>
+<div class="card"><div class="ct">Your Accounts</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px">
+<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border:1px solid var(--bd)"><div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">401(k)</div>
+<div class="igrp"><label>Balance ($)</label><input type="number" class="ninput" id="nw401" value="50000" min="0" oninput="runNW()"></div>
+<div class="igrp"><label>Monthly ($)</label><input type="number" class="ninput" id="nw401m" value="1500" min="0" oninput="runNW()"></div>
+<div class="igrp"><label>Match ($/mo)</label><input type="number" class="ninput" id="nw401e" value="500" min="0" oninput="runNW()"></div></div>
+<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border:1px solid var(--bd)"><div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">ROTH IRA</div>
+<div class="igrp"><label>Balance ($)</label><input type="number" class="ninput" id="nwRoth" value="0" min="0" oninput="runNW()"></div>
+<div class="igrp"><label>Annual ($)</label><input type="number" class="ninput" id="nwRothA" value="7000" min="0" oninput="runNW()"></div></div>
+<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border:1px solid var(--bd)"><div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">BROKERAGE</div>
+<div class="igrp"><label>Balance ($)</label><input type="number" class="ninput" id="nwBrok" value="0" min="0" oninput="runNW()"></div>
+<div class="igrp"><label>Monthly ($)</label><input type="number" class="ninput" id="nwBrokM" value="500" min="0" oninput="runNW()"></div></div>
+<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border:1px solid var(--bd)"><div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">REAL ESTATE</div>
+<div class="igrp"><label>Home Value ($)</label><input type="number" class="ninput" id="nwHome" value="0" min="0" oninput="runNW()"></div>
+<div class="igrp"><label>Appreciation (%)</label><input type="number" class="ninput" id="nwHomeR" value="4" min="0" max="10" step="0.5" oninput="runNW()"></div></div>
+</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;align-items:end">
+<div class="igrp" style="margin-bottom:0"><label>Return (%)</label><input type="number" class="ninput" id="nwRet" value="10" min="1" max="15" step="0.5" oninput="runNW()" style="width:80px"></div>
+<div class="igrp" style="margin-bottom:0"><label>Years</label><input type="number" class="ninput" id="nwYrs" value="30" min="1" max="50" oninput="runNW()" style="width:70px"></div></div>
+</div><div id="nwRes"></div><div class="chart-wrap"><canvas id="nwChart"></canvas></div></div>
+
+<!-- STATE COMPARISON -->
+<div class="sec" id="sec-statecomp">
+<div class="tl">Relocation Analysis</div><h2 class="tl2">State Tax Comparison</h2>
+<p class="ts">Compare tax burden across two states side-by-side.</p>
+<div class="card"><div class="ct">Setup</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+<div class="igrp"><label>Income ($)</label><input type="number" class="ninput" id="scInc" value="250000" min="0" step="5000" oninput="runSC()"></div>
+<div class="igrp"><label>Filing Status</label><select class="nselect" id="scFS" onchange="runSC()"><option value="single">Single</option><option value="mfj">Married Filing Jointly</option></select></div>
+<div class="igrp"><label>Employment</label><select class="nselect" id="scType" onchange="runSC()"><option value="w2">W-2</option><option value="1099">1099</option></select></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<div class="igrp"><label>State A</label><select class="nselect" id="scA" onchange="runSC()"><option value="NY">New York</option><option value="NJ">New Jersey</option><option value="CT">Connecticut</option><option value="PA">Pennsylvania</option><option value="NC">North Carolina</option><option value="SC">South Carolina</option><option value="WV">West Virginia</option><option value="FL">Florida</option><option value="CA">California</option><option value="TX">Texas</option><option value="NV">Nevada</option><option value="WA">Washington</option><option value="IL">Illinois (Chicago)</option><option value="WY">Wyoming</option><option value="NM">New Mexico</option><option value="GA">Georgia</option></select></div>
+<div class="igrp"><label>State B</label><select class="nselect" id="scB" onchange="runSC()"><option value="FL" selected>Florida</option><option value="NY">New York</option><option value="CA">California</option><option value="TX">Texas</option><option value="NJ">New Jersey</option></select></div></div>
+</div><div id="scRes"></div></div>
 
 <!-- YEAR BY YEAR -->
 <div class="sec" id="sec-breakdown">
@@ -343,17 +392,12 @@ Everything on this site represents <b>my personal experiences, opinions, and wha
 </div>
 
 <footer class="ft">
-<div class="v">ABV Financial Intelligence Platform V2.0 · Educational Use Only</div>
+<div class="v">ABV Financial Intelligence Platform V3.0 · Educational Use Only</div>
 <div class="d">This platform is for informational and educational purposes only. It is not financial, investment, tax, or legal advice. All projections are estimates based on simplified assumptions. Past performance does not guarantee future results. Consult a qualified professional before making financial decisions.<br>Built by Abe Varughese</div>
 </footer>
 
 <!-- THEME SWITCHER -->
-<div class="theme-sw">
-<button class="active" id="thA" data-t="a">Style A</button>
-<button id="thB" data-t="b">Style B</button>
-</div>
-
-</div><!-- end mainSite -->
+<!-- end mainSite -->
 
 <script>
 // ============================================================
@@ -374,7 +418,11 @@ document.addEventListener('DOMContentLoaded',()=>{
   ['dName','dEmail'].forEach(id=>{document.getElementById(id)?.addEventListener('input',()=>{hideErr();chkReady()})});
   document.getElementById('dChk').addEventListener('click',e=>{e.preventDefault();document.getElementById('dChk').classList.toggle('checked');chkReady()});
   document.getElementById('dBtn').addEventListener('click',acceptD);
-  document.querySelectorAll('.theme-sw button').forEach(b=>{b.addEventListener('click',()=>setTheme(b.dataset.t))});
+  
+  document.getElementById('txNYC')?.addEventListener('click',function(e){e.preventDefault();this.classList.toggle('checked');runTax()});
+  document.querySelectorAll('#cRateGroup button').forEach(b=>{b.addEventListener('click',function(){document.querySelectorAll('#cRateGroup button').forEach(x=>x.classList.remove('on'));this.classList.add('on');runCalc()})});
+  document.querySelectorAll('#txType button').forEach(b=>{b.addEventListener('click',function(){document.querySelectorAll('#cRateGroup button').forEach(b=>{b.addEventListener('click',function(){document.querySelectorAll('#cRateGroup button').forEach(x=>x.classList.remove('on'));this.classList.add('on');runCalc()})});
+  document.querySelectorAll('#txType button').forEach(x=>x.classList.remove('on'));this.classList.add('on');document.getElementById('txScorpWrap').style.display=this.dataset.v==='scorp'?'block':'none';runTax()})});
 });
 
 async function acceptD(){
@@ -393,18 +441,123 @@ async function acceptD(){
   console.log('📋 SUBMISSION:',JSON.stringify(payload,null,2));
   const FID='YOUR_FORM_ID';
   if(FID!=='YOUR_FORM_ID'){try{fetch('https://formspree.io/f/'+FID,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)}).catch(()=>{})}catch(e){}}
-  setTimeout(()=>{document.getElementById('dOv').classList.add('hidden');document.getElementById('mainSite').style.display='block';setTimeout(()=>{runCalc();runRet();runTbl();runCmp();buildRules();buildAccts()},100)},1200);
+  setTimeout(()=>{document.getElementById('dOv').classList.add('hidden');document.getElementById('mainSite').style.display='block';setTimeout(()=>{runTax();runCalc();runRet();runNW();runSC();runTbl();runCmp();buildRules();buildAccts()},100)},1200);
 }
+
+// === TAX DATA ===
+const FED={
+single:[[0,11925,.10],[11925,48475,.12],[48475,103350,.22],[103350,197300,.24],[197300,250525,.32],[250525,626350,.35],[626350,1e15,.37]],
+mfj:[[0,23850,.10],[23850,96950,.12],[96950,206700,.22],[206700,394600,.24],[394600,501050,.32],[501050,751600,.35],[751600,1e15,.37]],
+mfs:[[0,11925,.10],[11925,48475,.12],[48475,103350,.22],[103350,197300,.24],[197300,250525,.32],[250525,375800,.35],[375800,1e15,.37]],
+hoh:[[0,17000,.10],[17000,64850,.12],[64850,103350,.22],[103350,197300,.24],[197300,250500,.32],[250500,626350,.35],[626350,1e15,.37]]
+};
+const FED_SD={single:15000,mfj:30000,mfs:15000,hoh:22500};
+const FICA={ssR:.062,ssC:176100,medR:.0145,addMedR:.009,addMedT:{single:200000,mfj:250000,mfs:125000,hoh:200000}};
+const ST={
+NY:{n:'New York',sd:{single:8000,mfj:16050,mfs:8000,hoh:11200},single:[[0,8500,.04],[8500,11700,.045],[11700,13900,.0525],[13900,80650,.055],[80650,215400,.06],[215400,1077550,.0685],[1077550,5000000,.0965],[5000000,25000000,.103],[25000000,1e15,.109]],mfj:[[0,17150,.04],[17150,23600,.045],[23600,27900,.0525],[27900,161550,.055],[161550,323200,.06],[323200,2155350,.0685],[2155350,5000000,.0965],[5000000,25000000,.103],[25000000,1e15,.109]]},
+NJ:{n:'New Jersey',sd:{},single:[[0,20000,.014],[20000,35000,.0175],[35000,40000,.035],[40000,75000,.05525],[75000,500000,.0637],[500000,1000000,.0897],[1000000,1e15,.1075]],mfj:[[0,20000,.014],[20000,50000,.0175],[50000,70000,.035],[70000,80000,.05525],[80000,150000,.0637],[150000,500000,.0637],[500000,1000000,.0897],[1000000,1e15,.1075]]},
+CT:{n:'Connecticut',sd:{},single:[[0,10000,.03],[10000,50000,.05],[50000,100000,.055],[100000,200000,.06],[200000,250000,.065],[250000,500000,.069],[500000,1e15,.0699]],mfj:[[0,20000,.03],[20000,100000,.05],[100000,200000,.055],[200000,400000,.06],[400000,500000,.065],[500000,1000000,.069],[1000000,1e15,.0699]]},
+PA:{n:'Pennsylvania',flat:.0307},
+NC:{n:'North Carolina',flat:.0425},
+SC:{n:'South Carolina',sd:{},single:[[0,3460,0],[3460,17330,.03],[17330,1e15,.064]],mfj:[[0,3460,0],[3460,17330,.03],[17330,1e15,.064]]},
+WV:{n:'West Virginia',sd:{},single:[[0,10000,.0236],[10000,25000,.0315],[25000,40000,.0354],[40000,60000,.0472],[60000,1e15,.0512]],mfj:[[0,10000,.0236],[10000,25000,.0315],[25000,40000,.0354],[40000,60000,.0472],[60000,1e15,.0512]]},
+FL:{n:'Florida',flat:0},CA:{n:'California',sd:{single:5540,mfj:11080,mfs:5540,hoh:5540},single:[[0,10412,.01],[10412,24684,.02],[24684,38959,.04],[38959,54081,.06],[54081,68350,.08],[68350,349137,.093],[349137,418961,.103],[418961,698271,.113],[698271,1000000,.123],[1000000,1e15,.133]],mfj:[[0,20824,.01],[20824,49368,.02],[49368,77918,.04],[77918,108162,.06],[108162,136700,.08],[136700,698274,.093],[698274,837922,.103],[837922,1396542,.113],[1396542,1e15,.123]]},
+TX:{n:'Texas',flat:0},NV:{n:'Nevada',flat:0},WA:{n:'Washington',flat:0},
+IL:{n:'Illinois',flat:.0495},WY:{n:'Wyoming',flat:0},
+NM:{n:'New Mexico',sd:{},single:[[0,5500,.017],[5500,11000,.032],[11000,16500,.047],[16500,22000,.049],[22000,1e15,.059]],mfj:[[0,8000,.017],[8000,16000,.032],[16000,24000,.047],[24000,33500,.049],[33500,1e15,.059]]},
+GA:{n:'Georgia',flat:.0539}
+};
+const NYC_B={single:[[0,12000,.03078],[12000,25000,.03762],[25000,50000,.03819],[50000,1e15,.03876]],mfj:[[0,21600,.03078],[21600,45000,.03762],[45000,90000,.03819],[90000,1e15,.03876]]};
+
+function calcBrk(inc,brk){let t=0,bd=[];for(const[lo,hi,r]of brk){if(inc<=lo)break;const tx=Math.min(inc,hi)-lo,tax=tx*r;if(tax>0)bd.push({lo,hi:Math.min(inc,hi),r,tx,tax});t+=tax}return{t,bd}}
+function calcST(inc,code,fs){const s=ST[code];if(!s)return{t:0,bd:[],n:'?',eff:0};let ti=inc;if(s.sd&&s.sd[fs])ti=Math.max(0,inc-s.sd[fs]);if(s.flat!==undefined){const tax=ti*s.flat;return{t:tax,bd:s.flat>0?[{lo:0,hi:ti,r:s.flat,tx:ti,tax}]:[],n:s.n,eff:inc>0?tax/inc*100:0}}const brk=s[fs]||s.single||[];const res=calcBrk(ti,brk);return{...res,n:s.n,eff:inc>0?res.t/inc*100:0}}
+
+function pct2(v,t){return t>0?(v/t*100).toFixed(1)+'%':'0%'}
+
+function runTax(){
+const gross=+document.getElementById('txInc').value||0,fs=document.getElementById('txFS').value,stCode=document.getElementById('txSt').value;
+const empType=document.querySelector('#txType .on')?.dataset.v||'w2';
+const isNYC=stCode==='NY'&&document.getElementById('txNYC').classList.contains('checked');
+const k401=Math.min(+document.getElementById('tx401k').value||0,69000);
+const scorpSal=empType==='scorp'?Math.min(+document.getElementById('txScSal').value||0,gross):0;
+document.getElementById('txNYCwrap').style.display=stCode==='NY'?'block':'none';
+document.getElementById('txScorpWrap').style.display=empType==='scorp'?'block':'none';
+let ficaInc=gross;if(empType==='scorp')ficaInc=scorpSal;if(empType==='1099')ficaInc=gross*0.9235;
+const fR=empType==='w2'?1:2;const ssTax=Math.min(ficaInc,FICA.ssC)*FICA.ssR*fR,medTax=ficaInc*FICA.medR*fR;
+const addMedTh=FICA.addMedT[fs]||200000,addMed=ficaInc>addMedTh?(ficaInc-addMedTh)*FICA.addMedR:0;
+const totalFICA=ssTax+medTax+addMed,seDed=empType==='1099'?totalFICA/2:0;
+const fedDed=FED_SD[fs]||15000,fedTaxable=Math.max(0,gross-k401-seDed-fedDed);
+const fedRes=calcBrk(fedTaxable,FED[fs]||FED.single);
+const stRes=calcST(Math.max(0,gross-k401-seDed),stCode,fs);
+let nycRes={t:0,bd:[]};
+if(isNYC){const nycSD=ST.NY.sd[fs]||8000;nycRes=calcBrk(Math.max(0,gross-k401-seDed-nycSD),NYC_B[fs]||NYC_B.single)}
+const totalTax=fedRes.t+stRes.t+nycRes.t+totalFICA,takeHome=gross-totalTax,effRate=gross>0?totalTax/gross*100:0;
+const topFedRate=fedRes.bd.length>0?(fedRes.bd[fedRes.bd.length-1].r*100).toFixed(0):'10';
+let h='<div class="rg"><div class="rc"><div class="rc-l">Gross Income</div><div class="rc-v" style="color:var(--wh)">'+$f(gross)+'</div></div><div class="rc"><div class="rc-l">Total Tax</div><div class="rc-v" style="color:var(--rd)">'+$f(totalTax)+'</div><div class="rc-s">'+effRate.toFixed(1)+'% effective</div></div><div class="rc"><div class="rc-l">Take-Home</div><div class="rc-v">'+$f(takeHome)+'</div><div class="rc-s">'+$f(takeHome/12)+'/mo</div></div><div class="rc"><div class="rc-l">Fed Marginal</div><div class="rc-v" style="color:var(--br)">'+topFedRate+'%</div></div></div>';
+h+='<div class="card"><div class="ct">Tax Breakdown</div><div class="tw"><table class="tbl"><thead><tr><th>Category</th><th>Amount</th><th>% of Gross</th></tr></thead><tbody>';
+h+='<tr><td style="color:var(--wh)">Federal Income Tax</td><td style="color:var(--rd);font-weight:600">'+$f(fedRes.t)+'</td><td>'+pct2(fedRes.t,gross)+'</td></tr>';
+h+='<tr><td style="color:var(--wh)">'+stRes.n+' State Tax</td><td style="color:var(--rd);font-weight:600">'+$f(stRes.t)+'</td><td>'+pct2(stRes.t,gross)+'</td></tr>';
+if(isNYC)h+='<tr><td style="color:var(--wh)">NYC City Tax</td><td style="color:var(--rd);font-weight:600">'+$f(nycRes.t)+'</td><td>'+pct2(nycRes.t,gross)+'</td></tr>';
+h+='<tr><td style="color:var(--wh)">Social Security ('+(empType==='w2'?'6.2%':'12.4%')+')</td><td style="color:var(--rd);font-weight:600">'+$f(ssTax)+'</td><td>'+pct2(ssTax,gross)+'</td></tr>';
+h+='<tr><td style="color:var(--wh)">Medicare ('+(empType==='w2'?'1.45%':'2.9%')+')</td><td style="color:var(--rd);font-weight:600">'+$f(medTax)+'</td><td>'+pct2(medTax,gross)+'</td></tr>';
+if(addMed>0)h+='<tr><td style="color:var(--wh)">Addl Medicare (0.9%)</td><td style="color:var(--rd);font-weight:600">'+$f(addMed)+'</td><td>'+pct2(addMed,gross)+'</td></tr>';
+h+='<tr style="border-top:2px solid var(--bd)"><td style="color:var(--wh);font-weight:700">Total Tax</td><td style="color:var(--rd);font-weight:700">'+$f(totalTax)+'</td><td style="font-weight:700">'+pct2(totalTax,gross)+'</td></tr>';
+h+='<tr><td style="color:var(--ac);font-weight:700">Take-Home</td><td style="color:var(--ac);font-weight:700">'+$f(takeHome)+'</td><td style="color:var(--ac);font-weight:700">'+pct2(takeHome,gross)+'</td></tr></tbody></table></div></div>';
+h+='<div class="card"><div class="ct">Federal Bracket Breakdown</div><p style="font-size:12px;color:var(--mt);margin-bottom:10px">Progressive system: you only pay each rate on income <b style="color:var(--wh)">within that bracket</b>.</p><div class="tw"><table class="tbl"><thead><tr><th>Bracket</th><th>Range</th><th>Taxable</th><th>Tax</th></tr></thead><tbody>';
+fedRes.bd.forEach(function(b){h+='<tr><td style="color:var(--ac);font-weight:700">'+(b.r*100).toFixed(0)+'%</td><td>'+$f(b.lo)+' - '+(b.hi>=1e12?'&infin;':$f(b.hi))+'</td><td style="color:var(--wh)">'+$f(b.tx)+'</td><td style="color:var(--rd);font-weight:600">'+$f(b.tax)+'</td></tr>'});
+h+='</tbody></table></div><div style="margin-top:6px;font-size:11px;color:var(--mt)"><b style="color:var(--wh)">Deductions:</b> Std '+$f(fedDed)+(k401>0?' + 401k '+$f(k401):'')+(seDed>0?' + SE '+$f(Math.round(seDed)):'')+' = <b style="color:var(--ac)">'+$f(fedDed+k401+seDed)+'</b></div></div>';
+if(stRes.bd.length>0){h+='<div class="card"><div class="ct">'+stRes.n+' Brackets</div><div class="tw"><table class="tbl"><thead><tr><th>Rate</th><th>Range</th><th>Taxable</th><th>Tax</th></tr></thead><tbody>';stRes.bd.forEach(function(b){h+='<tr><td style="color:var(--ac);font-weight:700">'+(b.r*100).toFixed(2)+'%</td><td>'+$f(b.lo)+' - '+(b.hi>=1e12?'&infin;':$f(b.hi))+'</td><td style="color:var(--wh)">'+$f(b.tx)+'</td><td style="color:var(--rd);font-weight:600">'+$f(b.tax)+'</td></tr>'});h+='</tbody></table></div></div>'}
+if(isNYC&&nycRes.bd.length>0){h+='<div class="card"><div class="ct">NYC Brackets</div><div class="tw"><table class="tbl"><thead><tr><th>Rate</th><th>Range</th><th>Taxable</th><th>Tax</th></tr></thead><tbody>';nycRes.bd.forEach(function(b){h+='<tr><td style="color:var(--ac)">'+(b.r*100).toFixed(3)+'%</td><td>'+$f(b.lo)+' - '+(b.hi>=1e12?'&infin;':$f(b.hi))+'</td><td>'+$f(b.tx)+'</td><td style="color:var(--rd)">'+$f(b.tax)+'</td></tr>'});h+='</tbody></table></div></div>'}
+if(empType==='scorp'){const dist=gross-scorpSal,saved=Math.min(dist,Math.max(0,FICA.ssC-scorpSal))*FICA.ssR*2+dist*FICA.medR*2;h+='<div class="card"><div class="ct">S-Corp Strategy</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px"><div style="padding:10px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--mt)">SALARY</div><div style="font-size:18px;font-weight:700;color:var(--wh);font-family:var(--disp)">'+$f(scorpSal)+'</div><div style="font-size:11px;color:var(--mt)">Subject to FICA</div></div><div style="padding:10px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--mt)">DISTRIBUTION</div><div style="font-size:18px;font-weight:700;color:var(--ac);font-family:var(--disp)">'+$f(dist)+'</div><div style="font-size:11px;color:var(--ac)">NO FICA</div></div></div><div class="ic-hl"><b>FICA savings: ~'+$f(Math.round(saved))+'/yr</b> by taking '+$f(dist)+' as distribution. IRS requires reasonable salary.</div></div>'}
+if(empType==='1099'){h+='<div class="card"><div class="ct">1099 Self-Employment</div><div class="ic-b">You pay both halves of FICA (15.3%). Half is deductible: '+$f(Math.round(seDed))+'.</div></div>'}
+if(k401>0){const mr=fedRes.bd.length>0?fedRes.bd[fedRes.bd.length-1].r:.22;h+='<div class="note"><b>401(k):</b> '+$f(k401)+' saves ~<b style="color:var(--ac)">'+$f(Math.round(k401*mr))+'</b> at '+(mr*100).toFixed(0)+'% marginal rate.</div>'}
+document.getElementById('txRes').innerHTML=h}
+
+let nwChartObj=null;
+function runNW(){
+const b401=+document.getElementById('nw401').value||0,m401=+document.getElementById('nw401m').value||0,e401=+document.getElementById('nw401e').value||0;
+const bRoth=+document.getElementById('nwRoth').value||0,aRoth=+document.getElementById('nwRothA').value||0;
+const bBrok=+document.getElementById('nwBrok').value||0,mBrok=+document.getElementById('nwBrokM').value||0;
+const bHome=+document.getElementById('nwHome').value||0,rHome=+document.getElementById('nwHomeR').value||4;
+const ret=+document.getElementById('nwRet').value||10,yrs=+document.getElementById('nwYrs').value||30;
+const r=ret/100/12,rH=rHome/100;let v401=b401,vRoth=bRoth,vBrok=bBrok,vHome=bHome;
+const labels=[],d401=[],dRoth=[],dBrok=[],dHome=[],dTotal=[];
+for(let y=1;y<=yrs;y++){for(let m=0;m<12;m++){v401=v401*(1+r)+m401+e401;vRoth=vRoth*(1+r)+aRoth/12;vBrok=vBrok*(1+r)+mBrok}vHome=vHome*(1+rH);labels.push('Year '+y);d401.push(v401);dRoth.push(vRoth);dBrok.push(vBrok);dHome.push(vHome);dTotal.push(v401+vRoth+vBrok+vHome)}
+const total=v401+vRoth+vBrok+vHome;
+let h='<div class="rg" style="margin-top:14px"><div class="rc"><div class="rc-l">Total Net Worth</div><div class="rc-v">'+$f(total)+'</div><div class="rc-s">in '+yrs+' years</div></div><div class="rc"><div class="rc-l">401(k)</div><div class="rc-v" style="color:var(--br)">'+$f(v401)+'</div></div><div class="rc"><div class="rc-l">Roth IRA</div><div class="rc-v">'+$f(vRoth)+'</div><div class="rc-s">tax-free</div></div><div class="rc"><div class="rc-l">Brokerage</div><div class="rc-v" style="color:var(--br)">'+$f(vBrok)+'</div></div><div class="rc"><div class="rc-l">Real Estate</div><div class="rc-v" style="color:var(--am)">'+$f(vHome)+'</div></div></div>';
+document.getElementById('nwRes').innerHTML=h;
+if(nwChartObj)nwChartObj.destroy();const c=CC();
+nwChartObj=new Chart(document.getElementById('nwChart'),{type:'line',data:{labels,datasets:[{label:'Total',data:dTotal,borderColor:c.c2,backgroundColor:'transparent',tension:.3,pointRadius:0,borderWidth:3},{label:'401(k)',data:d401,borderColor:'rgba(100,150,255,.6)',backgroundColor:'transparent',tension:.3,pointRadius:0,borderWidth:1.5,borderDash:[4,2]},{label:'Roth',data:dRoth,borderColor:'rgba(0,212,116,.5)',backgroundColor:'transparent',tension:.3,pointRadius:0,borderWidth:1.5,borderDash:[4,2]},{label:'Brokerage',data:dBrok,borderColor:'rgba(200,180,140,.5)',backgroundColor:'transparent',tension:.3,pointRadius:0,borderWidth:1.5,borderDash:[4,2]},{label:'Real Estate',data:dHome,borderColor:'rgba(255,193,7,.4)',backgroundColor:'transparent',tension:.3,pointRadius:0,borderWidth:1.5,borderDash:[4,2]}]},options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:c.mt,font:{size:11,family:'Inter'},boxWidth:12}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:c.wh,bodyColor:c.mt,padding:12,cornerRadius:6,callbacks:{label:function(ctx){return ctx.dataset.label+': '+$f(ctx.parsed.y)}}}},scales:{x:{ticks:{color:c.mt,font:{size:10},maxTicksLimit:10},grid:{color:c.grid}},y:{ticks:{color:c.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:c.grid}}}}})}
+
+function runSC(){
+const inc=+document.getElementById('scInc').value||0,fs=document.getElementById('scFS').value;
+const sA=document.getElementById('scA').value,sB=document.getElementById('scB').value;
+function fc(code){const st=calcST(inc,code,fs);const fedDed=FED_SD[fs]||15000;const fed=calcBrk(Math.max(0,inc-fedDed),FED[fs]||FED.single);const ss=Math.min(inc,FICA.ssC)*FICA.ssR,med=inc*FICA.medR,am=inc>FICA.addMedT[fs]?(inc-FICA.addMedT[fs])*FICA.addMedR:0;const fica=ss+med+am;const total=fed.t+st.t+fica;return{fed:fed.t,state:st.t,n:ST[code]?.n||code,fica,total,take:inc-total,eff:inc>0?total/inc*100:0,stEff:inc>0?st.t/inc*100:0}}
+const a=fc(sA),b=fc(sB),diff=a.total-b.total;
+let h='<div class="card" style="margin-top:14px"><div class="ct">Side-by-Side</div><div class="tw"><table class="tbl"><thead><tr><th></th><th>'+a.n+'</th><th>'+b.n+'</th><th>Diff</th></tr></thead><tbody>';
+h+='<tr><td style="color:var(--wh)">Federal</td><td>'+$f(a.fed)+'</td><td>'+$f(b.fed)+'</td><td>'+$f(b.fed-a.fed)+'</td></tr>';
+h+='<tr><td style="color:var(--wh)">State Tax</td><td style="color:var(--rd);font-weight:600">'+$f(a.state)+'</td><td style="color:var(--rd);font-weight:600">'+$f(b.state)+'</td><td style="color:'+(b.state<a.state?'var(--ac)':'var(--rd)')+';font-weight:600">'+$f(b.state-a.state)+'</td></tr>';
+h+='<tr><td style="color:var(--wh)">State Eff Rate</td><td>'+a.stEff.toFixed(2)+'%</td><td>'+b.stEff.toFixed(2)+'%</td><td>'+(b.stEff-a.stEff).toFixed(2)+'%</td></tr>';
+h+='<tr><td style="color:var(--wh)">FICA</td><td>'+$f(a.fica)+'</td><td>'+$f(b.fica)+'</td><td>$0</td></tr>';
+h+='<tr style="border-top:2px solid var(--bd)"><td style="color:var(--wh);font-weight:700">Total Tax</td><td style="color:var(--rd);font-weight:700">'+$f(a.total)+'</td><td style="color:var(--rd);font-weight:700">'+$f(b.total)+'</td><td style="font-weight:700">'+$f(Math.abs(diff))+'</td></tr>';
+h+='<tr><td style="color:var(--ac);font-weight:700">Take-Home</td><td style="color:var(--ac);font-weight:700">'+$f(a.take)+'</td><td style="color:var(--ac);font-weight:700">'+$f(b.take)+'</td><td style="color:'+(b.take>a.take?'var(--ac)':'var(--rd)')+';font-weight:700">'+$f(b.take-a.take)+'</td></tr>';
+h+='<tr><td style="color:var(--wh)">Monthly Take-Home</td><td>'+$f(a.take/12)+'</td><td>'+$f(b.take/12)+'</td><td style="color:'+(b.take>a.take?'var(--ac)':'var(--rd)')+'">'+$f((b.take-a.take)/12)+'/mo</td></tr>';
+h+='</tbody></table></div>';
+if(Math.abs(diff)>0)h+='<div class="note"><b>'+(diff>0?b.n:a.n)+' saves '+$f(Math.abs(diff))+'/year</b> ('+$f(Math.abs(diff)/12)+'/mo). Over 10 years: <b style="color:var(--ac)">'+$f(Math.abs(diff)*10)+'</b>.</div>';
+h+='</div>';
+h+='<div class="card"><div class="ct">State Tax at Different Incomes</div><div class="tw"><table class="tbl"><thead><tr><th>Income</th><th>'+a.n+'</th><th>'+b.n+'</th><th>Savings</th></tr></thead><tbody>';
+[100000,150000,200000,300000,500000,750000,1000000].forEach(function(i){var sa=calcST(i,sA,fs),sb=calcST(i,sB,fs),d=sa.t-sb.t;h+='<tr><td style="color:var(--wh)">'+$f(i)+'</td><td style="color:var(--rd)">'+$f(sa.t)+' ('+sa.eff.toFixed(1)+'%)</td><td style="color:var(--rd)">'+$f(sb.t)+' ('+sb.eff.toFixed(1)+'%)</td><td style="color:'+(d>0?'var(--ac)':'var(--rd)')+';font-weight:600">'+(d>0?'Save ':'Lose ')+$f(Math.abs(d))+'</td></tr>'});
+h+='</tbody></table></div><div style="font-size:10px;color:var(--mt);margin-top:6px">State tax only. Federal + FICA same regardless of state.</div></div>';
+document.getElementById('scRes').innerHTML=h}
 
 // ============================================================
 // THEME SWITCHER
 // ============================================================
 function setTheme(t){
   document.body.setAttribute('data-theme',t);
-  document.querySelectorAll('.theme-sw button').forEach(b=>{b.classList.toggle('active',b.dataset.t===t)});
   try{localStorage.setItem('abv-theme',t)}catch(e){}
   // Redraw charts with new colors
-  setTimeout(()=>{runCalc();runRet();runCmp()},50);
+  setTimeout(()=>{runTax();runCalc();runRet();runNW();runCmp()},50);
 }
 // Restore saved theme
 try{const saved=localStorage.getItem('abv-theme');if(saved)setTheme(saved)}catch(e){}
@@ -458,15 +611,18 @@ function makeAreaChart(canvasId,labels,contribData,totalData,existingChart){
 // TAB 1: INVESTMENT CALCULATOR
 // ============================================================
 function runCalc(){
-  const P=+document.getElementById('cI').value||0,PMT=+document.getElementById('cM').value,Y=+document.getElementById('cY').value,R=+document.getElementById('cR').value;
-  document.getElementById('cMV').textContent=$f(PMT);document.getElementById('cYV').textContent=Y;document.getElementById('cRV').textContent=R+'%';
+  const P=+document.getElementById('cI').value||0,PMT=+document.getElementById('cM').value;
+  const cAge=+document.getElementById('cAge').value||31,retAge=+document.getElementById('cRetAge').value||65;
+  const Y=Math.max(retAge-cAge,1);
+  const R=+(document.querySelector('#cRateGroup .on')?.dataset.v||10);
+  document.getElementById('cMV').textContent=$f(PMT);document.getElementById('cAgeV').textContent=cAge;document.getElementById('cRetAgeV').textContent=retAge;
   const res=calcFV(P,PMT,R,Y),yd=yearByYear(P,PMT,R,Y);
   const cPct=res.bal>0?(res.contrib/res.bal*100):0,iPct=res.bal>0?(res.interest/res.bal*100):0;
   let ms=[];[100000,250000,500000,1000000,2000000,5000000].forEach(t=>{const h=yd.find(y=>y.bal>=t);if(h)ms.push({t,yr:h.yr})});
   const wait=calcFV(P,PMT,R,Math.max(Y-5,1)),cost=res.bal-wait.bal;
 
   let h=`<div class="rg">
-  <div class="rc"><div class="rc-l">Future Balance</div><div class="rc-v">${$f(res.bal)}</div><div class="rc-s">after ${Y} years</div></div>
+  <div class="rc"><div class="rc-l">Future Balance</div><div class="rc-v">${$f(res.bal)}</div><div class="rc-s">by age ${retAge} (${Y} years)</div></div>
   <div class="rc"><div class="rc-l">Total Contributed</div><div class="rc-v" style="color:var(--br)">${$f(res.contrib)}</div><div class="rc-s">${$f(P)} initial + ${$f(PMT*Y*12)} monthly</div></div>
   <div class="rc"><div class="rc-l">Interest Earned</div><div class="rc-v">${$f(res.interest)}</div><div class="rc-s">${iPct.toFixed(1)}% of total</div></div>
   <div class="rc"><div class="rc-l">Growth Multiple</div><div class="rc-v" style="color:var(--br)">${res.contrib>0?(res.bal/res.contrib).toFixed(1):'0'}x</div><div class="rc-s">your money multiplied</div></div>
@@ -590,32 +746,47 @@ function buildRules(){
 // TAB 6: ACCOUNTS
 // ============================================================
 function buildAccts(){
-  const accts=[
-    {n:'401(k)',type:'Employer-Sponsored',tax:'Traditional: pre-tax in, taxed out. Roth 401(k): after-tax in, tax-free out.',lim:'$23,500/yr (2025). $31,000 if 50+.',pros:['Employer match = free money','High contribution limits','Automatic payroll deduction'],cons:['Limited fund choices','10% penalty before 59½','RMDs at 73 (Traditional)'],take:'If your employer matches, this is priority #1. Get the full match before anything else.'},
-    {n:'Roth IRA',type:'Individual Retirement',tax:'After-tax contributions. Growth and qualified withdrawals are 100% tax-free.',lim:'$7,000/yr (2025). $8,000 if 50+. Income limits apply.',pros:['Tax-free growth and withdrawals','No RMDs','Can withdraw contributions anytime'],cons:['Income limits for high earners','Lower limit than 401(k)','No upfront tax break'],take:'I love the Roth. Pay taxes now while your bracket is lower, never pay again on that money.'},
-    {n:'Traditional IRA',type:'Individual Retirement',tax:'May be tax-deductible. Growth is tax-deferred. Taxed on withdrawal.',lim:'$7,000/yr (2025). $8,000 if 50+.',pros:['Potential tax deduction now','Tax-deferred growth','Wide investment choices'],cons:['Taxed on withdrawal','10% penalty before 59½','RMDs at 73'],take:'Good if you make too much for Roth. For most young people, I\'d prioritize Roth.'},
-    {n:'HSA',type:'Triple Tax-Advantaged',tax:'Pre-tax in. Tax-free growth. Tax-free out for medical expenses.',lim:'$4,300 individual / $8,550 family (2025). Requires HDHP.',pros:['Triple tax advantage','Investable balance','After 65, works like Traditional IRA'],cons:['Requires HDHP','Only tax-free for medical before 65','Lower limits'],take:'Most tax-advantaged account in America. If you have access, max it out.'},
-    {n:'Taxable Brokerage',type:'General Investment',tax:'No special tax treatment. Long-term gains taxed at lower capital gains rate.',lim:'No limits.',pros:['No contribution limits','No withdrawal restrictions','Full flexibility'],cons:['No tax advantages','Capital gains taxes','Dividends taxed annually'],take:'After maxing 401(k) match, Roth IRA, and HSA — surplus cash goes here.'}
-  ];
+const accts=[
+{n:'401(k)',type:'Employer-Sponsored',tax:'Traditional: pre-tax in, taxed out. Roth 401(k): after-tax in, tax-free out.',lim:'$23,500/yr (2025). $31,000 if 50+.',pros:['Employer match = free money','High contribution limits','Automatic payroll deduction'],cons:['Limited fund choices','10% penalty before 59½','RMDs at 73 (Traditional)'],take:'If your employer matches, this is priority #1. Get the full match before anything else.'},
+{n:'Solo 401(k)',type:'Self-Employed',tax:'Pre-tax employee + employer contributions.',lim:'$23,500 employee + up to 25% comp = $69,000 total (2025).',pros:['Massive tax deduction','Both employee & employer contributions','Roth option available'],cons:['Must be self-employed/S-Corp','Admin requirements','No W-2 employees allowed'],take:'If you have an S-Corp, this is your single best tax tool. $40K/year saves ~$12K in taxes and builds retirement wealth simultaneously.'},
+{n:'Roth IRA',type:'Individual Retirement',tax:'After-tax contributions. Growth and qualified withdrawals are 100% tax-free forever.',lim:'$7,000/yr (2025). $8,000 if 50+.',pros:['Tax-free growth and withdrawals','No RMDs','Can withdraw contributions anytime'],cons:['Income limits for direct contributions','Lower limit than 401(k)','No upfront tax break'],take:'Pay taxes now while your bracket is lower, never pay again. This is the holy grail for young earners.',warn:'<b style="color:var(--rd)">⚠️ Income Limits (2025):</b> If your MAGI exceeds <b>$150,000 (single)</b> or <b>$236,000 (married filing jointly)</b>, you <b>cannot</b> contribute directly to a Roth IRA. But there\'s a workaround — the Backdoor Roth (see below).'},
+{n:'Backdoor Roth IRA',type:'High-Earner Strategy',tax:'Contribute non-deductible to Traditional IRA → immediately convert to Roth. Tax-free growth forever.',lim:'$7,000/yr per person (2025). No income limits on conversion.',pros:['Bypasses Roth income limits','Tax-free growth forever','No RMDs'],cons:['Annual paperwork required','Pro-rata rule if you have pre-tax IRA balances','Must convert promptly'],take:'15 minutes of work per year for tax-free retirement money. If you earn above the Roth limits, this is how you still get Roth dollars working for you. $14K/year for a couple at 10% for 30 years = ~$2.5M tax-free.'},
+{n:'HSA',type:'Triple Tax-Advantaged',tax:'Pre-tax in. Tax-free growth. Tax-free out for medical expenses.',lim:'$4,300 individual / $8,550 family (2025). Requires HDHP.',pros:['Triple tax advantage — only account with all three','Investable balance','After 65, works like Traditional IRA for any expense'],cons:['Requires high-deductible health plan','Only tax-free for medical before 65','Lower limits'],take:'I don\'t personally use an HSA because my employer plan isn\'t HDHP-eligible, but if you have access to one — this is objectively the most tax-advantaged account in America. The triple tax benefit is unmatched. If you have access, seriously consider maxing it out.',optional:true},
+{n:'529 Plan',type:'Education Savings',tax:'After-tax contributions. Tax-free growth. Tax-free withdrawals for education.',lim:'$19,000/yr per beneficiary (gift tax). Can superfund 5 years: $95,000.',pros:['Tax-free growth for education','No income limits','Can change beneficiary','K-12 up to $10K/yr qualifies'],cons:['10% penalty on non-education use','Limited to education expenses','Varies by state'],take:'Great for parents. If they don\'t go to college, you can roll up to $35K into a Roth IRA (account must be 15+ years old).'},
+{n:'Taxable Brokerage',type:'General Investment',tax:'No special tax treatment. Long-term gains taxed at lower capital gains rate (0%, 15%, or 20%).',lim:'No limits.',pros:['No contribution limits','No withdrawal restrictions','Full flexibility and liquidity'],cons:['No tax advantages','Capital gains taxes','Dividends taxed annually'],take:'After maxing all tax-advantaged accounts, surplus goes here. No limits, no rules, no penalties.'}
+];
+let h='<div class="card"><div class="ct">My Priority Order</div><p style="font-size:12px;color:var(--mt);margin-bottom:12px">How I prioritize based on maximizing free money and tax advantages.</p>';
+['401(k) up to employer match — free money','Max Roth IRA (or Backdoor Roth) — tax-free growth','HSA if eligible — triple tax advantage (I don\'t have access, but if you do, use it)','Max remaining 401(k) / Solo 401(k) — tax deduction','529 for kids (if applicable) — education tax-free','Taxable brokerage — no limits, invest surplus'].forEach(function(s,i){h+='<div class="ms"><div class="ms-i" style="font-family:var(--disp);font-size:18px;font-weight:700;color:var(--ac)">'+(i+1)+'</div><div class="ms-t"><b>'+s.split(' — ')[0]+'</b><span style="color:var(--mt)"> — '+(s.split(' — ')[1]||'')+'</span></div></div>'});
+h+='</div>';
+accts.forEach(function(a){h+='<div class="ic">'+(a.optional?'<div style="display:inline-block;padding:2px 8px;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);font-size:10px;font-weight:700;color:var(--mt);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">I DON\'T USE THIS — BUT IT\'S GREAT</div>':'')+'<div class="ic-t">'+a.n+' <span style="font-size:11px;color:var(--mt);font-weight:400">· '+a.type+'</span></div>';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0"><div style="padding:8px 10px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">Tax Treatment</div><div style="font-size:12px;color:var(--br);line-height:1.6">'+a.tax+'</div></div><div style="padding:8px 10px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">2025 Limits</div><div style="font-size:12px;color:var(--br);line-height:1.6">'+a.lim+'</div></div></div>';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px"><div>'+a.pros.map(function(p){return '<div style="font-size:12px;color:var(--tx);padding:3px 0 3px 10px;border-left:2px solid var(--ac);margin-bottom:3px">'+p+'</div>'}).join('')+'</div><div>'+a.cons.map(function(c){return '<div style="font-size:12px;color:var(--tx);padding:3px 0 3px 10px;border-left:2px solid var(--rd);margin-bottom:3px">'+c+'</div>'}).join('')+'</div></div>';
+if(a.warn)h+='<div style="padding:10px 12px;background:var(--rdd);border:1px solid rgba(255,82,82,.1);border-radius:var(--Rs);margin-bottom:8px;font-size:12px;color:var(--tx);line-height:1.6">'+a.warn+'</div>';
+h+='<div class="ic-hl"><b style="color:var(--ac)">My take:</b> '+a.take+'</div></div>'});
 
-  let h=`<div class="card"><div class="ct">My Priority Order</div><p style="font-size:12px;color:var(--mt);margin-bottom:12px">This is how I personally prioritize, based on maximizing free money and tax advantages.</p>
-  ${['401(k) up to employer match — free money','Max out Roth IRA — tax-free growth','Max out HSA (if eligible) — triple tax advantage','Max out remaining 401(k) limit','Taxable brokerage — no limits, invest surplus'].map((s,i)=>`<div class="ms"><div class="ms-i" style="font-family:var(--disp);font-size:18px;font-weight:700;color:var(--ac)">${i+1}</div><div class="ms-t"><b>${s.split('—')[0]}</b>${s.includes('—')?'<span style="color:var(--mt)"> —'+s.split('—')[1]+'</span>':''}</div></div>`).join('')}
-  </div>`;
+// INVESTMENT STRATEGY SECTION
+h+='<div class="card" style="margin-top:20px"><div class="ct">My Investment Strategy: S&P 500 + Growth Mutual Funds</div>';
+h+='<div class="ic-b" style="margin-bottom:14px">Most people know about investing in the S&P 500 — and that\'s a great foundation. But I go a step further. I invest in <b>5 funds total</b>: the S&P 500 index fund plus 4 actively managed mutual funds focused on <b>technology, large-cap growth, and innovation</b>.</div>';
+h+='<div class="ic-b" style="margin-bottom:14px">Why? I believe technology and AI are the defining economic forces of our generation. The companies driving the future — cloud computing, semiconductors, artificial intelligence, biotech, fintech — are disproportionately represented in growth-oriented funds. I\'ve been invested in this strategy since <b>2018</b>, and the results speak for themselves.</div>';
+h+='<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">BLENDED 5-FUND PORTFOLIO PERFORMANCE (as of February 2026)</div>';
+h+='<div class="tw"><table class="tbl"><thead><tr><th>Timeframe</th><th>Blended Return</th></tr></thead><tbody>';
+h+='<tr><td style="color:var(--wh)">YTD</td><td style="color:var(--ac);font-weight:600">+1.58%</td></tr>';
+h+='<tr><td style="color:var(--wh)">1 Year</td><td style="color:var(--ac);font-weight:600">+20.43%</td></tr>';
+h+='<tr><td style="color:var(--wh)">3 Year (annualized)</td><td style="color:var(--ac);font-weight:600">+29.46%</td></tr>';
+h+='<tr><td style="color:var(--wh)">5 Year (annualized)</td><td style="color:var(--ac);font-weight:600">+15.27%</td></tr>';
+h+='<tr><td style="color:var(--wh)">10 Year (annualized)</td><td style="color:var(--ac);font-weight:600">+19.73%</td></tr>';
+h+='<tr><td style="color:var(--wh)">Life of Funds (annualized)</td><td style="color:var(--ac);font-weight:600">+13.40%</td></tr>';
+h+='<tr style="border-top:2px solid var(--bd)"><td style="color:var(--wh)">Blended Expense Ratio</td><td style="font-weight:600">0.52%</td></tr>';
+h+='</tbody></table></div></div>';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">';
+h+='<div style="padding:10px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--mt);margin-bottom:4px">THE 5 FUNDS</div><div style="font-size:12px;color:var(--br);line-height:1.8"><b>1.</b> Technology sector fund<br><b>2.</b> Blue-chip large-cap growth<br><b>3.</b> OTC / NASDAQ-focused growth<br><b>4.</b> Large-cap stock picker (growth)<br><b>5.</b> S&P 500 index fund (the anchor)</div></div>';
+h+='<div style="padding:10px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--mt);margin-bottom:4px">WHY THIS MIX</div><div style="font-size:12px;color:var(--br);line-height:1.8">The S&P 500 is the foundation — broad, diversified, low-cost. The 4 growth funds tilt the portfolio toward tech, AI, and innovation where I believe the outsized returns will be over the next 20+ years. It\'s a bet on the future, backed by a decade of conviction.</div></div></div>';
+h+='<div class="ic-hl"><b style="color:var(--ac)">My take:</b> The S&P 500 alone is a phenomenal investment. But if you have conviction in where the world is heading — AI, cloud, automation — a growth tilt can meaningfully accelerate your wealth. I\'ve held this strategy through COVID crashes, rate hikes, and everything in between. Time in the market beats timing the market.</div>';
+h+='<div style="font-size:10px;color:var(--mt);margin-top:8px;font-style:italic">Past performance does not guarantee future results. All data as of February 2026. These are my personal investments and opinions, not recommendations. Expense ratios reduce net returns.</div>';
+h+='</div>';
 
-  accts.forEach(a=>{h+=`<div class="ic"><div class="ic-t">${a.n} <span style="font-size:11px;color:var(--mt);font-weight:400">· ${a.type}</span></div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0">
-  <div style="padding:8px 10px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">Tax Treatment</div><div style="font-size:12px;color:var(--br);line-height:1.6">${a.tax}</div></div>
-  <div style="padding:8px 10px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">2025 Limits</div><div style="font-size:12px;color:var(--br);line-height:1.6">${a.lim}</div></div>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px">
-  <div>${a.pros.map(p=>`<div style="font-size:12px;color:var(--tx);padding:3px 0 3px 10px;border-left:2px solid var(--ac);margin-bottom:3px">${p}</div>`).join('')}</div>
-  <div>${a.cons.map(c=>`<div style="font-size:12px;color:var(--tx);padding:3px 0 3px 10px;border-left:2px solid #ff5252;margin-bottom:3px">${c}</div>`).join('')}</div>
-  </div>
-  <div class="ic-hl"><b style="color:var(--ac)">My take:</b> ${a.take}</div></div>`});
-
-  h+=`<div style="padding:10px;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);margin-top:6px;font-size:10px;color:var(--mt);line-height:1.6"><b style="color:var(--ac)">⚠️</b> Contribution limits shown are 2025. Check IRS.gov for current limits. This is a simplified overview, not tax advice.</div>`;
-  document.getElementById('acctC').innerHTML=h;
-}
+h+='<div class="note"><b>⚠️</b> Contribution limits are 2025. Check IRS.gov for current. This is a simplified overview, not tax advice.</div>';
+document.getElementById('acctC').innerHTML=h}
 </script>
 </body>
 </html>
