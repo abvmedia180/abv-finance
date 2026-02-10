@@ -1,235 +1,229 @@
 <!DOCTYPE html>
-<!-- ABV Financial Intelligence Platform V1.0 -->
-<!--
-  If hosting on GitHub Pages, make sure:
-  1. File is named index.html
-  2. Add an empty .nojekyll file to the repo root
--->
+<!-- ABV Financial Intelligence Platform V2.0 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ABV Financial Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700;9..144,800&family=Fraunces:ital,opsz,wght@1,9..144,400&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700;9..144,800&family=Fraunces:ital,opsz,wght@1,9..144,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root{--bg:#080a0f;--bg2:#0c0f16;--bg3:#111521;--bg4:#161b2b;--bg5:#1c2235;--bd:#1e2740;--bd2:#283350;--mt:#5b6585;--tx:#9ba4be;--br:#ccd6f6;--wh:#e6f1ff;--ac:#00ff88;--ac2:#00cc6a;--acd:rgba(0,255,136,.06);--ac10:rgba(0,255,136,.1);--ac20:rgba(0,255,136,.2);--bl:#4fc3f7;--bld:rgba(79,195,247,.08);--am:#ffb74d;--amd:rgba(255,183,77,.08);--rd:#ff5252;--rdd:rgba(255,82,82,.08);--pp:#b388ff;--ppd:rgba(179,136,255,.08);--R:10px;--Rs:6px;--sans:'Inter',system-ui,sans-serif;--disp:'Fraunces',serif}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100vh;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,136,.012) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.012) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+/* ============================================================
+   THEME A: CLEAN PROFESSIONAL (default)
+   Dark theme, green accent, Inter + Fraunces
+   ============================================================ */
+:root,[data-theme="a"]{
+  --bg:#080a0f;--bg2:#0c0f16;--bg3:#111521;--bg4:#161b2b;
+  --bd:#1e2740;--bd2:#283350;
+  --mt:#6b7394;--tx:#a0a8c0;--br:#ccd6f6;--wh:#e6f1ff;
+  --ac:#00d474;--ac2:#00b862;--acd:rgba(0,212,116,.06);--ac15:rgba(0,212,116,.15);
+  --chart-contrib:rgba(0,150,255,.6);--chart-interest:rgba(0,212,116,.6);
+  --chart-contrib-bg:rgba(0,150,255,.1);--chart-interest-bg:rgba(0,212,116,.1);
+  --R:8px;--Rs:5px;
+  --sans:'Inter',system-ui,sans-serif;
+  --disp:'Fraunces',Georgia,serif;
+  --heading:'Fraunces',Georgia,serif;
+  --grid-line:rgba(255,255,255,.04);
+  --card-hover:rgba(0,212,116,.02);
+  --glow:rgba(0,212,116,.08);
+}
 
-/* DISCLAIMER OVERLAY */
-.disclaimer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(20px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:opacity .4s}
-.disclaimer-overlay.hidden{opacity:0;pointer-events:none}
-.disclaimer-box{max-width:620px;width:100%;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--R);padding:36px 32px;position:relative;overflow:hidden}
-.disclaimer-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--am),var(--rd),var(--am))}
-.disclaimer-icon{font-size:48px;text-align:center;margin-bottom:16px}
-.disclaimer-title{font-family:var(--disp);font-size:24px;font-weight:700;color:var(--wh);text-align:center;margin-bottom:8px}
-.disclaimer-subtitle{font-size:13px;color:var(--am);font-weight:700;text-align:center;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px}
-.disclaimer-text{font-size:13px;color:var(--tx);line-height:1.8;margin-bottom:24px}
-.disclaimer-text b{color:var(--wh)}
-.disclaimer-text .warn{color:var(--am)}
-.disclaimer-bullets{margin:16px 0;padding:0;list-style:none}
-.disclaimer-bullets li{padding:6px 0 6px 20px;position:relative;font-size:13px;color:var(--tx);line-height:1.6}
-.disclaimer-bullets li::before{content:'⚠️';position:absolute;left:0;top:6px;font-size:11px}
-.disclaimer-btn{display:block;width:100%;padding:14px;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);color:var(--mt);font-size:14px;font-weight:700;cursor:not-allowed;text-align:center;transition:all .3s;font-family:var(--sans);letter-spacing:.5px}
-.disclaimer-btn.ready{background:var(--ac);border-color:var(--ac);color:var(--bg);cursor:pointer}
-.disclaimer-btn.ready:hover{box-shadow:0 0 30px rgba(0,255,136,.3)}
-.disclaimer-check{display:flex;align-items:center;gap:10px;margin-bottom:20px;cursor:pointer;user-select:none}
-.disclaimer-check input{display:none}
-.disclaimer-check .checkmark{width:20px;height:20px;border:2px solid var(--bd);border-radius:4px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
-.disclaimer-check.checked .checkmark{background:var(--ac);border-color:var(--ac)}
-.disclaimer-check .checkmark::after{content:'✓';color:var(--bg);font-size:14px;font-weight:700;opacity:0;transition:opacity .2s}
-.disclaimer-check.checked .checkmark::after{opacity:1}
-.disclaimer-check span{font-size:13px;font-weight:600;color:var(--br)}
+/* ============================================================
+   THEME B: AVC LUXURY
+   Dark warm, cream/gold accent, Cormorant + Playfair
+   ============================================================ */
+[data-theme="b"]{
+  --bg:#0a0a08;--bg2:#0f0f0c;--bg3:#151512;--bg4:#1c1c18;
+  --bd:#2a2a24;--bd2:#3a3a32;
+  --mt:#7a7a6e;--tx:#a8a898;--br:#d4d4c4;--wh:#f0efe6;
+  --ac:#c8a86e;--ac2:#b8944e;--acd:rgba(200,168,110,.06);--ac15:rgba(200,168,110,.15);
+  --chart-contrib:rgba(200,168,110,.6);--chart-interest:rgba(240,239,230,.5);
+  --chart-contrib-bg:rgba(200,168,110,.1);--chart-interest-bg:rgba(240,239,230,.08);
+  --R:4px;--Rs:3px;
+  --sans:'Inter',system-ui,sans-serif;
+  --disp:'Cormorant Garamond',Georgia,serif;
+  --heading:'Playfair Display',Georgia,serif;
+  --grid-line:rgba(255,255,255,.03);
+  --card-hover:rgba(200,168,110,.02);
+  --glow:rgba(200,168,110,.06);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100vh;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
+
+/* DISCLAIMER */
+.dov{position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(20px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;transition:opacity .4s}
+.dov.hidden{opacity:0;pointer-events:none}
+.dbox{max-width:620px;width:100%;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--R);padding:32px 28px;position:relative;overflow-y:auto;max-height:90vh}
+.dbox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--ac2))}
+.dtitle{font-family:var(--heading);font-size:22px;font-weight:600;color:var(--wh);text-align:center;margin-bottom:6px}
+.dsub{font-size:11px;color:var(--ac);font-weight:700;text-align:center;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px}
+.dtxt{font-size:13px;color:var(--tx);line-height:1.8;margin-bottom:20px}
+.dtxt b{color:var(--wh)}
+.dbul{margin:14px 0;padding:0;list-style:none}
+.dbul li{padding:5px 0 5px 20px;position:relative;font-size:13px;color:var(--tx);line-height:1.6}
+.dbul li::before{content:'▸';position:absolute;left:4px;top:5px;color:var(--ac);font-size:12px}
+.dbtn{display:block;width:100%;padding:13px;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);color:var(--mt);font-size:14px;font-weight:600;cursor:not-allowed;text-align:center;transition:all .3s;font-family:var(--sans)}
+.dbtn.ready{background:var(--ac);border-color:var(--ac);color:var(--bg);cursor:pointer}
+.dbtn.ready:hover{box-shadow:0 0 24px var(--glow)}
+.dchk{display:flex;align-items:center;gap:10px;margin-bottom:16px;cursor:pointer;user-select:none}
+.dchk input{display:none}
+.dchk .cm{width:18px;height:18px;border:2px solid var(--bd);border-radius:3px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.dchk.checked .cm{background:var(--ac);border-color:var(--ac)}
+.dchk .cm::after{content:'✓';color:var(--bg);font-size:13px;font-weight:700;opacity:0;transition:opacity .2s}
+.dchk.checked .cm::after{opacity:1}
+.dchk span{font-size:13px;font-weight:500;color:var(--br)}
+.ninput{background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);padding:10px 12px;font-size:14px;font-weight:500;color:var(--wh);width:100%;font-family:var(--sans);transition:border-color .2s}
+.ninput:hover,.ninput:focus{border-color:var(--ac);outline:none}
+.igrp{margin-bottom:12px}
+.igrp label{display:block;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--mt);margin-bottom:5px}
 
 /* HERO */
-.hero{position:relative;padding:56px 24px 44px;text-align:center;background:linear-gradient(135deg,rgba(0,255,136,.04) 0%,rgba(0,136,255,.03) 50%,var(--bg) 100%);border-bottom:1px solid var(--bd);z-index:1;overflow:hidden}
-.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 0%,rgba(0,255,136,.06) 0%,transparent 70%);pointer-events:none}
-.hero::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--ac),transparent)}
-.hero-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--ac);text-transform:uppercase;padding:5px 14px;border:1px solid var(--ac20);border-radius:3px;background:var(--acd);margin-bottom:16px}
-.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ac);box-shadow:0 0 8px var(--ac);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:400;color:var(--wh);letter-spacing:0px;margin-bottom:8px;position:relative;z-index:1;font-family:var(--sans)}
-.hero h1 .brand{font-family:'Playfair Display',Georgia,serif;font-weight:600;letter-spacing:-.5px}
-.hero h1 em{font-family:var(--disp);font-style:italic;color:var(--ac);font-weight:700}
-.hero>p{font-size:14px;color:var(--mt);max-width:560px;margin:0 auto;line-height:1.6}
-.hero-disclaimer{font-size:11px;color:var(--am);max-width:520px;margin:12px auto 0;line-height:1.5;padding:8px 14px;border:1px solid rgba(255,183,77,.15);border-radius:4px;background:var(--amd)}
+.hero{position:relative;padding:48px 24px 36px;text-align:center;border-bottom:1px solid var(--bd);overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,var(--ac15),transparent)}
+.htag{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--ac);text-transform:uppercase;margin-bottom:14px}
+.htag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ac);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:var(--heading);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:600;color:var(--wh);margin-bottom:8px}
+.hero h1 em{font-family:var(--disp);font-style:italic;color:var(--ac)}
+.hero>p{font-size:13px;color:var(--mt);max-width:500px;margin:0 auto}
+.hdiscl{font-size:10px;color:var(--mt);max-width:480px;margin:10px auto 0;padding:6px 12px;border:1px solid var(--bd);border-radius:var(--Rs);background:var(--bg3);opacity:.7}
 
 /* NAV */
-.nb{position:sticky;top:0;z-index:100;background:rgba(8,10,15,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);padding:0 16px}
-.ni{max-width:1440px;margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.nb{position:sticky;top:0;z-index:100;background:rgba(8,10,15,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);padding:0 16px}
+[data-theme="b"] .nb{background:rgba(10,10,8,.96)}
+.ni{max-width:1400px;margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
 .ni::-webkit-scrollbar{display:none}
-.nt{padding:12px 13px;font-size:12px;font-weight:600;color:var(--mt);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;user-select:none}
+.nt{padding:11px 14px;font-size:12px;font-weight:600;color:var(--mt);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;user-select:none}
 .nt:hover{color:var(--tx)}.nt.a{color:var(--ac);border-bottom-color:var(--ac)}
 
 /* CONTENT */
-.con{max-width:1440px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
-.sec{display:none;padding:28px 0;animation:fu .35s ease}.sec.a{display:block}
-@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.card{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--R);padding:20px;margin-bottom:16px;position:relative;overflow:hidden;word-wrap:break-word}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ac20),transparent)}
+.con{max-width:1400px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+.sec{display:none;padding:24px 0;animation:fu .3s ease}.sec.a{display:block}
+@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--R);padding:20px;margin-bottom:14px;transition:border-color .2s}
 .card:hover{border-color:var(--bd2)}
-.tl{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ac);margin-bottom:4px}
-.tl2{font-family:var(--disp);font-size:22px;font-weight:700;color:var(--wh);margin-bottom:6px}
-.ts{font-size:14px;color:var(--mt);margin-bottom:24px;line-height:1.6}
-.ct{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--br);margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.ct::before{content:'';width:3px;height:14px;background:var(--ac);border-radius:2px}
+.tl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ac);margin-bottom:4px}
+.tl2{font-family:var(--heading);font-size:20px;font-weight:600;color:var(--wh);margin-bottom:6px}
+.ts{font-size:13px;color:var(--mt);margin-bottom:20px}
+.ct{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--br);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ct::before{content:'';width:3px;height:12px;background:var(--ac);border-radius:2px}
 
 /* FORM CONTROLS */
-.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:24px}
-.sb{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--Rs);padding:16px;position:relative;overflow:hidden}
-.sb::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ac20),transparent)}
-.sb .sl{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt);margin-bottom:6px}
-.sb .sv{font-family:var(--disp);font-size:26px;font-weight:700}
-.sb .su{font-size:12px;color:var(--mt);margin-top:3px}
-.slider-group{margin-bottom:16px}
-.slider-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.slider-group{margin-bottom:14px}
+.slider-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
 .slider-label .sn{font-size:13px;font-weight:500;color:var(--tx)}
-.slider-label .sv2{font-family:var(--disp);font-size:18px;font-weight:700;color:var(--ac);min-width:100px;text-align:right}
+.slider-label .sv2{font-family:var(--disp);font-size:17px;font-weight:700;color:var(--ac);min-width:90px;text-align:right}
 input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:var(--bg4);outline:none;border:1px solid var(--bd)}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:3px;background:var(--ac);cursor:pointer;box-shadow:0 0 12px rgba(0,255,136,.3);border:2px solid var(--bg)}
-input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:3px;background:var(--ac);cursor:pointer;border:2px solid var(--bg)}
-.num-input{background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);padding:9px 12px;font-size:14px;font-weight:600;color:var(--wh);width:100%;font-family:var(--sans);transition:border-color .2s}
-.num-input:hover,.num-input:focus{border-color:var(--ac);outline:none}
-.input-group{margin-bottom:14px}
-.input-group label{display:block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);margin-bottom:5px}
-.sel{appearance:none;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--Rs);padding:9px 32px 9px 12px;font-size:13px;font-weight:500;color:var(--br);cursor:pointer;font-family:var(--sans);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%235b6585'%3E%3Cpath d='M5 7.5L0.5 2.5h9z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
-.sel:hover,.sel:focus{border-color:var(--ac);outline:none}
-.fl2{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt);margin-bottom:6px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:3px;background:var(--ac);cursor:pointer;border:2px solid var(--bg)}
 
 /* RESULTS */
-.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
-.res-card{background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);padding:16px;text-align:center;position:relative;overflow:hidden}
-.res-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px}
-.res-card.profit::after{background:var(--ac)}.res-card.revenue::after{background:var(--bl)}.res-card.cost::after{background:var(--am)}.res-card.neutral::after{background:var(--tx)}.res-card.staff::after{background:var(--pp)}
-.rc-label{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt);margin-bottom:6px}
-.rc-val{font-family:var(--disp);font-size:24px;font-weight:700}
-.rc-sub{font-size:11px;color:var(--mt);margin-top:3px}
-.profit .rc-val{color:var(--ac)}.revenue .rc-val{color:var(--bl)}.cost .rc-val{color:var(--am)}.neutral .rc-val{color:var(--br)}.staff .rc-val{color:var(--pp)}
+.rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+.rc{background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);padding:14px;text-align:center}
+.rc-l{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt);margin-bottom:5px}
+.rc-v{font-family:var(--disp);font-size:22px;font-weight:700;color:var(--ac)}
+.rc-s{font-size:11px;color:var(--mt);margin-top:3px}
 
-/* TABLES */
+/* CHART */
+.chart-wrap{position:relative;width:100%;height:320px;margin:16px 0}
+.chart-wrap canvas{width:100%!important;height:100%!important}
+
+/* TABLE */
 .tw{overflow-x:auto;border-radius:var(--Rs);border:1px solid var(--bd)}
-.bd-table{width:100%;border-collapse:collapse}
-.bd-table th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);padding:9px 10px;border-bottom:1px solid var(--bd);background:var(--bg4)}
-.bd-table td{padding:9px 10px;font-size:13px;border-bottom:1px solid var(--bd);font-variant-numeric:tabular-nums}
-.bd-table tr:hover{background:rgba(0,255,136,.02)}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);padding:8px 10px;border-bottom:1px solid var(--bd);background:var(--bg4)}
+.tbl td{padding:8px 10px;font-size:13px;border-bottom:1px solid var(--bd);font-variant-numeric:tabular-nums}
+.tbl tr:hover{background:var(--card-hover)}
 
-/* BARS */
-.bar{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.bar .lb{width:100px;font-size:12px;font-weight:600;color:var(--tx);text-align:right;flex-shrink:0}
-.bar .tk{flex:1;height:26px;background:var(--bg4);border-radius:4px;overflow:hidden;border:1px solid var(--bd)}
-.bar .fl{height:100%;border-radius:3px;transition:width .8s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;padding-left:10px;font-size:12px;font-weight:700;color:var(--bg);min-width:fit-content}
-
-/* PROFIT BAR */
-.profit-bar{height:32px;border-radius:4px;overflow:hidden;display:flex;border:1px solid var(--bd)}
-.pb-rev,.pb-cost{height:100%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
-
-/* CALC GRID */
-.calc-grid{display:grid;grid-template-columns:380px 1fr;gap:20px}
-.calc-grid>div{min-width:0;overflow-x:auto}
-
-/* CHART CANVAS */
-.chart-container{position:relative;width:100%;height:350px;margin-bottom:16px}
-.chart-container canvas{width:100%!important;height:100%!important}
-
-/* FR */
-.fr{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-.fc{padding:7px 14px;font-size:12px;font-weight:600;border-radius:4px;cursor:pointer;transition:all .2s;border:1px solid var(--bd);background:var(--bg3);color:var(--tx);user-select:none}
-.fc:hover{border-color:var(--ac);color:var(--br)}.fc.a{background:var(--ac);border-color:var(--ac);color:var(--bg)}
-
-/* MILESTONES */
-.milestone{padding:10px 14px;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);margin-bottom:6px;display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center}
-.milestone .m-icon{font-size:20px;text-align:center}
-.milestone .m-text{font-size:13px;color:var(--tx)}.milestone .m-text b{color:var(--wh)}
-.milestone .m-val{font-family:var(--disp);font-size:16px;font-weight:700;color:var(--ac);text-align:right}
+/* LAYOUT */
+.cg{display:grid;grid-template-columns:360px 1fr;gap:16px}
+.cg>div{min-width:0}
 
 /* INFO CARDS */
-.info-card{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--Rs);padding:20px;margin-bottom:12px;transition:border-color .2s}
-.info-card:hover{border-color:var(--bd2)}
-.info-card .ic-title{font-size:15px;font-weight:700;color:var(--wh);margin-bottom:8px}
-.info-card .ic-body{font-size:13px;color:var(--tx);line-height:1.8}
-.info-card .ic-body b{color:var(--br)}
-.info-card .ic-highlight{padding:10px 14px;background:var(--bg4);border-radius:var(--Rs);margin-top:10px;border-left:3px solid var(--ac);font-size:12px;color:var(--br);line-height:1.7}
-.info-card .ic-warn{padding:10px 14px;background:var(--amd);border-radius:var(--Rs);margin-top:10px;border-left:3px solid var(--am);font-size:12px;color:var(--tx);line-height:1.7}
+.ic{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--Rs);padding:18px;margin-bottom:10px}
+.ic:hover{border-color:var(--bd2)}
+.ic-t{font-size:15px;font-weight:600;color:var(--wh);margin-bottom:6px}
+.ic-b{font-size:13px;color:var(--tx);line-height:1.8}
+.ic-b b{color:var(--br)}
+.ic-hl{padding:10px 12px;background:var(--bg4);border-radius:var(--Rs);margin-top:8px;border-left:3px solid var(--ac);font-size:12px;color:var(--br);line-height:1.7}
 
-.mc{color:var(--ac)}.mgood{color:var(--ac)}.mok{color:var(--am)}.mbad{color:var(--rd)}
+/* MILESTONE */
+.ms{padding:8px 12px;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);margin-bottom:5px;display:grid;grid-template-columns:32px 1fr auto;gap:8px;align-items:center}
+.ms-i{font-size:16px;text-align:center}
+.ms-t{font-size:13px;color:var(--tx)}.ms-t b{color:var(--wh)}
+.ms-v{font-family:var(--disp);font-size:15px;font-weight:700;color:var(--ac);text-align:right}
+
+/* PROGRESS BAR */
+.pbar{height:32px;border-radius:var(--Rs);overflow:hidden;display:flex;border:1px solid var(--bd);margin-bottom:4px}
+.pbar>div{height:100%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+
+/* THEME SWITCHER */
+.theme-sw{position:fixed;bottom:20px;right:20px;z-index:200;display:flex;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--R);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.theme-sw button{padding:8px 16px;font-size:11px;font-weight:700;font-family:var(--sans);letter-spacing:.5px;border:none;cursor:pointer;transition:all .2s;background:transparent;color:var(--mt)}
+.theme-sw button.active{background:var(--ac);color:var(--bg)}
+.theme-sw button:hover:not(.active){color:var(--wh)}
+
+/* FOOTER */
+.ft{margin-top:32px;padding:24px;border-top:1px solid var(--bd);text-align:center}
+.ft .v{font-size:11px;color:var(--mt);margin-bottom:8px}
+.ft .d{font-size:10px;color:rgba(255,255,255,.2);line-height:1.8;max-width:600px;margin:0 auto}
 
 @media(max-width:768px){
-.hero{padding:32px 12px 24px}
-.hero h1{font-size:1.5rem}
+.hero{padding:28px 12px 20px}
 .con{padding:0 10px}
-.sec{padding:16px 0}
-.card{padding:14px;margin-bottom:12px}
-.sg{grid-template-columns:repeat(2,1fr)}
-.res-grid{grid-template-columns:repeat(2,1fr)}
-.calc-grid{grid-template-columns:1fr;gap:12px}
-.tl2{font-size:1.3rem}
-.ts{font-size:12px}
-.nb{padding:0 8px}
-.nt{padding:10px 12px;font-size:11px}
-.disclaimer-box{padding:24px 20px}
+.cg{grid-template-columns:1fr}
+.rg{grid-template-columns:repeat(2,1fr)}
+.chart-wrap{height:250px}
+.nb{padding:0 6px}
+.nt{padding:9px 10px;font-size:11px}
+.dbox{padding:20px 16px}
+.theme-sw{bottom:10px;right:10px}
 }
 </style>
 </head>
-<body>
+<body data-theme="a">
 
-<!-- DISCLAIMER OVERLAY -->
-<div class="disclaimer-overlay" id="disclaimerOverlay">
-<div class="disclaimer-box" style="max-width:660px;max-height:90vh;overflow-y:auto">
-<div class="disclaimer-icon">⚖️</div>
-<div class="disclaimer-title">Important Disclaimer</div>
-<div class="disclaimer-subtitle">Please Read Before Continuing</div>
-<div class="disclaimer-text">
+<!-- DISCLAIMER -->
+<div class="dov" id="dOv">
+<div class="dbox">
+<div class="dtitle">Important Disclaimer</div>
+<div class="dsub">Please Read Before Continuing</div>
+<div class="dtxt">
 <b>This website is not financial, legal, or investment advice.</b>
 <br><br>
 Everything on this site represents <b>my personal experiences, opinions, and what I would do for myself</b>. Your financial situation is unique — what works for me may not work for you.
-<ul class="disclaimer-bullets">
+<ul class="dbul">
 <li>No one can give you accurate financial advice over the internet or from a graph without understanding your complete situation</li>
 <li>All projections use simplified assumptions and historical averages — actual results will vary</li>
 <li>Past market performance does not guarantee future results</li>
 <li>Consult a qualified financial advisor, CPA, or attorney for advice specific to your situation</li>
 <li>This tool is for <b>informational and educational purposes only</b></li>
 </ul>
-<span style="color:var(--am);font-weight:600">People ask me all the time what I do with my money. This site is my answer — sharing what I've learned and what I personally would do. Take what's useful, leave what isn't.</span>
+<span style="color:var(--ac);font-weight:600">People ask me all the time what I do with my money. This site is my answer — sharing what I've learned and what I personally would do. Take what's useful, leave what isn't.</span>
 </div>
-
-<div style="border-top:1px solid var(--bd);padding-top:16px;margin-bottom:16px">
-<div style="font-size:12px;font-weight:700;color:var(--wh);margin-bottom:12px">To access this site, please provide your information:</div>
-<div class="input-group" style="margin-bottom:10px">
-<label style="display:block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);margin-bottom:5px">First and Last Name <span style="color:var(--rd)">*</span></label>
-<input type="text" class="num-input" id="dName" placeholder="Your first and last name" autocomplete="name" required>
+<div style="border-top:1px solid var(--bd);padding-top:14px;margin-bottom:14px">
+<div style="font-size:12px;font-weight:600;color:var(--wh);margin-bottom:10px">To access this site, please provide your information:</div>
+<div class="igrp"><label>First and Last Name <span style="color:#ff5252">*</span></label><input type="text" class="ninput" id="dName" placeholder="Your first and last name" autocomplete="name"></div>
+<div class="igrp"><label>Email Address <span style="color:#ff5252">*</span></label><input type="email" class="ninput" id="dEmail" placeholder="your@email.com" autocomplete="email"></div>
+<div id="dErr" style="display:none;font-size:12px;color:#ff5252;font-weight:600;margin-bottom:8px;padding:6px 10px;background:rgba(255,82,82,.08);border-radius:var(--Rs)"></div>
+<div style="font-size:10px;color:var(--mt);line-height:1.6;padding:6px 10px;background:var(--bg4);border-radius:var(--Rs);border-left:2px solid var(--ac)">
+<b style="color:var(--ac)">🔒 Why we ask:</b> This site contains personal financial perspectives that I've put a lot of thought into. I just want to know who's reading it — that's it. Your info is kept private and never sold or shared. Please use your real name and email so I know it's a real person on the other end. Disposable or temporary email addresses won't be accepted.
 </div>
-<div class="input-group" style="margin-bottom:10px">
-<label style="display:block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);margin-bottom:5px">Email Address <span style="color:var(--rd)">*</span></label>
-<input type="email" class="num-input" id="dEmail" placeholder="your@email.com" autocomplete="email" required>
 </div>
-<div id="dError" style="display:none;font-size:12px;color:var(--rd);font-weight:600;margin-bottom:10px;padding:8px 12px;background:var(--rdd);border-radius:var(--Rs)"></div>
-<div style="font-size:10px;color:var(--mt);line-height:1.6;margin-bottom:12px;padding:8px 10px;background:var(--bg4);border-radius:var(--Rs);border-left:2px solid var(--bl)">
-<b style="color:var(--bl)">🔒 Why we ask:</b> This site contains personal financial perspectives that I've put a lot of thought into. I just want to know who's reading it — that's it. Your info is kept private and never sold or shared. Please use your real name and email so I know it's a real person on the other end. Disposable or temporary email addresses won't be accepted.
+<div class="dchk" id="dChk"><input type="checkbox" id="dCb"><div class="cm"></div><span>I understand this is not financial or legal advice and is for educational purposes only</span></div>
+<button class="dbtn" id="dBtn">Please complete all fields above</button>
+<div id="dSub" style="display:none;text-align:center;padding:10px;font-size:13px;color:var(--ac)">⏳ Verifying...</div>
 </div>
 </div>
 
-<div class="disclaimer-check" id="disclaimerCheck">
-<input type="checkbox" id="disclaimerCb">
-<div class="checkmark"></div>
-<span>I understand this is not financial or legal advice and is for educational purposes only</span>
-</div>
-<button class="disclaimer-btn" id="disclaimerBtn">Please complete all fields above</button>
-<div id="dSubmitting" style="display:none;text-align:center;padding:12px;font-size:13px;color:var(--ac)">
-<span style="display:inline-block;animation:pulse 1s infinite">⏳</span> Verifying your information...
-</div>
-</div>
-</div>
-
-<!-- MAIN SITE (hidden until disclaimer accepted) -->
+<!-- MAIN SITE -->
 <div id="mainSite" style="display:none">
-
 <div class="hero">
-<div class="hero-tag">💰 financial intelligence platform</div>
-<h1><span class="brand">ABV</span> <em>Financial Intelligence</em></h1>
-<p>Retirement projections · Compound growth · Investment modeling · What I'd do</p>
-<div class="hero-disclaimer">⚠️ Educational purposes only. Not financial advice. I share what I personally do — your situation may be different. Consult a licensed professional.</div>
+<div class="htag">Financial Intelligence Platform</div>
+<h1>ABV <em>Financial Intelligence</em></h1>
+<p>Retirement projections · Compound growth · Investment modeling</p>
+<div class="hdiscl">⚠️ Educational purposes only. Not financial advice. Consult a licensed professional.</div>
 </div>
 
 <div class="nb"><div class="ni">
@@ -243,998 +237,384 @@ Everything on this site represents <b>my personal experiences, opinions, and wha
 
 <div class="con">
 
-<!-- TAB 1: INVESTMENT CALCULATOR -->
+<!-- CALCULATOR -->
 <div class="sec a" id="sec-calculator">
 <div class="tl">Compound Growth Engine</div>
 <h2 class="tl2">Investment Calculator</h2>
-<p class="ts">See how consistent investing + compound interest can grow your money over time. Adjust the sliders and watch the math do its thing.</p>
-
-<div class="calc-grid">
+<p class="ts">See how consistent investing and compound interest grow your money over time.</p>
+<div class="cg">
 <div>
 <div class="card">
 <div class="ct">Your Numbers</div>
-
-<div class="input-group">
-<label>Initial Investment ($)</label>
-<input type="number" class="num-input" id="calcInit" value="0" min="0" step="100" oninput="runCalc()">
+<div class="igrp"><label>Initial Investment ($)</label><input type="number" class="ninput" id="cI" value="0" min="0" step="100" oninput="runCalc()"></div>
+<div class="slider-group"><div class="slider-label"><span class="sn">Monthly Contribution</span><span class="sv2" id="cMV">$500</span></div><input type="range" id="cM" min="0" max="5000" value="500" step="25" oninput="runCalc()"></div>
+<div class="slider-group"><div class="slider-label"><span class="sn">Years to Grow</span><span class="sv2" id="cYV">30</span></div><input type="range" id="cY" min="1" max="50" value="30" step="1" oninput="runCalc()"></div>
+<div class="slider-group"><div class="slider-label"><span class="sn">Expected Annual Return</span><span class="sv2" id="cRV">10%</span></div><input type="range" id="cR" min="1" max="15" value="10" step="0.5" oninput="runCalc()"></div>
+<div style="padding:8px 12px;background:var(--bg4);border-radius:var(--Rs);margin-top:8px;border-left:3px solid var(--ac);font-size:11px;color:var(--mt);line-height:1.6">
+<b style="color:var(--ac)">About the return rate:</b> The S&P 500 has historically returned ~10% annually over 30+ years. Use 7-8% for a conservative inflation-adjusted estimate.
 </div>
-
-<div class="slider-group">
-<div class="slider-label">
-<span class="sn">Monthly Contribution</span>
-<span class="sv2" id="calcMonV">$500</span>
 </div>
-<input type="range" id="calcMon" min="0" max="5000" value="500" step="25" oninput="runCalc()">
 </div>
-
-<div class="slider-group">
-<div class="slider-label">
-<span class="sn">Years to Grow</span>
-<span class="sv2" id="calcYrsV">30</span>
-</div>
-<input type="range" id="calcYrs" min="1" max="50" value="30" step="1" oninput="runCalc()">
-</div>
-
-<div class="slider-group">
-<div class="slider-label">
-<span class="sn">Expected Annual Return</span>
-<span class="sv2" id="calcRetV">10%</span>
-</div>
-<input type="range" id="calcRet" min="1" max="15" value="10" step="0.5" oninput="runCalc()">
-</div>
-
-<div style="padding:10px 14px;background:var(--bg4);border-radius:var(--Rs);margin-top:12px;border-left:3px solid var(--bl)">
-<div style="font-size:11px;color:var(--mt);line-height:1.6">
-<b style="color:var(--bl)">About the return rate:</b> The S&P 500 has historically returned ~10% annually over long periods (30+ years). I personally use <b style="color:var(--wh)">10%</b> for long-term projections, which is the historical average. Some people use 7-8% to account for inflation (that's the "real return"). Be conservative if you want — better to be pleasantly surprised.
-</div>
+<div>
+<div id="calcRes"></div>
+<div class="chart-wrap"><canvas id="calcChart"></canvas></div>
+<div id="calcExtra"></div>
 </div>
 </div>
 </div>
 
-<div id="calcResults"></div>
-</div>
-</div>
-
-<!-- TAB 2: RETIREMENT PLANNER -->
+<!-- RETIREMENT -->
 <div class="sec" id="sec-retirement">
 <div class="tl">Retirement Planning</div>
 <h2 class="tl2">Retirement Planner</h2>
-<p class="ts">Enter your details and see if you're on track. This uses a conservative withdrawal rate to estimate retirement income.</p>
-
-<div class="calc-grid">
+<p class="ts">Enter your details and see if you're on track for retirement.</p>
+<div class="cg">
 <div>
 <div class="card">
 <div class="ct">Your Info</div>
-
-<div class="slider-group">
-<div class="slider-label">
-<span class="sn">Current Age</span>
-<span class="sv2" id="retAgeV">28</span>
-</div>
-<input type="range" id="retAge" min="18" max="65" value="28" step="1" oninput="runRet()">
-</div>
-
-<div class="slider-group">
-<div class="slider-label">
-<span class="sn">Retirement Age</span>
-<span class="sv2" id="retRetV">65</span>
-</div>
-<input type="range" id="retRet" min="50" max="80" value="65" step="1" oninput="runRet()">
-</div>
-
-<div class="input-group">
-<label>Current Retirement Savings ($)</label>
-<input type="number" class="num-input" id="retCur" value="0" min="0" step="1000" oninput="runRet()">
-</div>
-
-<div class="slider-group">
-<div class="slider-label">
-<span class="sn">Monthly Contribution</span>
-<span class="sv2" id="retMonV">$500</span>
-</div>
-<input type="range" id="retMon" min="0" max="5000" value="500" step="25" oninput="runRet()">
-</div>
-
-<div class="slider-group">
-<div class="slider-label">
-<span class="sn">Expected Annual Return</span>
-<span class="sv2" id="retReturnV">10%</span>
-</div>
-<input type="range" id="retReturn" min="4" max="14" value="10" step="0.5" oninput="runRet()">
-</div>
-
-<div class="slider-group">
-<div class="slider-label">
-<span class="sn">Withdrawal Rate</span>
-<span class="sv2" id="retWdV">4%</span>
-</div>
-<input type="range" id="retWd" min="2" max="8" value="4" step="0.5" oninput="runRet()">
-</div>
-
-<div style="padding:10px 14px;background:var(--bg4);border-radius:var(--Rs);margin-top:12px;border-left:3px solid var(--am)">
-<div style="font-size:11px;color:var(--mt);line-height:1.6">
-<b style="color:var(--am)">About withdrawal rates:</b> The <b style="color:var(--wh)">4% rule</b> is the standard guideline — withdraw 4% of your portfolio in year one, then adjust for inflation. Historically, this has sustained portfolios for 30+ years. I personally use 4% for planning because it's conservative and battle-tested.
+<div class="slider-group"><div class="slider-label"><span class="sn">Current Age</span><span class="sv2" id="rAV">28</span></div><input type="range" id="rA" min="18" max="65" value="28" step="1" oninput="runRet()"></div>
+<div class="slider-group"><div class="slider-label"><span class="sn">Retirement Age</span><span class="sv2" id="rRV">65</span></div><input type="range" id="rR" min="50" max="80" value="65" step="1" oninput="runRet()"></div>
+<div class="igrp"><label>Current Savings ($)</label><input type="number" class="ninput" id="rC" value="0" min="0" step="1000" oninput="runRet()"></div>
+<div class="slider-group"><div class="slider-label"><span class="sn">Monthly Contribution</span><span class="sv2" id="rMV">$500</span></div><input type="range" id="rM" min="0" max="5000" value="500" step="25" oninput="runRet()"></div>
+<div class="slider-group"><div class="slider-label"><span class="sn">Expected Annual Return</span><span class="sv2" id="rRetV">10%</span></div><input type="range" id="rRet" min="4" max="14" value="10" step="0.5" oninput="runRet()"></div>
+<div class="slider-group"><div class="slider-label"><span class="sn">Withdrawal Rate</span><span class="sv2" id="rWV">4%</span></div><input type="range" id="rW" min="2" max="8" value="4" step="0.5" oninput="runRet()"></div>
+<div style="padding:8px 12px;background:var(--bg4);border-radius:var(--Rs);margin-top:8px;border-left:3px solid var(--ac);font-size:11px;color:var(--mt);line-height:1.6">
+<b style="color:var(--ac)">The 4% rule:</b> Withdraw 4% of your portfolio in year one, then adjust for inflation. Historically sustains portfolios for 30+ years.
 </div>
 </div>
+</div>
+<div><div id="retRes"></div><div class="chart-wrap"><canvas id="retChart"></canvas></div></div>
 </div>
 </div>
 
-<div id="retResults"></div>
-</div>
-</div>
-
-<!-- TAB 3: YEAR BY YEAR -->
+<!-- YEAR BY YEAR -->
 <div class="sec" id="sec-breakdown">
 <div class="tl">Detailed Projections</div>
 <h2 class="tl2">Year-by-Year Breakdown</h2>
-<p class="ts">The full table so you can see exactly how compound interest builds your wealth each year.</p>
-
-<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:end">
-<div class="input-group" style="margin-bottom:0">
-<label>Initial Investment ($)</label>
-<input type="number" class="num-input" id="tblInit" value="0" min="0" step="100" oninput="runTable()" style="width:140px">
+<p class="ts">Full table showing exactly how compound interest builds your wealth each year.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:end">
+<div class="igrp" style="margin-bottom:0"><label>Initial ($)</label><input type="number" class="ninput" id="tI" value="0" min="0" step="100" oninput="runTbl()" style="width:120px"></div>
+<div class="igrp" style="margin-bottom:0"><label>Monthly ($)</label><input type="number" class="ninput" id="tM" value="500" min="0" step="25" oninput="runTbl()" style="width:110px"></div>
+<div class="igrp" style="margin-bottom:0"><label>Years</label><input type="number" class="ninput" id="tYr" value="30" min="1" max="50" oninput="runTbl()" style="width:70px"></div>
+<div class="igrp" style="margin-bottom:0"><label>Return %</label><input type="number" class="ninput" id="tRt" value="10" min="1" max="15" step="0.5" oninput="runTbl()" style="width:70px"></div>
 </div>
-<div class="input-group" style="margin-bottom:0">
-<label>Monthly ($)</label>
-<input type="number" class="num-input" id="tblMon" value="500" min="0" step="25" oninput="runTable()" style="width:120px">
-</div>
-<div class="input-group" style="margin-bottom:0">
-<label>Years</label>
-<input type="number" class="num-input" id="tblYrs" value="30" min="1" max="50" step="1" oninput="runTable()" style="width:80px">
-</div>
-<div class="input-group" style="margin-bottom:0">
-<label>Return %</label>
-<input type="number" class="num-input" id="tblRet" value="10" min="1" max="15" step="0.5" oninput="runTable()" style="width:80px">
-</div>
+<div id="tblRes"></div>
 </div>
 
-<div id="tblResults"></div>
-</div>
-
-<!-- TAB 4: COMPARE SCENARIOS -->
+<!-- COMPARE -->
 <div class="sec" id="sec-compare">
 <div class="tl">Scenario Analysis</div>
 <h2 class="tl2">Compare Scenarios</h2>
-<p class="ts">See side-by-side how different choices play out. Small differences in contributions or starting early can be massive over time.</p>
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
-<div class="card">
-<div class="ct" style="color:var(--ac)">Scenario A</div>
-<div class="input-group"><label>Initial ($)</label><input type="number" class="num-input" id="cmpAInit" value="0" oninput="runCmp()"></div>
-<div class="input-group"><label>Monthly ($)</label><input type="number" class="num-input" id="cmpAMon" value="300" oninput="runCmp()"></div>
-<div class="input-group"><label>Years</label><input type="number" class="num-input" id="cmpAYrs" value="30" min="1" max="50" oninput="runCmp()"></div>
-<div class="input-group"><label>Return %</label><input type="number" class="num-input" id="cmpARet" value="10" min="1" max="15" step="0.5" oninput="runCmp()"></div>
+<p class="ts">See how different choices play out side-by-side.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+<div class="card"><div class="ct">Scenario A</div>
+<div class="igrp"><label>Initial ($)</label><input type="number" class="ninput" id="aI" value="0" oninput="runCmp()"></div>
+<div class="igrp"><label>Monthly ($)</label><input type="number" class="ninput" id="aM" value="300" oninput="runCmp()"></div>
+<div class="igrp"><label>Years</label><input type="number" class="ninput" id="aY" value="30" min="1" max="50" oninput="runCmp()"></div>
+<div class="igrp"><label>Return %</label><input type="number" class="ninput" id="aR" value="10" min="1" max="15" step="0.5" oninput="runCmp()"></div>
 </div>
-<div class="card">
-<div class="ct" style="color:var(--am)">Scenario B</div>
-<div class="input-group"><label>Initial ($)</label><input type="number" class="num-input" id="cmpBInit" value="0" oninput="runCmp()"></div>
-<div class="input-group"><label>Monthly ($)</label><input type="number" class="num-input" id="cmpBMon" value="500" oninput="runCmp()"></div>
-<div class="input-group"><label>Years</label><input type="number" class="num-input" id="cmpBYrs" value="30" min="1" max="50" oninput="runCmp()"></div>
-<div class="input-group"><label>Return %</label><input type="number" class="num-input" id="cmpBRet" value="10" min="1" max="15" step="0.5" oninput="runCmp()"></div>
+<div class="card"><div class="ct">Scenario B</div>
+<div class="igrp"><label>Initial ($)</label><input type="number" class="ninput" id="bI" value="0" oninput="runCmp()"></div>
+<div class="igrp"><label>Monthly ($)</label><input type="number" class="ninput" id="bM" value="500" oninput="runCmp()"></div>
+<div class="igrp"><label>Years</label><input type="number" class="ninput" id="bY" value="30" min="1" max="50" oninput="runCmp()"></div>
+<div class="igrp"><label>Return %</label><input type="number" class="ninput" id="bR" value="10" min="1" max="15" step="0.5" oninput="runCmp()"></div>
 </div>
 </div>
-<div id="cmpResults"></div>
+<div id="cmpRes"></div>
+<div class="chart-wrap"><canvas id="cmpChart"></canvas></div>
 </div>
 
-<!-- TAB 5: ABE'S RULES -->
+<!-- RULES -->
 <div class="sec" id="sec-rules">
 <div class="tl">My Playbook</div>
 <h2 class="tl2">What I Personally Do</h2>
-<p class="ts">Again — not financial advice. This is literally just what I do and what I'd tell my friends if they asked. Your situation may be different.</p>
-
-<div id="rulesContent"></div>
+<p class="ts">Not financial advice. This is what I do and what I'd tell my friends if they asked.</p>
+<div id="rulesC"></div>
 </div>
 
-<!-- TAB 6: ACCOUNT TYPES -->
+<!-- ACCOUNTS -->
 <div class="sec" id="sec-accounts">
 <div class="tl">Educational Reference</div>
 <h2 class="tl2">Account Types Explained</h2>
-<p class="ts">A plain-English breakdown of the most common retirement and investment accounts. This is publicly available information — not advice on which to pick.</p>
-
-<div id="accountsContent"></div>
+<p class="ts">Plain-English breakdown of common retirement and investment accounts.</p>
+<div id="acctC"></div>
 </div>
 
 </div>
 
-<footer style="margin-top:40px;padding:32px;border-top:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.15);text-align:center">
-<div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:12px">ABV Financial Intelligence Platform V1.0 · Educational Use Only</div>
-<div style="font-size:11px;color:rgba(255,255,255,.25);line-height:1.8;max-width:700px;margin:0 auto 12px">This platform is for informational and educational purposes only. It is not financial, investment, tax, or legal advice. The creator is not a licensed financial advisor. All projections are estimates based on simplified assumptions and historical averages. Past performance does not guarantee future results. Consult a qualified professional before making financial decisions.</div>
-<div style="font-size:11px;color:rgba(255,255,255,.25);line-height:1.8">Built by Abe Varughese · "People asked, so I built it."</div>
+<footer class="ft">
+<div class="v">ABV Financial Intelligence Platform V2.0 · Educational Use Only</div>
+<div class="d">This platform is for informational and educational purposes only. It is not financial, investment, tax, or legal advice. All projections are estimates based on simplified assumptions. Past performance does not guarantee future results. Consult a qualified professional before making financial decisions.<br>Built by Abe Varughese</div>
 </footer>
+
+<!-- THEME SWITCHER -->
+<div class="theme-sw">
+<button class="active" id="thA" data-t="a">Style A</button>
+<button id="thB" data-t="b">Style B</button>
+</div>
 
 </div><!-- end mainSite -->
 
 <script>
 // ============================================================
-// DISCLAIMER + FORM SUBMISSION + IP CAPTURE
+// DISCLAIMER
 // ============================================================
-// Disposable/temporary email domains to reject
-const DISPOSABLE_DOMAINS=['mailinator.com','guerrillamail.com','tempmail.com','throwaway.email','10minutemail.com','trashmail.com','yopmail.com','sharklasers.com','guerrillamail.info','grr.la','guerrillamail.de','tmail.com','tempail.com','dispostable.com','mailnesia.com','maildrop.cc','discard.email','fakeinbox.com','emailondeck.com','getnada.com','temp-mail.org','mohmal.com','burnermail.io','inboxkitten.com','mailsac.com','harakirimail.com','mytemp.email','tempr.email','dropmail.me','emailfake.com','crazymailing.com','mailcatch.com','mintemail.com','tempmailo.com','emailtemporanee.com','tmpmail.net','tmpmail.org','tempm.com','bupmail.com','classicmail.co.nz','cool.fr.nf','courriel.fr.nf','disbox.net','disbox.org','ezehe.com','flufi.com','get1mail.com','getairmail.com','getmails.eu','girlmail.win','goemailgo.com','hotmails.com','imgof.com','irabops.com','koszmail.pl','kurzepost.de','mail-temporaire.com','mail-temporaire.fr','mailblocks.com','mailexpire.com','mailimate.com','mailmoat.com','mailnull.com','mailshell.com','mailtemp.info','meltmail.com','mobi.web.id','objectmail.com','onewaymail.com','promailt.com','rcpt.at','rejectmail.com','rtrtr.com','s0ny.net','safe-mail.net','safetymail.info','spam.la','spamavert.com','spambox.us','spamcero.com','spamex.com','spamfree24.info','spamfree24.net','spamfree24.org','spamgourmet.com','spamhole.com','spamify.com','spaminator.de','spamkiss.com','spammotel.com','spamslicer.com','spamspot.com','superrito.com','suremail.info','teleworm.us','tempemail.co.za','tempemail.net','tempinbox.com','tempmail.eu','tempmail2.com','tempomail.fr','temporaryemail.net','temporaryemail.us','temporaryforwarding.com','temporaryinbox.com','thanksnospam.info','thankyou2010.com','trash-amil.com','trash-mail.at','trash-mail.com','trash-mail.de','trash2009.com','trashdevil.com','trashdevil.de','trashmail.at','trashmail.com','trashmail.de','trashmail.me','trashmail.net','trashmailer.com','trashymail.com','trashymail.net','turual.com','twinmail.de','uggsrock.com','upliftnow.com','uplipht.com','venompen.com','veryreallmail.com','viditag.com','viewcastmedia.com','viewcastmedia.net','viewcastmedia.org','vomoto.com','vpn.st','vsimcard.com','vubby.com','wasteland.rfc822.org','webemail.me','weg-werf-email.de','wegwerf-emails.de','wegwerfadresse.de','wegwerfmail.de','wegwerfmail.info','wegwerfmail.net','wegwerfmail.org','wetrainbayarea.com','wetrainbayarea.org','wh4f.org','whatiaas.com','whatpaas.com','whyspam.me','wikidocuslice.com','wilemail.com','willhackforfood.biz','wilemail.com','xagloo.com','xemaps.com','xents.com','xjoi.com','xoxy.net','yapped.net','yeah.net','yep.it','yogamaven.com','yomail.info','yopmail.com','yopmail.fr','yordanmail.cf','yourdomain.com','ypmail.webarnak.fr.eu.org','yuurok.com','zehnminutenmail.de','zippymail.info','zoaxe.com','zoemail.org'];
+const DISPOSABLE=['mailinator.com','guerrillamail.com','tempmail.com','throwaway.email','10minutemail.com','yopmail.com','sharklasers.com','guerrillamail.info','maildrop.cc','discard.email','fakeinbox.com','getnada.com','temp-mail.org','mohmal.com','burnermail.io','tempmailo.com','dropmail.me','emailfake.com','trashmail.com','trashmail.de','trashmail.net','trashmail.me','guerrillamail.de','tempail.com','dispostable.com','mailnesia.com'];
+let userIP='unknown',ipData={};
+(async()=>{try{const r=await fetch('https://ipapi.co/json/');if(r.ok){ipData=await r.json();userIP=ipData.ip||'unknown'}}catch(e){try{const r2=await fetch('https://api.ipify.org?format=json');if(r2.ok){const d=await r2.json();userIP=d.ip||'unknown'}}catch(e2){}}})();
 
-let userIP='unknown';
-let ipData={};
+function isDisp(e){const d=e.split('@')[1]?.toLowerCase();return!d||DISPOSABLE.includes(d)}
+function isEmail(e){return/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e)}
+function isName(n){const t=n.trim();if(t.length<3||!t.includes(' ')||/\d/.test(t))return false;const p=t.split(/\s+/).filter(x=>x.length>0);return p.length>=2&&p[0].length>=2&&p[p.length-1].length>=2}
+function showErr(m){const e=document.getElementById('dErr');e.style.display='block';e.textContent=m}
+function hideErr(){document.getElementById('dErr').style.display='none'}
+function chkReady(){const n=document.getElementById('dName').value.trim(),e=document.getElementById('dEmail').value.trim(),c=document.getElementById('dChk').classList.contains('checked'),b=document.getElementById('dBtn');if(n&&e&&c){b.classList.add('ready');b.textContent='I understand — let me in'}else{b.classList.remove('ready');b.textContent=!n||!e?'Please complete all fields above':!c?'Please check the box above':'Please complete all fields above'}}
 
-// Fetch IP on page load
-(async function(){
-  try{
-    const r=await fetch('https://ipapi.co/json/');
-    if(r.ok){
-      ipData=await r.json();
-      userIP=ipData.ip||'unknown';
-    }
-  }catch(e){
-    try{
-      const r2=await fetch('https://api.ipify.org?format=json');
-      if(r2.ok){const d=await r2.json();userIP=d.ip||'unknown';}
-    }catch(e2){userIP='fetch-failed'}
-  }
-})();
-
-function isDisposableEmail(email){
-  const domain=email.split('@')[1]?.toLowerCase();
-  if(!domain)return true;
-  return DISPOSABLE_DOMAINS.includes(domain);
-}
-
-function isValidEmail(email){
-  // RFC 5322 simplified
-  const re=/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-  if(!re.test(email))return false;
-  const domain=email.split('@')[1];
-  if(!domain||!domain.includes('.'))return false;
-  const tld=domain.split('.').pop();
-  if(tld.length<2)return false;
-  return true;
-}
-
-function isValidName(name){
-  const trimmed=name.trim();
-  if(trimmed.length<3)return false;
-  // Must contain at least a space (first + last name)
-  if(!trimmed.includes(' '))return false;
-  // No numbers
-  if(/\d/.test(trimmed))return false;
-  // No special chars except hyphen, apostrophe, period
-  if(/[^a-zA-Z\s\-'.áàâäãåæçéèêëíìîïñóòôöõøúùûüýÿÁÀÂÄÃÅÆÇÉÈÊËÍÌÎÏÑÓÒÔÖÕØÚÙÛÜÝ]/.test(trimmed))return false;
-  // Check both parts have at least 2 chars
-  const parts=trimmed.split(/\s+/).filter(p=>p.length>0);
-  if(parts.length<2)return false;
-  if(parts[0].length<2||parts[parts.length-1].length<2)return false;
-  return true;
-}
-
-function showError(msg){
-  const el=document.getElementById('dError');
-  el.style.display='block';
-  el.textContent=msg;
-}
-
-function hideError(){
-  document.getElementById('dError').style.display='none';
-}
-
-function checkFormReady(){
-  const name=document.getElementById('dName').value.trim();
-  const email=document.getElementById('dEmail').value.trim();
-  const checked=document.getElementById('disclaimerCheck').classList.contains('checked');
-  const btn=document.getElementById('disclaimerBtn');
-
-  if(name&&email&&checked){
-    btn.classList.add('ready');
-    btn.textContent='I understand — let me in';
-  }else{
-    btn.classList.remove('ready');
-    if(!name||!email)btn.textContent='Please complete all fields above';
-    else if(!checked)btn.textContent='Please check the box above';
-    else btn.textContent='Please complete all fields above';
-  }
-}
-
-function toggleDisclaimer(){
-  const el=document.getElementById('disclaimerCheck');
-  el.classList.toggle('checked');
-  checkFormReady();
-}
-
-// Listen for input changes to update button state
 document.addEventListener('DOMContentLoaded',()=>{
-  ['dName','dEmail'].forEach(id=>{
-    document.getElementById(id)?.addEventListener('input',()=>{hideError();checkFormReady()});
-  });
-  // Checkbox click
-  document.getElementById('disclaimerCheck').addEventListener('click',function(e){
-    e.preventDefault();
-    toggleDisclaimer();
-  });
-  // Button click
-  document.getElementById('disclaimerBtn').addEventListener('click',function(){
-    acceptDisclaimer();
-  });
+  ['dName','dEmail'].forEach(id=>{document.getElementById(id)?.addEventListener('input',()=>{hideErr();chkReady()})});
+  document.getElementById('dChk').addEventListener('click',e=>{e.preventDefault();document.getElementById('dChk').classList.toggle('checked');chkReady()});
+  document.getElementById('dBtn').addEventListener('click',acceptD);
+  document.querySelectorAll('.theme-sw button').forEach(b=>{b.addEventListener('click',()=>setTheme(b.dataset.t))});
 });
 
-async function acceptDisclaimer(){
-  const name=document.getElementById('dName').value.trim();
-  const email=document.getElementById('dEmail').value.trim();
-  const checked=document.getElementById('disclaimerCheck').classList.contains('checked');
-
-  hideError();
-
-  // Validate
-  if(!name){showError('Please enter your full name.');return}
-  if(!isValidName(name)){showError('Please enter your real first and last name (letters only, no numbers or special characters).');return}
-  if(!email){showError('Please enter your email address.');return}
-  if(!isValidEmail(email)){showError('Please enter a valid email address.');return}
-  if(isDisposableEmail(email)){showError('Temporary or disposable email addresses are not accepted. Please use a real email address.');return}
-  if(!checked){showError('Please check the acknowledgment box to continue.');return}
-
-  // Show loading
-  document.getElementById('disclaimerBtn').style.display='none';
-  document.getElementById('dSubmitting').style.display='block';
-
-  // Gather metadata
-  const timestamp=new Date().toISOString();
-  const timezone=Intl.DateTimeFormat().resolvedOptions().timeZone||'unknown';
-  const screenRes=window.screen.width+'x'+window.screen.height;
-  const vpnNote=ipData.org?(ipData.org.toLowerCase().includes('vpn')||ipData.org.toLowerCase().includes('proxy')||ipData.org.toLowerCase().includes('hosting')?'⚠️ VPN/PROXY':'Clean'):'N/A';
-
-  // Build compact metadata string
-  const meta=[userIP,'|',ipData.city||'?',ipData.region||'?',ipData.country_name||'?','|ISP:',ipData.org||'?','|',vpnNote,'|TZ:',timezone,'|',screenRes].join(' ');
-
-  // ================================================================
-  // SUBMISSION: Using Formspree (free, reliable, no CORS issues)
-  // To activate: sign up at formspree.io, create a form pointed to
-  // abv454@pm.me, and replace YOUR_FORM_ID below.
-  // Until then, submissions are stored in console log as backup.
-  // ================================================================
-  const FORMSPREE_ID='YOUR_FORM_ID'; // ← REPLACE THIS
-
-  const payload={
-    name:name,
-    email:email,
-    ip_and_metadata:meta,
-    timestamp:timestamp,
-    _replyto:email,
-    _subject:'🔔 ABV Financial Intel — New Access: '+name
-  };
-
-  // Log to console as immediate backup (always works)
-  console.log('📋 NEW SUBMISSION:',JSON.stringify(payload,null,2));
-
-  // Submit to Formspree if configured
-  if(FORMSPREE_ID!=='YOUR_FORM_ID'){
-    try{
-      fetch('https://formspree.io/f/'+FORMSPREE_ID,{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body:JSON.stringify(payload)
-      }).catch(()=>{});
-    }catch(e){}
-  }
-
-  // Let them in — submission is fire-and-forget, never blocks entry
-  setTimeout(()=>{
-    document.getElementById('disclaimerOverlay').classList.add('hidden');
-    document.getElementById('mainSite').style.display='block';
-    setTimeout(()=>{runCalc();runRet();runTable();runCmp();buildRules();buildAccounts()},100);
-  },1200);
+async function acceptD(){
+  const n=document.getElementById('dName').value.trim(),e=document.getElementById('dEmail').value.trim(),c=document.getElementById('dChk').classList.contains('checked');
+  hideErr();
+  if(!n){showErr('Please enter your first and last name.');return}
+  if(!isName(n)){showErr('Please enter your real first and last name.');return}
+  if(!e){showErr('Please enter your email address.');return}
+  if(!isEmail(e)){showErr('Please enter a valid email address.');return}
+  if(isDisp(e)){showErr('Temporary email addresses are not accepted.');return}
+  if(!c){showErr('Please check the acknowledgment box.');return}
+  document.getElementById('dBtn').style.display='none';
+  document.getElementById('dSub').style.display='block';
+  const meta=[userIP,'|',ipData.city||'?',ipData.region||'?',ipData.country_name||'?','|ISP:',ipData.org||'?','|TZ:',Intl.DateTimeFormat().resolvedOptions().timeZone||'?'].join(' ');
+  const payload={name:n,email:e,ip_and_metadata:meta,timestamp:new Date().toISOString(),_replyto:e,_subject:'🔔 ABV Financial Intel — '+n};
+  console.log('📋 SUBMISSION:',JSON.stringify(payload,null,2));
+  const FID='YOUR_FORM_ID';
+  if(FID!=='YOUR_FORM_ID'){try{fetch('https://formspree.io/f/'+FID,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)}).catch(()=>{})}catch(e){}}
+  setTimeout(()=>{document.getElementById('dOv').classList.add('hidden');document.getElementById('mainSite').style.display='block';setTimeout(()=>{runCalc();runRet();runTbl();runCmp();buildRules();buildAccts()},100)},1200);
 }
+
+// ============================================================
+// THEME SWITCHER
+// ============================================================
+function setTheme(t){
+  document.body.setAttribute('data-theme',t);
+  document.querySelectorAll('.theme-sw button').forEach(b=>{b.classList.toggle('active',b.dataset.t===t)});
+  try{localStorage.setItem('abv-theme',t)}catch(e){}
+  // Redraw charts with new colors
+  setTimeout(()=>{runCalc();runRet();runCmp()},50);
+}
+// Restore saved theme
+try{const saved=localStorage.getItem('abv-theme');if(saved)setTheme(saved)}catch(e){}
 
 // ============================================================
 // NAV
 // ============================================================
-document.querySelectorAll('.nt').forEach(t=>{
-  t.addEventListener('click',()=>{
-    document.querySelectorAll('.nt').forEach(x=>x.classList.remove('a'));
-    document.querySelectorAll('.sec').forEach(x=>x.classList.remove('a'));
-    t.classList.add('a');
-    document.getElementById('sec-'+t.dataset.s).classList.add('a');
-  });
-});
+document.querySelectorAll('.nt').forEach(t=>{t.addEventListener('click',()=>{document.querySelectorAll('.nt').forEach(x=>x.classList.remove('a'));document.querySelectorAll('.sec').forEach(x=>x.classList.remove('a'));t.classList.add('a');document.getElementById('sec-'+t.dataset.s).classList.add('a')})});
 
 // ============================================================
 // UTILITY
 // ============================================================
 const $f=v=>'$'+Math.round(v).toLocaleString('en-US');
 const $k=v=>{if(Math.abs(v)>=1e6)return(v<0?'-':'')+'$'+(Math.abs(v)/1e6).toFixed(2)+'M';if(Math.abs(v)>=1e3)return(v<0?'-':'')+'$'+(Math.abs(v)/1e3).toFixed(0)+'K';return'$'+v.toFixed(0)};
-const pct=v=>v.toFixed(1)+'%';
 
 // ============================================================
-// CORE COMPOUND INTEREST CALCULATION
-// Future Value = P(1+r)^n + PMT × [((1+r)^n - 1) / r]
-// Where:
-//   P = initial principal
-//   r = monthly interest rate (annual / 12)
-//   n = total months
-//   PMT = monthly contribution
-// This is the standard future value formula used by every financial calculator.
+// CORE MATH
+// FV = P(1+r)^n + PMT × [((1+r)^n - 1) / r]
 // ============================================================
-function calcCompound(principal,monthly,annualRate,years){
-  const monthlyRate=annualRate/100/12;
-  const months=years*12;
-  // Edge case: 0% return
-  if(annualRate===0){
-    return{
-      finalBalance:principal+monthly*months,
-      totalContributions:principal+monthly*months,
-      totalInterest:0
-    };
-  }
-  // Future value of lump sum
-  const fvPrincipal=principal*Math.pow(1+monthlyRate,months);
-  // Future value of annuity (monthly contributions)
-  const fvAnnuity=monthly*((Math.pow(1+monthlyRate,months)-1)/monthlyRate);
-  const finalBalance=fvPrincipal+fvAnnuity;
-  const totalContributions=principal+monthly*months;
-  const totalInterest=finalBalance-totalContributions;
-  return{finalBalance,totalContributions,totalInterest};
+function calcFV(P,PMT,rate,yrs){
+  const r=rate/100/12,n=yrs*12;
+  if(rate===0)return{bal:P+PMT*n,contrib:P+PMT*n,interest:0};
+  const fvP=P*Math.pow(1+r,n),fvA=PMT*((Math.pow(1+r,n)-1)/r),bal=fvP+fvA,contrib=P+PMT*n;
+  return{bal,contrib,interest:bal-contrib};
+}
+function yearByYear(P,PMT,rate,yrs){
+  const r=rate/100/12;let bal=P,tc=P,data=[];
+  for(let y=1;y<=yrs;y++){let yi=0,yc=0;for(let m=0;m<12;m++){const i=bal*r;yi+=i;bal+=i+PMT;yc+=PMT}tc+=yc;data.push({yr:y,bal,contrib:tc,interest:bal-tc,yi,yc})}return data;
 }
 
-// Year-by-year breakdown: iterates month by month for accuracy
-function calcYearByYear(principal,monthly,annualRate,years){
-  const monthlyRate=annualRate/100/12;
-  let balance=principal;
-  let totalContrib=principal;
-  let yearData=[];
-  for(let y=1;y<=years;y++){
-    let yearStart=balance;
-    let yearContrib=0;
-    let yearInterest=0;
-    for(let m=1;m<=12;m++){
-      const interest=balance*monthlyRate;
-      yearInterest+=interest;
-      balance+=interest+monthly;
-      yearContrib+=monthly;
-    }
-    totalContrib+=yearContrib;
-    yearData.push({
-      year:y,
-      startBalance:yearStart,
-      contributions:yearContrib,
-      interest:yearInterest,
-      endBalance:balance,
-      totalContributions:totalContrib,
-      totalInterest:balance-totalContrib
-    });
-  }
-  return yearData;
+// ============================================================
+// CHART HELPERS
+// ============================================================
+let calcChartObj=null,retChartObj=null,cmpChartObj=null;
+function getChartColors(){
+  const s=getComputedStyle(document.body);
+  return{contrib:s.getPropertyValue('--chart-contrib').trim(),interest:s.getPropertyValue('--chart-interest').trim(),contribBg:s.getPropertyValue('--chart-contrib-bg').trim(),interestBg:s.getPropertyValue('--chart-interest-bg').trim(),grid:s.getPropertyValue('--grid-line').trim(),text:s.getPropertyValue('--mt').trim(),white:s.getPropertyValue('--wh').trim()};
+}
+function makeAreaChart(canvasId,labels,contribData,totalData,existingChart){
+  if(existingChart){existingChart.destroy()}
+  const c=getChartColors();
+  const ctx=document.getElementById(canvasId);
+  if(!ctx)return null;
+  return new Chart(ctx,{type:'line',data:{labels,datasets:[
+    {label:'Total Balance',data:totalData,borderColor:c.interest,backgroundColor:c.interestBg,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},
+    {label:'Total Contributed',data:contribData,borderColor:c.contrib,backgroundColor:c.contribBg,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2}
+  ]},options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:c.text,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:c.white,bodyColor:c.text,padding:12,cornerRadius:6,callbacks:{label:ctx=>ctx.dataset.label+': '+$f(ctx.parsed.y)}}},scales:{x:{ticks:{color:c.text,font:{size:10},maxTicksLimit:10},grid:{color:c.grid}},y:{ticks:{color:c.text,font:{size:10},callback:v=>$k(v)},grid:{color:c.grid}}}}});
 }
 
 // ============================================================
 // TAB 1: INVESTMENT CALCULATOR
 // ============================================================
 function runCalc(){
-  const init=+document.getElementById('calcInit').value||0;
-  const mon=+document.getElementById('calcMon').value;
-  const yrs=+document.getElementById('calcYrs').value;
-  const ret=+document.getElementById('calcRet').value;
+  const P=+document.getElementById('cI').value||0,PMT=+document.getElementById('cM').value,Y=+document.getElementById('cY').value,R=+document.getElementById('cR').value;
+  document.getElementById('cMV').textContent=$f(PMT);document.getElementById('cYV').textContent=Y;document.getElementById('cRV').textContent=R+'%';
+  const res=calcFV(P,PMT,R,Y),yd=yearByYear(P,PMT,R,Y);
+  const cPct=res.bal>0?(res.contrib/res.bal*100):0,iPct=res.bal>0?(res.interest/res.bal*100):0;
+  let ms=[];[100000,250000,500000,1000000,2000000,5000000].forEach(t=>{const h=yd.find(y=>y.bal>=t);if(h)ms.push({t,yr:h.yr})});
+  const wait=calcFV(P,PMT,R,Math.max(Y-5,1)),cost=res.bal-wait.bal;
 
-  document.getElementById('calcMonV').textContent=$f(mon);
-  document.getElementById('calcYrsV').textContent=yrs;
-  document.getElementById('calcRetV').textContent=ret+'%';
-
-  const r=calcCompound(init,mon,ret,yrs);
-  const yearData=calcYearByYear(init,mon,ret,yrs);
-
-  // Contribution vs interest percentages
-  const contribPct=r.finalBalance>0?(r.totalContributions/r.finalBalance*100):0;
-  const interestPct=r.finalBalance>0?(r.totalInterest/r.finalBalance*100):0;
-
-  // Milestones
-  let milestones=[];
-  const targets=[100000,250000,500000,1000000,2000000,5000000,10000000];
-  targets.forEach(t=>{
-    const hit=yearData.find(y=>y.endBalance>=t);
-    if(hit)milestones.push({target:t,year:hit.year});
-  });
-
-  // What if you waited 5 years?
-  const waitResult=calcCompound(init,mon,ret,Math.max(yrs-5,1));
-  const costOfWaiting=r.finalBalance-waitResult.finalBalance;
-
-  let h='';
-
-  // Summary cards
-  h+=`<div class="card" style="border-color:var(--ac20)">
-  <div class="ct">Projection Results</div>
-  <div class="res-grid">
-  <div class="res-card profit"><div class="rc-label">Future Balance</div><div class="rc-val">${$f(r.finalBalance)}</div><div class="rc-sub">after ${yrs} years</div></div>
-  <div class="res-card revenue"><div class="rc-label">Total Contributed</div><div class="rc-val">${$f(r.totalContributions)}</div><div class="rc-sub">${$f(init)} initial + ${$f(mon*yrs*12)} monthly</div></div>
-  <div class="res-card staff"><div class="rc-label">Interest Earned</div><div class="rc-val">${$f(r.totalInterest)}</div><div class="rc-sub">${interestPct.toFixed(1)}% of total</div></div>
-  <div class="res-card neutral"><div class="rc-label">Growth Multiple</div><div class="rc-val">${r.totalContributions>0?(r.finalBalance/r.totalContributions).toFixed(1):'0'}x</div><div class="rc-sub">your money multiplied</div></div>
+  let h=`<div class="rg">
+  <div class="rc"><div class="rc-l">Future Balance</div><div class="rc-v">${$f(res.bal)}</div><div class="rc-s">after ${Y} years</div></div>
+  <div class="rc"><div class="rc-l">Total Contributed</div><div class="rc-v" style="color:var(--br)">${$f(res.contrib)}</div><div class="rc-s">${$f(P)} initial + ${$f(PMT*Y*12)} monthly</div></div>
+  <div class="rc"><div class="rc-l">Interest Earned</div><div class="rc-v">${$f(res.interest)}</div><div class="rc-s">${iPct.toFixed(1)}% of total</div></div>
+  <div class="rc"><div class="rc-l">Growth Multiple</div><div class="rc-v" style="color:var(--br)">${res.contrib>0?(res.bal/res.contrib).toFixed(1):'0'}x</div><div class="rc-s">your money multiplied</div></div>
   </div>
+  <div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">Contributions vs. Compound Interest</div>
+  <div class="pbar"><div style="width:${cPct}%;background:var(--chart-contrib);color:var(--bg)">${cPct>10?'Contributed '+cPct.toFixed(0)+'%':''}</div><div style="width:${iPct}%;background:var(--ac);color:var(--bg)">${iPct>10?'Interest '+iPct.toFixed(0)+'%':''}</div></div>
+  <div style="font-size:11px;color:var(--mt);margin-bottom:8px">The green portion is money earned entirely through compound interest.</div>`;
+  document.getElementById('calcRes').innerHTML=h;
 
-  <div class="fl2">Your Money vs. Compound Interest</div>
-  <div class="profit-bar" style="height:40px;margin-bottom:4px">
-  <div class="pb-cost" style="width:${contribPct}%;background:var(--bl);color:var(--bg)">${contribPct>8?'Contributions '+contribPct.toFixed(0)+'%':''}</div>
-  <div class="pb-rev" style="width:${interestPct}%;background:var(--ac);color:var(--bg)">${interestPct>8?'Interest '+interestPct.toFixed(0)+'%':''}</div>
-  </div>
-  <div style="font-size:11px;color:var(--mt);margin-bottom:16px">The green portion is money you <b style="color:var(--ac)">never contributed</b> — it was earned entirely through compound interest.</div>
+  // Chart
+  const labels=yd.map(y=>'Year '+y.yr),contD=yd.map(y=>y.contrib),totD=yd.map(y=>y.bal);
+  calcChartObj=makeAreaChart('calcChart',labels,contD,totD,calcChartObj);
 
-  ${milestones.length?`<div class="fl2" style="margin-top:16px">Milestones</div>${milestones.map(m=>`<div class="milestone"><div class="m-icon">${m.target>=1000000?'🏆':'🎯'}</div><div class="m-text">Hit <b>${$f(m.target)}</b></div><div class="m-val">Year ${m.year}</div></div>`).join('')}`:''}
-
-  ${yrs>5?`<div style="margin-top:16px;padding:14px;background:var(--rdd);border:1px solid rgba(255,82,82,.15);border-radius:var(--Rs)">
-  <div style="font-size:12px;font-weight:700;color:var(--rd);margin-bottom:4px">⏰ Cost of Waiting 5 Years</div>
-  <div style="font-size:13px;color:var(--tx);line-height:1.6">If you waited 5 years to start (investing for ${yrs-5} years instead of ${yrs}), you'd end up with <b style="color:var(--wh)">${$f(waitResult.finalBalance)}</b> — that's <b style="color:var(--rd)">${$f(costOfWaiting)} less</b>. Time is your most powerful asset.</div>
-  </div>`:''}
-  </div>`;
-
-  // Growth chart (simple bar representation)
-  const sampleYears=yearData.filter((_,i)=>{
-    if(yrs<=10)return true;
-    if(yrs<=20)return (i+1)%2===0||i===0||i===yearData.length-1;
-    return (i+1)%5===0||i===0||i===yearData.length-1;
-  });
-  const maxBal=Math.max(...sampleYears.map(y=>y.endBalance));
-
-  h+=`<div class="card"><div class="ct">Growth Over Time</div>`;
-  sampleYears.forEach(y=>{
-    const pctBar=(y.endBalance/maxBal*100).toFixed(0);
-    const contribBar=(y.totalContributions/maxBal*100).toFixed(0);
-    h+=`<div style="display:grid;grid-template-columns:50px 1fr 110px;gap:8px;align-items:center;padding:4px 0">
-    <span style="font-size:12px;color:var(--mt);text-align:right">Yr ${y.year}</span>
-    <div style="position:relative;height:24px;background:var(--bg4);border-radius:3px;border:1px solid var(--bd);overflow:hidden">
-    <div style="position:absolute;left:0;top:0;height:100%;width:${pctBar}%;background:var(--ac);border-radius:3px;opacity:.3"></div>
-    <div style="position:absolute;left:0;top:0;height:100%;width:${contribBar}%;background:var(--bl);border-radius:3px;opacity:.5"></div>
-    </div>
-    <span style="font-family:var(--disp);font-size:14px;font-weight:700;color:var(--ac);text-align:right">${$k(y.endBalance)}</span>
-    </div>`;
-  });
-  h+=`<div style="display:flex;gap:16px;margin-top:8px;font-size:11px;color:var(--mt)">
-  <span><span style="display:inline-block;width:10px;height:10px;background:var(--bl);border-radius:2px;opacity:.5;margin-right:4px"></span>Contributions</span>
-  <span><span style="display:inline-block;width:10px;height:10px;background:var(--ac);border-radius:2px;opacity:.3;margin-right:4px"></span>Total (incl. interest)</span>
-  </div></div>`;
-
-  document.getElementById('calcResults').innerHTML=h;
+  // Extra: milestones + cost of waiting
+  let ex='';
+  if(ms.length){ex+=`<div style="margin-top:12px"><div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt);margin-bottom:6px">Milestones</div>${ms.map(m=>`<div class="ms"><div class="ms-i">${m.t>=1e6?'🏆':'🎯'}</div><div class="ms-t">Hit <b>${$f(m.t)}</b></div><div class="ms-v">Year ${m.yr}</div></div>`).join('')}</div>`}
+  if(Y>5){ex+=`<div style="margin-top:10px;padding:10px 12px;background:rgba(255,82,82,.05);border:1px solid rgba(255,82,82,.1);border-radius:var(--Rs)"><div style="font-size:11px;font-weight:700;color:#ff5252;margin-bottom:3px">⏰ Cost of Waiting 5 Years</div><div style="font-size:12px;color:var(--tx)">Investing for ${Y-5} years instead: <b style="color:var(--wh)">${$f(wait.bal)}</b> — <b style="color:#ff5252">${$f(cost)} less</b>.</div></div>`}
+  document.getElementById('calcExtra').innerHTML=ex;
 }
 
 // ============================================================
 // TAB 2: RETIREMENT PLANNER
 // ============================================================
 function runRet(){
-  const age=+document.getElementById('retAge').value;
-  const retAge=+document.getElementById('retRet').value;
-  const cur=+document.getElementById('retCur').value||0;
-  const mon=+document.getElementById('retMon').value;
-  const ret=+document.getElementById('retReturn').value;
-  const wd=+document.getElementById('retWd').value;
+  const age=+document.getElementById('rA').value,rAge=+document.getElementById('rR').value,cur=+document.getElementById('rC').value||0,mon=+document.getElementById('rM').value,ret=+document.getElementById('rRet').value,wd=+document.getElementById('rW').value;
+  document.getElementById('rAV').textContent=age;document.getElementById('rRV').textContent=rAge;document.getElementById('rMV').textContent=$f(mon);document.getElementById('rRetV').textContent=ret+'%';document.getElementById('rWV').textContent=wd+'%';
+  const yrs=Math.max(rAge-age,1),res=calcFV(cur,mon,ret,yrs),annInc=res.bal*(wd/100),moInc=annInc/12;
+  let dur='Indefinite';
+  if(wd>=ret){let b=res.bal,y=0;const mw=annInc/12,mr=ret/100/12;while(b>0&&y<100){for(let m=0;m<12;m++){b=b*(1+mr)-mw;if(b<=0)break}y++}dur=y>=100?'100+':y.toString()}
+  const mr2=ret/100/12,n2=yrs*12;
+  let need1M=0;if(mr2>0&&n2>0){const fvP=cur*Math.pow(1+mr2,n2),af=(Math.pow(1+mr2,n2)-1)/mr2;need1M=Math.max((1e6-fvP)/af,0)}
+  const yd=yearByYear(cur,mon,ret,yrs);
 
-  document.getElementById('retAgeV').textContent=age;
-  document.getElementById('retRetV').textContent=retAge;
-  document.getElementById('retMonV').textContent=$f(mon);
-  document.getElementById('retReturnV').textContent=ret+'%';
-  document.getElementById('retWdV').textContent=wd+'%';
-
-  const yrs=Math.max(retAge-age,1);
-  const r=calcCompound(cur,mon,ret,yrs);
-
-  // Annual income at retirement using withdrawal rate
-  const annualIncome=r.finalBalance*(wd/100);
-  const monthlyIncome=annualIncome/12;
-
-  // How long will it last? (simplified: assuming portfolio grows at ret% and withdrawals at wd%)
-  // If withdrawal rate < expected return, it theoretically lasts forever
-  // Otherwise, we compute depletion
-  let depletionYears='30+';
-  if(wd>=ret){
-    // Will deplete: approximate with iterative calc
-    let bal=r.finalBalance;
-    let yr=0;
-    const monthlyW=annualIncome/12;
-    const mr=ret/100/12;
-    while(bal>0&&yr<100){
-      for(let m=0;m<12;m++){
-        bal=bal*(1+mr)-monthlyW;
-        if(bal<=0)break;
-      }
-      yr++;
-    }
-    depletionYears=yr>=100?'100+':yr.toString();
-  }else{
-    // Sustainable — portfolio keeps growing
-    depletionYears='Indefinite';
-  }
-
-  // Benchmark: need $1M? $2M?
-  const neededFor50k=50000/(wd/100);
-  const neededFor75k=75000/(wd/100);
-  const neededFor100k=100000/(wd/100);
-
-  // Monthly needed to hit $1M
-  const targetMillion=1000000;
-  // Solve: PMT = (FV - P(1+r)^n) / [((1+r)^n - 1)/r]
-  const mr=ret/100/12;
-  const n=yrs*12;
-  let monNeeded1M=0;
-  if(mr>0&&n>0){
-    const fvPrincipal=cur*Math.pow(1+mr,n);
-    const annuityFactor=(Math.pow(1+mr,n)-1)/mr;
-    monNeeded1M=Math.max((targetMillion-fvPrincipal)/annuityFactor,0);
-  }
-
-  let h='';
-  h+=`<div class="card" style="border-color:var(--ac20)">
-  <div class="ct">Retirement Projection</div>
-  <div class="res-grid">
-  <div class="res-card profit"><div class="rc-label">Nest Egg at ${retAge}</div><div class="rc-val">${$f(r.finalBalance)}</div><div class="rc-sub">${yrs} years of growth</div></div>
-  <div class="res-card revenue"><div class="rc-label">Annual Income</div><div class="rc-val">${$f(annualIncome)}</div><div class="rc-sub">${wd}% withdrawal</div></div>
-  <div class="res-card staff"><div class="rc-label">Monthly Income</div><div class="rc-val">${$f(monthlyIncome)}</div><div class="rc-sub">in retirement</div></div>
-  <div class="res-card neutral"><div class="rc-label">Portfolio Duration</div><div class="rc-val">${depletionYears}</div><div class="rc-sub">years of withdrawals</div></div>
-  </div>
-
-  <div style="margin-top:16px;padding:14px;background:var(--bg4);border-radius:var(--Rs);border-left:3px solid var(--ac)">
-  <div style="font-size:12px;font-weight:700;color:var(--ac);margin-bottom:8px">What Your Nest Egg Buys You</div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
-  <div style="padding:10px;background:var(--bg3);border-radius:var(--Rs);border:1px solid var(--bd)">
-  <div style="font-size:10px;color:var(--mt);text-transform:uppercase;letter-spacing:1px">Monthly Income</div>
-  <div style="font-family:var(--disp);font-size:22px;font-weight:700;color:var(--wh);margin-top:4px">${$f(monthlyIncome)}/mo</div>
-  <div style="font-size:11px;color:var(--mt);margin-top:2px">${$f(annualIncome)}/year at ${wd}%</div>
-  </div>
-  <div style="padding:10px;background:var(--bg3);border-radius:var(--Rs);border:1px solid var(--bd)">
-  <div style="font-size:10px;color:var(--mt);text-transform:uppercase;letter-spacing:1px">Total Contributed</div>
-  <div style="font-family:var(--disp);font-size:22px;font-weight:700;color:var(--bl);margin-top:4px">${$f(r.totalContributions)}</div>
-  <div style="font-size:11px;color:var(--mt);margin-top:2px">your actual money in</div>
-  </div>
-  <div style="padding:10px;background:var(--bg3);border-radius:var(--Rs);border:1px solid var(--bd)">
-  <div style="font-size:10px;color:var(--mt);text-transform:uppercase;letter-spacing:1px">Interest Earned</div>
-  <div style="font-family:var(--disp);font-size:22px;font-weight:700;color:var(--pp);margin-top:4px">${$f(r.totalInterest)}</div>
-  <div style="font-size:11px;color:var(--mt);margin-top:2px">free money from compounding</div>
-  </div>
-  </div>
-  </div>
+  let h=`<div class="rg">
+  <div class="rc"><div class="rc-l">Nest Egg at ${rAge}</div><div class="rc-v">${$f(res.bal)}</div><div class="rc-s">${yrs} years of growth</div></div>
+  <div class="rc"><div class="rc-l">Annual Income</div><div class="rc-v">${$f(annInc)}</div><div class="rc-s">${wd}% withdrawal</div></div>
+  <div class="rc"><div class="rc-l">Monthly Income</div><div class="rc-v">${$f(moInc)}</div><div class="rc-s">in retirement</div></div>
+  <div class="rc"><div class="rc-l">Duration</div><div class="rc-v" style="color:var(--br)">${dur}</div><div class="rc-s">years of withdrawals</div></div>
   </div>`;
 
-  // How much do you need?
-  h+=`<div class="card">
-  <div class="ct">How Much Do You Need?</div>
-  <p style="font-size:13px;color:var(--mt);margin-bottom:16px">At a <b style="color:var(--wh)">${wd}% withdrawal rate</b>, here's how much you'd need saved to generate different income levels:</p>
-  <div class="tw" style="border:none"><table class="bd-table">
-  <thead><tr><th>Desired Income</th><th>Nest Egg Needed</th><th>You'll Have</th><th>Status</th></tr></thead>
-  <tbody>
-  ${[30000,50000,75000,100000,150000,200000].map(inc=>{
-    const needed=inc/(wd/100);
-    const surplus=r.finalBalance-needed;
-    const ok=surplus>=0;
-    return`<tr>
-    <td style="color:var(--wh);font-weight:600">${$f(inc)}/yr</td>
-    <td style="color:var(--bl)">${$f(needed)}</td>
-    <td style="color:var(--ac);font-weight:600">${$f(r.finalBalance)}</td>
-    <td style="color:${ok?'var(--ac)':'var(--rd)'};font-weight:700">${ok?'✅ On Track ('+$k(surplus)+' surplus)':'❌ Short by '+$f(Math.abs(surplus))}</td>
-    </tr>`;
-  }).join('')}
+  h+=`<div class="card" style="margin-top:8px"><div class="ct">Income Benchmarks at ${wd}% Withdrawal</div>
+  <div class="tw"><table class="tbl"><thead><tr><th>Income Goal</th><th>Nest Egg Needed</th><th>Your Projection</th><th>Status</th></tr></thead><tbody>
+  ${[30000,50000,75000,100000,150000].map(i=>{const need=i/(wd/100),ok=res.bal>=need;return`<tr><td style="color:var(--wh)">${$f(i)}/yr</td><td style="color:var(--br)">${$f(need)}</td><td style="font-weight:600;color:var(--ac)">${$f(res.bal)}</td><td style="color:${ok?'var(--ac)':'#ff5252'};font-weight:600">${ok?'✅ On Track':'❌ Short '+$f(need-res.bal)}</td></tr>`}).join('')}
   </tbody></table></div>
-  ${monNeeded1M>0?`<div style="margin-top:12px;padding:12px;background:var(--bg4);border-radius:var(--Rs);border-left:3px solid var(--pp)">
-  <div style="font-size:12px;color:var(--pp);font-weight:700">💡 To reach $1,000,000 by age ${retAge}:</div>
-  <div style="font-size:13px;color:var(--tx);margin-top:4px">You'd need to invest <b style="color:var(--wh)">${$f(monNeeded1M)}/month</b> starting now at ${ret}% annual return. ${monNeeded1M<=mon?'<span style="color:var(--ac);font-weight:700">You\'re already exceeding this! 🎉</span>':'<span style="color:var(--am)">That\'s '+$f(monNeeded1M-mon)+'/mo more than your current contribution.</span>'}</div>
-  </div>`:''}
+  ${need1M>0?`<div style="margin-top:8px;padding:8px 12px;background:var(--bg4);border-radius:var(--Rs);border-left:3px solid var(--ac);font-size:12px;color:var(--tx)"><b style="color:var(--ac)">💡 To reach $1M by age ${rAge}:</b> Invest <b style="color:var(--wh)">${$f(need1M)}/month</b>. ${need1M<=mon?'<span style="color:var(--ac);font-weight:700">You\'re already exceeding this!</span>':'That\'s '+$f(need1M-mon)+'/mo more than current.'}</div>`:''}
   </div>`;
+  document.getElementById('retRes').innerHTML=h;
 
-  document.getElementById('retResults').innerHTML=h;
+  const labels=yd.map(y=>'Age '+(age+y.yr)),contD=yd.map(y=>y.contrib),totD=yd.map(y=>y.bal);
+  retChartObj=makeAreaChart('retChart',labels,contD,totD,retChartObj);
 }
 
 // ============================================================
-// TAB 3: YEAR-BY-YEAR TABLE
+// TAB 3: YEAR-BY-YEAR
 // ============================================================
-function runTable(){
-  const init=+document.getElementById('tblInit').value||0;
-  const mon=+document.getElementById('tblMon').value||0;
-  const yrs=+document.getElementById('tblYrs').value||30;
-  const ret=+document.getElementById('tblRet').value||10;
-
-  const yearData=calcYearByYear(init,mon,ret,yrs);
-  const maxBal=yearData.length?yearData[yearData.length-1].endBalance:0;
-
-  let h=`<div class="card" style="border-color:var(--ac20)">
-  <div class="ct">Detailed Year-by-Year Growth</div>
-  <div class="res-grid" style="margin-bottom:16px">
-  <div class="res-card profit"><div class="rc-label">Final Balance</div><div class="rc-val">${$f(maxBal)}</div></div>
-  <div class="res-card revenue"><div class="rc-label">Total Contributed</div><div class="rc-val">${$f(yearData.length?yearData[yearData.length-1].totalContributions:0)}</div></div>
-  <div class="res-card staff"><div class="rc-label">Total Interest</div><div class="rc-val">${$f(yearData.length?yearData[yearData.length-1].totalInterest:0)}</div></div>
+function runTbl(){
+  const P=+document.getElementById('tI').value||0,PMT=+document.getElementById('tM').value||0,Y=+document.getElementById('tYr').value||30,R=+document.getElementById('tRt').value||10;
+  const yd=yearByYear(P,PMT,R,Y),last=yd[yd.length-1]||{bal:0,contrib:0,interest:0};
+  let h=`<div class="rg" style="margin-bottom:12px">
+  <div class="rc"><div class="rc-l">Final Balance</div><div class="rc-v">${$f(last.bal)}</div></div>
+  <div class="rc"><div class="rc-l">Total Contributed</div><div class="rc-v" style="color:var(--br)">${$f(last.contrib)}</div></div>
+  <div class="rc"><div class="rc-l">Total Interest</div><div class="rc-v">${$f(last.interest)}</div></div>
   </div>
-  <div class="tw" style="border:none"><table class="bd-table">
-  <thead><tr><th>Year</th><th>Starting Balance</th><th>Contributions</th><th>Interest Earned</th><th>Ending Balance</th><th>Total Contributed</th><th>Total Interest</th></tr></thead>
-  <tbody>
-  ${yearData.map(y=>{
-    // Highlight every millionth milestone
-    const isMilestone=y.endBalance>=1000000&&y.startBalance<1000000;
-    const is500k=y.endBalance>=500000&&y.startBalance<500000;
-    const bgStyle=isMilestone?'background:var(--acd)':is500k?'background:var(--bld)':'';
-    return`<tr style="${bgStyle}">
-    <td style="font-weight:700;color:var(--wh)">Year ${y.year}${isMilestone?' 🏆':is500k?' 🎯':''}</td>
-    <td style="color:var(--tx)">${$f(y.startBalance)}</td>
-    <td style="color:var(--bl)">${$f(y.contributions)}</td>
-    <td style="color:var(--ac);font-weight:600">${$f(y.interest)}</td>
-    <td style="color:var(--wh);font-weight:700">${$f(y.endBalance)}</td>
-    <td style="color:var(--mt)">${$f(y.totalContributions)}</td>
-    <td style="color:var(--pp)">${$f(y.totalInterest)}</td>
-    </tr>`;
-  }).join('')}
+  <div class="tw"><table class="tbl"><thead><tr><th>Year</th><th>Contributions</th><th>Interest Earned</th><th>Balance</th><th>Total Contributed</th><th>Total Interest</th></tr></thead><tbody>
+  ${yd.map(y=>{const m1=y.bal>=1e6&&(y.bal-y.yi-y.yc)<1e6,m5=y.bal>=5e5&&(y.bal-y.yi-y.yc)<5e5;return`<tr style="${m1?'background:var(--acd)':m5?'background:var(--card-hover)':''}"><td style="font-weight:600;color:var(--wh)">Year ${y.yr}${m1?' 🏆':m5?' 🎯':''}</td><td style="color:var(--br)">${$f(y.yc)}</td><td style="font-weight:600;color:var(--ac)">${$f(y.yi)}</td><td style="font-weight:700;color:var(--wh)">${$f(y.bal)}</td><td style="color:var(--mt)">${$f(y.contrib)}</td><td style="color:var(--ac)">${$f(y.interest)}</td></tr>`}).join('')}
   </tbody></table></div>
-  <div style="font-size:11px;color:var(--mt);margin-top:8px;padding:8px;background:var(--bg4);border-radius:var(--Rs)">
-  <b style="color:var(--wh)">How to read this:</b> "Interest Earned" is the interest earned <i>that specific year</i>. Notice how it grows — in later years, you earn more in interest alone than you contribute. That's compound interest doing its thing.
-  </div>
-  </div>`;
-
-  document.getElementById('tblResults').innerHTML=h;
+  <div style="font-size:11px;color:var(--mt);margin-top:6px;padding:6px 10px;background:var(--bg4);border-radius:var(--Rs)"><b style="color:var(--wh)">How to read:</b> "Interest Earned" is what you earned <i>that year</i>. Notice how it grows — in later years, you earn more in interest than you contribute.</div>`;
+  document.getElementById('tblRes').innerHTML=h;
 }
 
 // ============================================================
-// TAB 4: COMPARE SCENARIOS
+// TAB 4: COMPARE
 // ============================================================
 function runCmp(){
-  const a={
-    init:+document.getElementById('cmpAInit').value||0,
-    mon:+document.getElementById('cmpAMon').value||0,
-    yrs:+document.getElementById('cmpAYrs').value||30,
-    ret:+document.getElementById('cmpARet').value||10
-  };
-  const b={
-    init:+document.getElementById('cmpBInit').value||0,
-    mon:+document.getElementById('cmpBMon').value||0,
-    yrs:+document.getElementById('cmpBYrs').value||30,
-    ret:+document.getElementById('cmpBRet').value||10
-  };
-  const ra=calcCompound(a.init,a.mon,a.ret,a.yrs);
-  const rb=calcCompound(b.init,b.mon,b.ret,b.yrs);
-  const yaData=calcYearByYear(a.init,a.mon,a.ret,a.yrs);
-  const ybData=calcYearByYear(b.init,b.mon,b.ret,b.yrs);
+  const a={P:+document.getElementById('aI').value||0,PMT:+document.getElementById('aM').value||0,Y:+document.getElementById('aY').value||30,R:+document.getElementById('aR').value||10};
+  const b={P:+document.getElementById('bI').value||0,PMT:+document.getElementById('bM').value||0,Y:+document.getElementById('bY').value||30,R:+document.getElementById('bR').value||10};
+  const ra=calcFV(a.P,a.PMT,a.R,a.Y),rb=calcFV(b.P,b.PMT,b.R,b.Y);
+  const yaD=yearByYear(a.P,a.PMT,a.R,a.Y),ybD=yearByYear(b.P,b.PMT,b.R,b.Y);
+  const w=ra.bal>rb.bal?'A':'B',diff=Math.abs(ra.bal-rb.bal);
 
-  const winner=ra.finalBalance>rb.finalBalance?'A':'B';
-  const diff=Math.abs(ra.finalBalance-rb.finalBalance);
+  let h=`<div class="card"><div class="ct">Scenario ${w} wins by ${$f(diff)}</div>
+  <div class="tw"><table class="tbl"><thead><tr><th>Metric</th><th>Scenario A</th><th>Scenario B</th><th>Difference</th></tr></thead><tbody>
+  <tr><td style="color:var(--wh)">Total Contributed</td><td style="color:var(--br)">${$f(ra.contrib)}</td><td style="color:var(--br)">${$f(rb.contrib)}</td><td>${$f(rb.contrib-ra.contrib)}</td></tr>
+  <tr><td style="color:var(--wh)">Interest Earned</td><td style="color:var(--ac)">${$f(ra.interest)}</td><td style="color:var(--ac)">${$f(rb.interest)}</td><td style="color:${rb.interest>ra.interest?'var(--ac)':'#ff5252'}">${$f(rb.interest-ra.interest)}</td></tr>
+  <tr><td style="color:var(--wh);font-weight:700">Final Balance</td><td style="color:var(--ac);font-weight:700">${$f(ra.bal)}</td><td style="color:var(--ac);font-weight:700">${$f(rb.bal)}</td><td style="color:${rb.bal>ra.bal?'var(--ac)':'#ff5252'};font-weight:700">${$f(rb.bal-ra.bal)}</td></tr>
+  </tbody></table></div></div>`;
+  document.getElementById('cmpRes').innerHTML=h;
 
-  let h=`<div class="card" style="border-color:${winner==='A'?'var(--ac20)':'rgba(255,183,77,.3)'}">
-  <div class="ct">Result — Scenario ${winner} Wins by ${$f(diff)}</div>
-
-  <div style="display:grid;grid-template-columns:1fr 50px 1fr;gap:0;align-items:start;margin-bottom:16px">
-  <div style="background:var(--bg3);border:1px solid var(--bd);border-radius:var(--Rs);padding:18px">
-  <div style="font-size:13px;font-weight:700;text-align:center;color:var(--ac);margin-bottom:12px">SCENARIO A</div>
-  ${[
-    ['Initial',$f(a.init)],
-    ['Monthly',$f(a.mon)],
-    ['Years',a.yrs],
-    ['Return',a.ret+'%'],
-    ['Total In',$f(ra.totalContributions)],
-    ['Interest',$f(ra.totalInterest)],
-    ['Final Balance',$f(ra.finalBalance)]
-  ].map(([l,v])=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd);font-size:13px"><span style="color:var(--mt)">${l}</span><span style="color:var(--wh);font-weight:600">${v}</span></div>`).join('')}
-  </div>
-  <div style="display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--mt);padding-top:80px">vs</div>
-  <div style="background:var(--bg3);border:1px solid var(--bd);border-radius:var(--Rs);padding:18px">
-  <div style="font-size:13px;font-weight:700;text-align:center;color:var(--am);margin-bottom:12px">SCENARIO B</div>
-  ${[
-    ['Initial',$f(b.init)],
-    ['Monthly',$f(b.mon)],
-    ['Years',b.yrs],
-    ['Return',b.ret+'%'],
-    ['Total In',$f(rb.totalContributions)],
-    ['Interest',$f(rb.totalInterest)],
-    ['Final Balance',$f(rb.finalBalance)]
-  ].map(([l,v])=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd);font-size:13px"><span style="color:var(--mt)">${l}</span><span style="color:var(--wh);font-weight:600">${v}</span></div>`).join('')}
-  </div>
-  </div>
-
-  <div class="fl2">Difference</div>
-  <div class="tw" style="border:none"><table class="bd-table">
-  <thead><tr><th>Metric</th><th>Scenario A</th><th>Scenario B</th><th>Difference</th></tr></thead>
-  <tbody>
-  <tr><td style="color:var(--wh)">Total Contributed</td><td style="color:var(--bl)">${$f(ra.totalContributions)}</td><td style="color:var(--bl)">${$f(rb.totalContributions)}</td><td style="color:var(--tx)">${$f(rb.totalContributions-ra.totalContributions)}</td></tr>
-  <tr><td style="color:var(--wh)">Interest Earned</td><td style="color:var(--pp)">${$f(ra.totalInterest)}</td><td style="color:var(--pp)">${$f(rb.totalInterest)}</td><td style="color:${rb.totalInterest>ra.totalInterest?'var(--ac)':'var(--rd)'}">${$f(rb.totalInterest-ra.totalInterest)}</td></tr>
-  <tr><td style="color:var(--wh);font-weight:700">Final Balance</td><td style="color:var(--ac);font-weight:700">${$f(ra.finalBalance)}</td><td style="color:var(--ac);font-weight:700">${$f(rb.finalBalance)}</td><td style="color:${rb.finalBalance>ra.finalBalance?'var(--ac)':'var(--rd)'};font-weight:700">${$f(rb.finalBalance-ra.finalBalance)}</td></tr>
-  <tr><td style="color:var(--wh)">Growth Multiple</td><td style="color:var(--tx)">${ra.totalContributions>0?(ra.finalBalance/ra.totalContributions).toFixed(1):'0'}x</td><td style="color:var(--tx)">${rb.totalContributions>0?(rb.finalBalance/rb.totalContributions).toFixed(1):'0'}x</td><td style="color:var(--mt)">—</td></tr>
-  </tbody></table></div>
-  </div>`;
-
-  // Growth comparison bars
-  const maxYrs=Math.max(a.yrs,b.yrs);
-  const maxBal=Math.max(ra.finalBalance,rb.finalBalance);
-  h+=`<div class="card"><div class="ct">Growth Comparison</div>`;
-  for(let y=1;y<=maxYrs;y++){
-    const aVal=y<=a.yrs&&yaData[y-1]?yaData[y-1].endBalance:null;
-    const bVal=y<=b.yrs&&ybData[y-1]?ybData[y-1].endBalance:null;
-    // Only show every 5th year (or first/last)
-    if(maxYrs>15&&y!==1&&y!==maxYrs&&y%5!==0)continue;
-    if(maxYrs>5&&maxYrs<=15&&y!==1&&y!==maxYrs&&y%2!==0)continue;
-    h+=`<div style="margin-bottom:8px">
-    <div style="font-size:11px;color:var(--mt);margin-bottom:3px">Year ${y}</div>
-    ${aVal!=null?`<div class="bar" style="margin-bottom:3px"><div class="lb" style="width:20px;color:var(--ac);font-size:10px">A</div><div class="tk" style="height:18px"><div class="fl" style="width:${(aVal/maxBal*100).toFixed(0)}%;background:var(--ac);font-size:10px">${$k(aVal)}</div></div></div>`:''}
-    ${bVal!=null?`<div class="bar" style="margin-bottom:0"><div class="lb" style="width:20px;color:var(--am);font-size:10px">B</div><div class="tk" style="height:18px"><div class="fl" style="width:${(bVal/maxBal*100).toFixed(0)}%;background:var(--am);font-size:10px">${$k(bVal)}</div></div></div>`:''}
-    </div>`;
-  }
-  h+=`</div>`;
-
-  document.getElementById('cmpResults').innerHTML=h;
+  // Chart: both scenarios
+  const maxY=Math.max(a.Y,b.Y);const labels=[];const dA=[],dB=[];
+  for(let y=1;y<=maxY;y++){labels.push('Year '+y);dA.push(y<=a.Y&&yaD[y-1]?yaD[y-1].bal:null);dB.push(y<=b.Y&&ybD[y-1]?ybD[y-1].bal:null)}
+  if(cmpChartObj)cmpChartObj.destroy();
+  const cc=getChartColors();
+  cmpChartObj=new Chart(document.getElementById('cmpChart'),{type:'line',data:{labels,datasets:[
+    {label:'Scenario A',data:dA,borderColor:cc.interest,backgroundColor:cc.interestBg,fill:true,tension:.3,pointRadius:0,borderWidth:2},
+    {label:'Scenario B',data:dB,borderColor:cc.contrib,backgroundColor:cc.contribBg,fill:true,tension:.3,pointRadius:0,borderWidth:2}
+  ]},options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:cc.text,font:{size:11,family:'Inter'},boxWidth:12}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:cc.white,bodyColor:cc.text,padding:12,cornerRadius:6,callbacks:{label:ctx=>ctx.dataset.label+': '+$f(ctx.parsed.y)}}},scales:{x:{ticks:{color:cc.text,font:{size:10},maxTicksLimit:10},grid:{color:cc.grid}},y:{ticks:{color:cc.text,font:{size:10},callback:v=>$k(v)},grid:{color:cc.grid}}}}});
 }
 
 // ============================================================
-// TAB 5: ABE'S RULES
+// TAB 5: RULES
 // ============================================================
 function buildRules(){
   const rules=[
-    {
-      title:"Pay Yourself First — Automate Everything",
-      body:"The single most important thing I do is automate my investments. The money comes out of my paycheck before I even see it. If you have to manually transfer money every month, you'll eventually skip a month. Then another. Then you're buying coffee instead of building wealth. <b>Set it and forget it.</b>",
-      highlight:"I treat investing like a bill. It's non-negotiable. Rent, phone, investments — in that order. Everything else is negotiable."
-    },
-    {
-      title:"Start Now — Even If It's $50/Month",
-      body:"People wait for the \"perfect time\" to start investing. The perfect time was yesterday. The second best time is today. Even small amounts compound into serious money over decades. The math doesn't care if you feel ready — it just needs time.",
-      highlight:"$200/month at 10% for 35 years = ~$648,000. You only put in $84,000. The other $564,000 is free money from compound interest. Start. Now."
-    },
-    {
-      title:"Emergency Fund Before Investing",
-      body:"Before you invest a single dollar, have 3-6 months of living expenses saved in a high-yield savings account. This isn't investing money — it's \"life happens\" money. Car breaks down? Medical bill? Job loss? Your emergency fund handles it so you never have to sell your investments at a bad time.",
-      warn:"If you don't have an emergency fund and invest anyway, the first unexpected expense will force you to sell — potentially at a loss. Build the foundation first."
-    },
-    {
-      title:"Kill High-Interest Debt First",
-      body:"If you have credit card debt at 24% interest, paying that off IS your best investment. No investment reliably returns 24%. Pay off high-interest debt (anything above ~6-7%) before investing aggressively. Low-interest debt like a mortgage? You can invest alongside it.",
-      highlight:"The order I personally follow: Emergency fund → High-interest debt → Employer 401(k) match → Max out Roth IRA → Pay extra on remaining debt → Invest more."
-    },
-    {
-      title:"Don't Try to Time the Market",
-      body:"I don't try to pick individual stocks or time the market. Nobody consistently beats the market long-term — not even the professionals. I invest in diversified index funds that track the broad market. It's boring. It works.",
-      highlight:"The S&P 500 has returned roughly 10% annually over the last 30+ years. That includes crashes, recessions, pandemics, and every scary headline you've ever read. Stay the course."
-    },
-    {
-      title:"Take the Employer Match — It's Free Money",
-      body:"If your employer offers a 401(k) match, take it. All of it. If they match 50% up to 6% of your salary, that's an instant 50% return on your money. You literally cannot beat that anywhere else.",
-      highlight:"Not taking your employer match is the same as declining a raise. I don't care if the 401(k) fund options aren't perfect — take the match first, optimize later."
-    },
-    {
-      title:"I Use 10% for Projections, Plan for Worse",
-      body:"The historical average return of the S&P 500 is around 10% nominally. That's what I use for long-term projections. But I mentally prepare for years where it's -20% or +30%. I don't change my strategy based on any single year. The 10% is an average over decades — any individual year will be different.",
-      warn:"If you want to be extra conservative, use 7-8%. That roughly adjusts for inflation and gives you a 'real return' projection. I'd rather be pleasantly surprised than dangerously optimistic."
-    },
-    {
-      title:"The 4% Rule for Retirement Withdrawals",
-      body:"When I plan for retirement income, I use the 4% rule: withdraw 4% of your portfolio in year one of retirement, then adjust for inflation each year after. Research shows this approach has historically sustained portfolios for 30+ years.",
-      highlight:"$1,000,000 nest egg × 4% = $40,000/year. $2,000,000 × 4% = $80,000/year. Work backwards from the income you want to find your target number."
-    }
+    {t:"Pay Yourself First — Automate Everything",b:"The single most important thing I do is automate my investments. The money leaves my paycheck before I see it. If you have to manually transfer money every month, you'll eventually skip one.",hl:"I treat investing like a bill. Rent, phone, investments — in that order."},
+    {t:"Start Now — Even If It's $50/Month",b:"People wait for the perfect time to start investing. The perfect time was yesterday. Even small amounts compound into serious money over decades.",hl:"$200/month at 10% for 35 years = ~$649,000. You only put in $84,000. Start. Now."},
+    {t:"Emergency Fund Before Investing",b:"Before investing a dollar, have 3-6 months of living expenses saved in a high-yield savings account. This is your safety net so you never have to sell investments at a bad time."},
+    {t:"Kill High-Interest Debt First",b:"Credit card debt at 24%? Paying that off IS your best investment. No investment reliably returns 24%. Pay off anything above ~6-7% before investing aggressively.",hl:"My order: Emergency fund → High-interest debt → 401(k) match → Max Roth IRA → Remaining debt → Invest more."},
+    {t:"Don't Try to Time the Market",b:"I don't pick individual stocks or time the market. Nobody consistently beats the market long-term. I invest in diversified index funds that track the broad market. It's boring. It works.",hl:"The S&P 500 has returned ~10% annually over 30+ years. That includes every crash, recession, and pandemic."},
+    {t:"Take the Employer Match — It's Free Money",b:"If your employer offers a 401(k) match, take all of it. A 50% match on 6% of your salary is an instant 50% return. You can't beat that anywhere.",hl:"Not taking the match is the same as declining a raise."},
+    {t:"I Use 10% for Projections, Plan for Worse",b:"The historical S&P 500 average is ~10% nominally. That's what I use for long-term projections. But I mentally prepare for years of -20% or +30%. The 10% is a decades-long average.",hl:"Use 7-8% for a conservative inflation-adjusted estimate. Better to be pleasantly surprised."},
+    {t:"The 4% Rule for Retirement Withdrawals",b:"When planning retirement income, I use the 4% rule: withdraw 4% of your portfolio in year one, then adjust for inflation each year. Research shows this sustains portfolios for 30+ years.",hl:"$1M × 4% = $40K/year. $2M × 4% = $80K/year. Work backwards from the income you want."}
   ];
-
   let h='';
-  rules.forEach((r,i)=>{
-    h+=`<div class="info-card">
-    <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
-    <span style="font-family:var(--disp);font-size:22px;font-weight:700;color:var(--ac);min-width:30px">${i+1}</span>
-    <div class="ic-title">${r.title}</div>
-    </div>
-    <div class="ic-body">${r.body}</div>
-    ${r.highlight?`<div class="ic-highlight"><b style="color:var(--ac)">My take:</b> ${r.highlight}</div>`:''}
-    ${r.warn?`<div class="ic-warn"><b style="color:var(--am)">⚠️ Heads up:</b> ${r.warn}</div>`:''}
-    </div>`;
-  });
-
-  h+=`<div style="padding:16px;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);margin-top:16px;border-left:3px solid var(--am)">
-  <div style="font-size:13px;color:var(--am);font-weight:700;margin-bottom:8px">🔁 Reminder</div>
-  <div style="font-size:13px;color:var(--tx);line-height:1.7">This is what <b style="color:var(--wh)">I personally do and believe</b> based on my own research and experience. I'm not a financial advisor. Your income, tax situation, risk tolerance, and goals are different from mine. Use this as a starting point, then talk to a real professional about your specific situation.</div>
-  </div>`;
-
-  document.getElementById('rulesContent').innerHTML=h;
+  rules.forEach((r,i)=>{h+=`<div class="ic"><div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><span style="font-family:var(--disp);font-size:20px;font-weight:700;color:var(--ac);min-width:24px">${i+1}</span><div class="ic-t">${r.t}</div></div><div class="ic-b">${r.b}</div>${r.hl?`<div class="ic-hl"><b style="color:var(--ac)">My take:</b> ${r.hl}</div>`:''}</div>`});
+  h+=`<div style="padding:12px;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);margin-top:10px;border-left:3px solid var(--ac);font-size:12px;color:var(--tx);line-height:1.7"><b style="color:var(--wh)">Reminder:</b> This is what I personally do. I'm not a financial advisor. Your situation is different. Use this as a starting point and consult a professional.</div>`;
+  document.getElementById('rulesC').innerHTML=h;
 }
 
 // ============================================================
-// TAB 6: ACCOUNT TYPES
+// TAB 6: ACCOUNTS
 // ============================================================
-function buildAccounts(){
-  const accounts=[
-    {
-      name:'401(k)',
-      type:'Employer-Sponsored Retirement',
-      color:'var(--ac)',
-      taxTreat:'Traditional: Pre-tax contributions, taxed on withdrawal. Roth 401(k): After-tax contributions, tax-free withdrawals.',
-      limit:'$23,500/year (2025). $31,000 if 50+. Does not include employer match.',
-      pros:['Employer match = free money','High contribution limits','Automatic payroll deduction','Reduces current taxable income (Traditional)'],
-      cons:['Limited fund choices (depends on employer)','10% penalty for early withdrawal before 59½','Required Minimum Distributions at 73 (Traditional)','Employer plan may have high fees'],
-      abe:'If your employer offers a match, this is your #1 priority. Get the full match before doing anything else. It\'s literally a guaranteed 50-100% return on that money.'
-    },
-    {
-      name:'Roth IRA',
-      type:'Individual Retirement Account',
-      color:'var(--bl)',
-      taxTreat:'Contributions are after-tax. Growth and qualified withdrawals are 100% TAX-FREE.',
-      limit:'$7,000/year (2025). $8,000 if 50+. Income limits apply ($150K single / $236K married for full contribution in 2025).',
-      pros:['Tax-free growth and withdrawals in retirement','No Required Minimum Distributions','Can withdraw contributions (not earnings) penalty-free anytime','Huge tax advantage if you expect higher tax bracket in retirement'],
-      cons:['Income limits restrict high earners','Lower contribution limit than 401(k)','No upfront tax deduction','Contributions are after-tax'],
-      abe:'I love the Roth IRA. Pay taxes now while you\'re (hopefully) in a lower bracket, and never pay taxes on that money again. If you\'re young and your income is lower now than it will be later, this is gold.'
-    },
-    {
-      name:'Traditional IRA',
-      type:'Individual Retirement Account',
-      color:'var(--pp)',
-      taxTreat:'Contributions may be tax-deductible. Growth is tax-deferred. Taxed as ordinary income on withdrawal.',
-      limit:'$7,000/year (2025). $8,000 if 50+. Deductibility depends on income and employer plan coverage.',
-      pros:['Potential tax deduction now','Tax-deferred growth','Wide investment choices','Good if you expect lower tax bracket in retirement'],
-      cons:['Taxed on withdrawal in retirement','10% penalty before 59½','Required Minimum Distributions at 73','May not be deductible if you have employer plan'],
-      abe:'If you make too much for a Roth IRA, this can be a good alternative. But honestly, for most young people, I\'d prioritize the Roth. You want tax-free growth working for you for decades.'
-    },
-    {
-      name:'HSA (Health Savings Account)',
-      type:'Triple Tax-Advantaged',
-      color:'var(--am)',
-      taxTreat:'Contributions are pre-tax. Growth is tax-free. Withdrawals for medical expenses are tax-free. Triple tax advantage.',
-      limit:'$4,300 individual / $8,550 family (2025). Requires High-Deductible Health Plan (HDHP).',
-      pros:['Triple tax advantage (deduction + tax-free growth + tax-free withdrawal)','Can invest the balance like a retirement account','After 65, can withdraw for any purpose (taxed like Traditional IRA)','No "use it or lose it" — rolls over every year'],
-      cons:['Requires HDHP enrollment','Can only use tax-free for medical expenses before 65','Lower contribution limits','Not all employers offer one'],
-      abe:'The HSA is the most tax-advantaged account in America. If you\'re healthy and have access to one, max it out. Pay medical expenses out of pocket, invest the HSA, and let it grow tax-free. After 65, it\'s basically another retirement account.'
-    },
-    {
-      name:'Taxable Brokerage',
-      type:'General Investment Account',
-      color:'var(--tx)',
-      taxTreat:'No special tax treatment. Capital gains and dividends are taxable. Long-term gains (held 1+ year) taxed at lower rate.',
-      limit:'No contribution limits. Invest as much as you want.',
-      pros:['No contribution limits','No withdrawal penalties or age restrictions','Full flexibility in investment choices','Good for goals before retirement'],
-      cons:['No tax advantages','Capital gains taxes on profits','Dividends taxed annually','Less efficient than tax-advantaged accounts'],
-      abe:'After you\'ve maxed out your 401(k) match, Roth IRA, and HSA — then start investing here. No limits, no restrictions, but also no tax benefits. This is where surplus cash goes to work.'
-    }
+function buildAccts(){
+  const accts=[
+    {n:'401(k)',type:'Employer-Sponsored',tax:'Traditional: pre-tax in, taxed out. Roth 401(k): after-tax in, tax-free out.',lim:'$23,500/yr (2025). $31,000 if 50+.',pros:['Employer match = free money','High contribution limits','Automatic payroll deduction'],cons:['Limited fund choices','10% penalty before 59½','RMDs at 73 (Traditional)'],take:'If your employer matches, this is priority #1. Get the full match before anything else.'},
+    {n:'Roth IRA',type:'Individual Retirement',tax:'After-tax contributions. Growth and qualified withdrawals are 100% tax-free.',lim:'$7,000/yr (2025). $8,000 if 50+. Income limits apply.',pros:['Tax-free growth and withdrawals','No RMDs','Can withdraw contributions anytime'],cons:['Income limits for high earners','Lower limit than 401(k)','No upfront tax break'],take:'I love the Roth. Pay taxes now while your bracket is lower, never pay again on that money.'},
+    {n:'Traditional IRA',type:'Individual Retirement',tax:'May be tax-deductible. Growth is tax-deferred. Taxed on withdrawal.',lim:'$7,000/yr (2025). $8,000 if 50+.',pros:['Potential tax deduction now','Tax-deferred growth','Wide investment choices'],cons:['Taxed on withdrawal','10% penalty before 59½','RMDs at 73'],take:'Good if you make too much for Roth. For most young people, I\'d prioritize Roth.'},
+    {n:'HSA',type:'Triple Tax-Advantaged',tax:'Pre-tax in. Tax-free growth. Tax-free out for medical expenses.',lim:'$4,300 individual / $8,550 family (2025). Requires HDHP.',pros:['Triple tax advantage','Investable balance','After 65, works like Traditional IRA'],cons:['Requires HDHP','Only tax-free for medical before 65','Lower limits'],take:'Most tax-advantaged account in America. If you have access, max it out.'},
+    {n:'Taxable Brokerage',type:'General Investment',tax:'No special tax treatment. Long-term gains taxed at lower capital gains rate.',lim:'No limits.',pros:['No contribution limits','No withdrawal restrictions','Full flexibility'],cons:['No tax advantages','Capital gains taxes','Dividends taxed annually'],take:'After maxing 401(k) match, Roth IRA, and HSA — surplus cash goes here.'}
   ];
 
-  let h='';
-
-  // Priority order card
-  h+=`<div class="card" style="border-left:3px solid var(--ac)">
-  <div class="ct">My Personal Priority Order</div>
-  <p style="font-size:13px;color:var(--mt);margin-bottom:16px">This is the order <b style="color:var(--wh)">I personally</b> prioritize. It's based on maximizing free money and tax advantages. Your situation may differ.</p>
-  <div style="display:grid;gap:8px">
-  ${[
-    ['1','401(k) up to employer match','var(--ac)','Free money. Always.'],
-    ['2','Max out Roth IRA','var(--bl)','Tax-free growth for decades.'],
-    ['3','Max out HSA (if eligible)','var(--am)','Triple tax advantage.'],
-    ['4','Max out 401(k)','var(--ac)','Use remaining limit.'],
-    ['5','Taxable brokerage','var(--tx)','No limits, invest the surplus.']
-  ].map(([num,label,c,note])=>`<div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;padding:10px 14px;background:var(--bg4);border-radius:var(--Rs);border-left:3px solid ${c}">
-  <span style="font-family:var(--disp);font-size:22px;font-weight:700;color:${c}">${num}</span>
-  <div><div style="font-size:14px;font-weight:700;color:var(--wh)">${label}</div><div style="font-size:11px;color:var(--mt)">${note}</div></div>
-  </div>`).join('')}
-  </div>
+  let h=`<div class="card"><div class="ct">My Priority Order</div><p style="font-size:12px;color:var(--mt);margin-bottom:12px">This is how I personally prioritize, based on maximizing free money and tax advantages.</p>
+  ${['401(k) up to employer match — free money','Max out Roth IRA — tax-free growth','Max out HSA (if eligible) — triple tax advantage','Max out remaining 401(k) limit','Taxable brokerage — no limits, invest surplus'].map((s,i)=>`<div class="ms"><div class="ms-i" style="font-family:var(--disp);font-size:18px;font-weight:700;color:var(--ac)">${i+1}</div><div class="ms-t"><b>${s.split('—')[0]}</b>${s.includes('—')?'<span style="color:var(--mt)"> —'+s.split('—')[1]+'</span>':''}</div></div>`).join('')}
   </div>`;
 
-  accounts.forEach(acc=>{
-    h+=`<div class="card">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-    <div style="width:4px;height:32px;background:${acc.color};border-radius:2px"></div>
-    <div>
-    <div style="font-size:18px;font-weight:700;color:var(--wh)">${acc.name}</div>
-    <div style="font-size:11px;color:var(--mt)">${acc.type}</div>
-    </div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:14px">
-    <div style="padding:12px;background:var(--bg4);border-radius:var(--Rs)">
-    <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mt);margin-bottom:6px">Tax Treatment</div>
-    <div style="font-size:13px;color:var(--br);line-height:1.6">${acc.taxTreat}</div>
-    </div>
-    <div style="padding:12px;background:var(--bg4);border-radius:var(--Rs)">
-    <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mt);margin-bottom:6px">2025 Contribution Limits</div>
-    <div style="font-size:13px;color:var(--br);line-height:1.6">${acc.limit}</div>
-    </div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
-    <div>
-    <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ac);margin-bottom:8px">✅ Advantages</div>
-    ${acc.pros.map(p=>`<div style="font-size:12px;color:var(--tx);padding:4px 0;padding-left:12px;border-left:2px solid var(--ac);margin-bottom:4px">${p}</div>`).join('')}
-    </div>
-    <div>
-    <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--rd);margin-bottom:8px">⚠️ Drawbacks</div>
-    ${acc.cons.map(c=>`<div style="font-size:12px;color:var(--tx);padding:4px 0;padding-left:12px;border-left:2px solid var(--am);margin-bottom:4px">${c}</div>`).join('')}
-    </div>
-    </div>
-
-    <div style="padding:12px;background:var(--acd);border-radius:var(--Rs);border-left:3px solid var(--ac)">
-    <div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:4px">What I personally think:</div>
-    <div style="font-size:12px;color:var(--br);line-height:1.6">${acc.abe}</div>
-    </div>
-    </div>`;
-  });
-
-  h+=`<div style="padding:16px;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);margin-top:8px">
-  <div style="font-size:11px;color:var(--mt);line-height:1.7">
-  <b style="color:var(--am)">⚠️ Contribution limits shown are for 2025.</b> These change annually — check IRS.gov for current limits. Income thresholds for Roth IRA eligibility also change yearly. Tax laws are complex — this is a simplified overview, not tax advice.
+  accts.forEach(a=>{h+=`<div class="ic"><div class="ic-t">${a.n} <span style="font-size:11px;color:var(--mt);font-weight:400">· ${a.type}</span></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0">
+  <div style="padding:8px 10px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">Tax Treatment</div><div style="font-size:12px;color:var(--br);line-height:1.6">${a.tax}</div></div>
+  <div style="padding:8px 10px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">2025 Limits</div><div style="font-size:12px;color:var(--br);line-height:1.6">${a.lim}</div></div>
   </div>
-  </div>`;
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px">
+  <div>${a.pros.map(p=>`<div style="font-size:12px;color:var(--tx);padding:3px 0 3px 10px;border-left:2px solid var(--ac);margin-bottom:3px">${p}</div>`).join('')}</div>
+  <div>${a.cons.map(c=>`<div style="font-size:12px;color:var(--tx);padding:3px 0 3px 10px;border-left:2px solid #ff5252;margin-bottom:3px">${c}</div>`).join('')}</div>
+  </div>
+  <div class="ic-hl"><b style="color:var(--ac)">My take:</b> ${a.take}</div></div>`});
 
-  document.getElementById('accountsContent').innerHTML=h;
+  h+=`<div style="padding:10px;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);margin-top:6px;font-size:10px;color:var(--mt);line-height:1.6"><b style="color:var(--ac)">⚠️</b> Contribution limits shown are 2025. Check IRS.gov for current limits. This is a simplified overview, not tax advice.</div>`;
+  document.getElementById('acctC').innerHTML=h;
 }
 </script>
 </body>
