@@ -617,6 +617,24 @@ function fmtMoney(el){
   el.setSelectionRange(newPos,newPos);
 }
 function getNum(id){var el=document.getElementById(id);if(!el)return 0;return parseFloat(el.value.replace(/,/g,''))||0}
+function runDual(){
+  if(!document.getElementById('dualAge'))return;
+  var age=+document.getElementById('dualAge').value||21;
+  var ret=+document.getElementById('dualRet').value||65;
+  var rate=(+document.getElementById('dualRate').value||7)/100;
+  var yrs=Math.max(ret-age,1);
+  var annual1=23500,annual2=47000;
+  var bal1=0,bal2=0;
+  for(var y=0;y<yrs;y++){for(var m=0;m<12;m++){bal1=bal1*(1+rate/12)+annual1/12;bal2=bal2*(1+rate/12)+annual2/12}}
+  var diff=bal2-bal1;
+  var h='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px">';
+  h+='<div style="padding:10px;background:var(--bg4);border-radius:var(--Rs);text-align:center"><div style="font-size:10px;font-weight:700;color:var(--mt)">ONE PLAN ($23,500/yr)</div><div style="font-family:var(--disp);font-size:18px;font-weight:700;color:var(--wh);margin-top:4px">'+$f(bal1)+'</div></div>';
+  h+='<div style="padding:10px;background:var(--bg4);border-radius:var(--Rs);text-align:center"><div style="font-size:10px;font-weight:700;color:var(--mt)">TWO PLANS ($47,000/yr)</div><div style="font-family:var(--disp);font-size:18px;font-weight:700;color:var(--ac);margin-top:4px">'+$f(bal2)+'</div></div>';
+  h+='<div style="padding:10px;background:var(--bg4);border-radius:var(--Rs);text-align:center"><div style="font-size:10px;font-weight:700;color:var(--mt)">THE DIFFERENCE</div><div style="font-family:var(--disp);font-size:18px;font-weight:700;color:var(--am);margin-top:4px">+'+$f(diff)+'</div></div>';
+  h+='</div>';
+  h+='<div style="font-size:10px;color:var(--mt);margin-top:6px;text-align:center">Both scenarios assume max contributions at '+((rate*100).toFixed(1))+'% annual return over '+(ret-age)+' years. No employer match included.</div>';
+  document.getElementById('dualRes').innerHTML=h;
+}
 function runSL(){
   if(!document.getElementById('slBal'))return;
   var bal=getNum('slBal');
@@ -954,6 +972,149 @@ h+='<b>Why this matters:</b> If your Traditional accounts have grown to $2M+ by 
 
 h+='</div>';
 
+
+// ========== RETIREMENT ACCOUNT TYPES ==========
+h+='<div class="card" style="margin-top:18px;border-top:2px solid var(--ac)"><div class="ct">Retirement Account Types - A Simple Guide</div>';
+h+='<div class="ic-b" style="margin-bottom:14px">People see letters and numbers - 401(k), 403(b), 457(b) - and immediately feel overwhelmed. <b style="color:var(--wh)">Don\'t be.</b> These are all just retirement savings accounts. The differences are smaller than you think. Here\'s what each one actually is.</div>';
+
+// --- EMPLOYER SPONSORED ---
+h+='<div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:10px">EMPLOYER-SPONSORED PLANS</div>';
+
+// 401(k)
+h+='<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);margin-bottom:10px;border-left:3px solid var(--ac)">';
+h+='<div style="font-size:14px;font-weight:700;color:var(--wh);margin-bottom:6px">401(k)</div>';
+h+='<div style="font-size:12px;color:var(--br);line-height:1.8">';
+h+='<b style="color:var(--ac)">What it is:</b> A retirement savings account offered by <b>for-profit companies</b>. This is the most common retirement plan in America. Money comes out of your paycheck before taxes (Traditional) or after taxes (Roth), goes into investments you choose, and grows until retirement.<br><br>';
+h+='<b style="color:var(--ac)">Who gets it:</b> Employees of private, for-profit companies - corporations, startups, law firms, accounting firms, most businesses.<br><br>';
+h+='<b style="color:var(--ac)">2025 Limits:</b> $23,500/yr employee contribution ($31,000 if 50+). Total with employer match: $69,000/yr.<br>';
+h+='<b style="color:var(--ac)">Withdrawal:</b> Age 59\u00BD without penalty. Early withdrawal = 10% penalty + income tax.';
+h+='</div></div>';
+
+// 403(b)
+h+='<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);margin-bottom:10px;border-left:3px solid var(--ac)">';
+h+='<div style="font-size:14px;font-weight:700;color:var(--wh);margin-bottom:6px">403(b)</div>';
+h+='<div style="font-size:12px;color:var(--br);line-height:1.8">';
+h+='<b style="color:var(--ac)">What it is:</b> Essentially the same thing as a 401(k), but for <b>nonprofit organizations</b>. Same contribution limits, same tax advantages, same withdrawal rules. If you work at a hospital, school, university, or church - this is probably what you have.<br><br>';
+h+='<b style="color:var(--ac)">Who gets it:</b> Employees of nonprofits, hospitals, public schools, universities, churches, and 501(c)(3) organizations.<br><br>';
+h+='<b style="color:var(--ac)">2025 Limits:</b> $23,500/yr ($31,000 if 50+). Same as a 401(k).<br>';
+h+='<b style="color:var(--ac)">Withdrawal:</b> Age 59\u00BD without penalty. Same rules as 401(k).<br><br>';
+h+='<b style="color:var(--wh)">Bottom line:</b> If someone tells you they have a 401(k) and you have a 403(b), you are not missing out on anything. They are functionally the same plan. Different number, same rules, same limits, same tax benefits.';
+h+='</div></div>';
+
+// 457(b)
+h+='<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);margin-bottom:10px;border-left:3px solid var(--am)">';
+h+='<div style="font-size:14px;font-weight:700;color:var(--wh);margin-bottom:6px">457(b)</div>';
+h+='<div style="font-size:12px;color:var(--br);line-height:1.8">';
+h+='<b style="color:var(--ac)">What it is:</b> A retirement plan offered by <b>state and local government employers</b> and some nonprofits. It looks and feels like a 401(k)/403(b), but it has one massive advantage.<br><br>';
+h+='<b style="color:var(--ac)">Who gets it:</b> Government employees (state, county, city, public universities) and some nonprofit/hospital employees.<br><br>';
+h+='<b style="color:var(--ac)">2025 Limits:</b> $23,500/yr ($31,000 if 50+).<br>';
+h+='<div style="margin:8px 0;padding:10px;background:var(--bg3);border-radius:var(--Rs);border:1px solid var(--am)">';
+h+='<b style="color:var(--am)">THE BIG PERK:</b> No 10% early withdrawal penalty before age 59\u00BD. If you leave your employer, you can access this money at any age without the 10% penalty that 401(k) and 403(b) plans charge. You still owe income tax, but no penalty. This makes the 457(b) the most flexible retirement account available.</div><br>';
+h+='<b style="color:var(--wh)">Can you have both a 403(b) AND a 457(b)?</b><br>';
+h+='Some employers - especially hospitals and government entities - offer both. If yours does, this is a <b style="color:var(--ac)">massive opportunity</b> most people don\'t realize they have. The limits are <b>separate</b>. You can max both: $23,500 into the 403(b) + $23,500 into the 457(b) = <b style="color:var(--ac)">$47,000 per year</b> in tax-advantaged retirement savings. Not every institution offers this, but if yours does, take full advantage.';
+h+='</div></div>';
+
+// 403(b) vs 457(b) comparison
+h+='<div style="padding:12px;background:var(--bg3);border-radius:var(--Rs);margin-bottom:10px">';
+h+='<div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">403(b) vs 457(b) - SIDE BY SIDE</div>';
+h+='<div class="tw"><table class="tbl"><thead><tr><th></th><th>403(b)</th><th>457(b)</th></tr></thead><tbody>';
+h+='<tr><td style="color:var(--wh)">Offered by</td><td>Nonprofits, hospitals, schools</td><td>Government, some nonprofits</td></tr>';
+h+='<tr><td style="color:var(--wh)">2025 Limit</td><td>$23,500</td><td>$23,500</td></tr>';
+h+='<tr><td style="color:var(--wh)">Employer Match</td><td>Common</td><td>Less common</td></tr>';
+h+='<tr><td style="color:var(--wh)">Early Withdrawal Penalty</td><td style="color:var(--rd)">10% before 59\u00BD</td><td style="color:var(--ac)">No penalty</td></tr>';
+h+='<tr><td style="color:var(--wh)">Roth Option</td><td>Yes</td><td>Yes</td></tr>';
+h+='<tr><td style="color:var(--wh)">Loan Provision</td><td>Usually yes</td><td>Usually no</td></tr>';
+h+='<tr><td style="color:var(--wh)">Stack with other plan?</td><td>Yes, with 457(b)</td><td>Yes, with 403(b) or 401(k)</td></tr>';
+h+='</tbody></table></div>';
+h+='<div style="font-size:11px;color:var(--br);margin-top:8px;line-height:1.6"><b style="color:var(--wh)">Which should you prioritize?</b> If your employer matches on the 403(b), always contribute enough to get the full match first - that is free money. After that, the 457(b)\'s no-penalty withdrawal makes it more flexible. If you can afford to max both, do both. $47,000/yr in tax-advantaged space is hard to beat.</div>';
+h+='</div>';
+
+// Solo 401(k)
+h+='<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);margin-bottom:10px;border-left:3px solid var(--ac)">';
+h+='<div style="font-size:14px;font-weight:700;color:var(--wh);margin-bottom:6px">Solo 401(k)</div>';
+h+='<div style="font-size:12px;color:var(--br);line-height:1.8">';
+h+='<b style="color:var(--ac)">What it is:</b> A 401(k) designed for self-employed individuals or business owners with no employees (other than a spouse). You act as both the employee AND the employer, so you can contribute on both sides.<br><br>';
+h+='<b style="color:var(--ac)">Who gets it:</b> Freelancers, consultants, sole proprietors, single-member LLCs, S-Corp owners with no W-2 employees.<br><br>';
+h+='<b style="color:var(--ac)">2025 Limits:</b> Up to $69,000/yr ($76,500 if 50+). Employee side: $23,500. Employer side: up to 25% of compensation.<br>';
+h+='<b style="color:var(--ac)">Withdrawal:</b> Same as 401(k) - age 59\u00BD, 10% penalty for early withdrawal.';
+h+='</div></div>';
+
+// --- TRADITIONAL VS ROTH ---
+h+='<div style="font-size:11px;font-weight:700;color:var(--ac);margin:16px 0 10px">TRADITIONAL vs ROTH - WITHIN YOUR RETIREMENT ACCOUNT</div>';
+h+='<div style="font-size:12px;color:var(--br);line-height:1.8;margin-bottom:10px">Most 401(k), 403(b), and 457(b) plans now offer both a Traditional and Roth option. This is not a different account - it is a choice within the same plan. Here is the difference:</div>';
+
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">';
+// Traditional card
+h+='<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border-top:3px solid var(--am)">';
+h+='<div style="font-size:13px;font-weight:700;color:var(--am);margin-bottom:6px">Traditional (Pre-Tax)</div>';
+h+='<div style="font-size:11px;color:var(--br);line-height:1.7">';
+h+='Tax break <b>now</b>. Contributions reduce your taxable income today. You pay income tax when you withdraw in retirement.<br><br>';
+h+='<b style="color:var(--wh)">Example:</b> You earn $200K. You put $23,500 into Traditional. Your taxable income drops to $176,500. At a 32% bracket, that saves you roughly <b style="color:var(--ac)">$7,520 on this year\'s tax bill</b>.<br><br>';
+h+='<b style="color:var(--am)">Best for:</b> High-income earners. The higher your tax bracket now, the more valuable the immediate deduction.';
+h+='</div></div>';
+// Roth card
+h+='<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border-top:3px solid var(--ac)">';
+h+='<div style="font-size:13px;font-weight:700;color:var(--ac);margin-bottom:6px">Roth (After-Tax)</div>';
+h+='<div style="font-size:11px;color:var(--br);line-height:1.7">';
+h+='No tax break now. You pay taxes on the money today. But everything - contributions AND growth - comes out <b>completely tax-free</b> in retirement. No RMDs either. (RMD = Required Minimum Distribution. The IRS forces you to start withdrawing money at age 73 whether you need it or not, and every dollar is taxed as income. Roth has no such requirement - your money can sit and grow tax-free for as long as you want.)<br><br>';
+h+='<b style="color:var(--wh)">Example:</b> You earn $60K. Your effective tax rate is relatively low. You put $10,000 into Roth. You pay tax on it now (not a big hit), and decades of growth come out <b style="color:var(--ac)">100% tax-free</b>.<br><br>';
+h+='<b style="color:var(--ac)">Best for:</b> Anyone who wants tax-free growth - early career professionals, mid-career earners. You do not have to be in a low bracket to benefit from Roth.';
+h+='</div></div>';
+h+='</div>';
+
+// My take on Trad vs Roth
+h+='<div style="padding:10px;background:var(--bg3);border-radius:var(--Rs);margin-bottom:10px">';
+h+='<div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:6px">WHAT I WOULD DO</div>';
+h+='<div style="font-size:12px;color:var(--br);line-height:1.8">';
+h+='<div style="font-size:11px;color:var(--mt);font-style:italic;margin-bottom:10px">These are rough ballpark guidelines. Depending on your specific situation - debt, expenses, surplus cash year over year, family obligations - the right answer may be different. Everyone\'s situation is unique. This is just a starting framework.</div>';
+
+h+='<div style="margin:8px 0;padding:10px;background:var(--bg4);border-radius:var(--Rs)">';
+h+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="color:var(--mt)">Under $100K</span><b style="color:var(--ac)">100% Roth</b></div>';
+h+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="color:var(--mt)">$100K - $200K</span><b style="color:var(--ac)">Lean Roth, or start mixing</b></div>';
+h+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="color:var(--mt)">$200K - $400K</span><b style="color:var(--am)">50/50 Split</b></div>';
+h+='<div style="display:flex;justify-content:space-between;padding:6px 0"><span style="color:var(--mt)">$400K+</span><b style="color:var(--am)">Traditional + some Roth</b></div>';
+h+='</div>';
+
+h+='<b style="color:var(--wh)">Under $100K:</b> Roth, no question. Your tax bill is not that high right now, so the Traditional deduction does not save you much. Lock in tax-free growth for decades.<br><br>';
+h+='<b style="color:var(--wh)">$100K - $200K:</b> Still lean Roth, or start mixing. You are in the 22-24% bracket. That is not high enough to make the Traditional deduction life-changing. Roth is still very competitive here.<br><br>';
+h+='<b style="color:var(--wh)">$200K - $400K:</b> This is where the 50/50 split makes real sense. You are in the 32-35% brackets. The Traditional deduction saves you real money, but you also want tax-free money in retirement. Split your contributions half Traditional, half Roth. Best of both worlds.<br><br>';
+h+='<b style="color:var(--wh)">$400K+:</b> Traditional gives you the biggest deduction at 35-37%. But if you have surplus cash, <b style="color:var(--ac)">mix in Roth</b>. You can afford the tax hit now, and you will thank yourself in retirement. Every dollar you put in Roth is a dollar the IRS will never touch again.<br><br>';
+
+
+h+='</div></div>';
+
+// --- OTHER PLANS ---
+h+='<div style="font-size:11px;font-weight:700;color:var(--ac);margin:16px 0 10px">OTHER RETIREMENT PLANS</div>';
+
+// Pension
+h+='<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);margin-bottom:10px;border-left:3px solid var(--am)">';
+h+='<div style="font-size:14px;font-weight:700;color:var(--wh);margin-bottom:6px">Pension (Defined Benefit Plan)</div>';
+h+='<div style="font-size:12px;color:var(--br);line-height:1.8">';
+h+='<b style="color:var(--ac)">What it is:</b> Your employer promises to pay you a specific monthly amount for the rest of your life when you retire. The amount is usually based on a formula: <b>years of service x a percentage x your salary</b>. You do not choose investments, you do not manage anything. Your employer funds it and takes on the investment risk.<br><br>';
+h+='<b style="color:var(--wh)">Simple example:</b> You work at a hospital for 25 years. Your average salary is $115,000. The pension formula is 1.5% per year of service. Your monthly pension = 25 x 1.5% x $115,000 / 12 = <b style="color:var(--ac)">$3,594/month for life</b>. That is $43,125/year, guaranteed, every year, until you die.<br><br>';
+h+='<b style="color:var(--ac)">Who gets it:</b> Government employees, union workers, some hospital systems, some large corporations. Pensions are becoming rare in the private sector but are still common in healthcare and government.<br><br>';
+h+='<div style="padding:8px;background:var(--rdd);border:1px solid rgba(255,82,82,.12);border-radius:var(--Rs);margin:6px 0"><b style="color:var(--rd)">Do not rely on your pension alone.</b> A pension is a great foundation, but it is rarely enough to maintain your lifestyle in retirement. Most pensions replace 30-50% of your pre-retirement income at best. You should always invest on top of your pension - max your 403(b), open a Roth IRA, build a brokerage account. Think of the pension as a floor, not a ceiling.</div>';
+h+='</div></div>';
+
+// Cash Balance Plan
+h+='<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);margin-bottom:10px;border-left:3px solid var(--am)">';
+h+='<div style="font-size:14px;font-weight:700;color:var(--wh);margin-bottom:6px">Cash Balance Plan</div>';
+h+='<div style="font-size:12px;color:var(--br);line-height:1.8">';
+h+='<b style="color:var(--ac)">What it is:</b> A cash balance plan is technically a type of pension, but it looks and feels different. Instead of promising you a monthly payment for life, your employer gives you what looks like an <b>account with a balance</b> - like a 401(k) balance. Every year, your employer credits your account with a set amount (a percentage of your salary) and a guaranteed interest rate.<br><br>';
+h+='<b style="color:var(--wh)">Why it confuses people:</b> You log into your benefits portal and see a balance - maybe $45,000, maybe $120,000. It looks like a 401(k). But you did not contribute that money. Your employer did. And unlike a 401(k), you do not pick the investments. The balance grows at a guaranteed rate (often 3-5%) set by your employer. It is your employer\'s money they are setting aside for you.<br><br>';
+h+='<b style="color:var(--ac)">What happens when you leave or retire:</b> You can take the balance as a <b>lump sum</b> (roll it into an IRA) or convert it into a monthly annuity payment. Most people take the lump sum and roll it over so they control the investments.<br><br>';
+h+='<b style="color:var(--wh)">Key things to know:</b><br>';
+h+='- You do not contribute to it. Your employer funds it entirely.<br>';
+h+='- The balance you see is yours, but it grows at whatever rate your employer set - not market returns.<br>';
+h+='- If you leave before you are vested (usually 3-5 years), you may forfeit some or all of it.<br>';
+h+='- It is essentially free retirement money on top of everything else you are doing.<br><br>';
+h+='<b style="color:var(--ac)">If you have one:</b> Check your vesting schedule. Once vested, that balance is yours. It is a nice bonus on top of your 403(b)/401(k) contributions - think of it as your employer investing for your retirement without you having to do anything.';
+h+='</div></div>';
+
+
+
+h+='</div>'; // close card
+
 document.getElementById('acctRes').innerHTML=h;
 }
 document.addEventListener('DOMContentLoaded',function(){
@@ -970,7 +1131,7 @@ document.addEventListener('DOMContentLoaded',function(){
   // Run all on load
   // NW rate toggle buttons
   document.querySelectorAll('.nwrg button').forEach(function(b){b.addEventListener('click',function(){b.parentElement.querySelectorAll('button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');runNW()})});
-  runSL();runCalc();runRet();runNW();runTax();runSC();runCmp();buildRules();buildAccts();
+  runDual();runSL();runCalc();runRet();runNW();runTax();runSC();runCmp();buildRules();buildAccts();
 });
 
 </script>
