@@ -683,9 +683,7 @@ footer a { color: var(--ac); text-decoration:none; }
     <div class="copy-section">
       <h4 style="color:#fff; font-size:18px;">&#x1F4CB; Copy the Number Below Into Part B</h4>
       <p style="font-size:14px; color:#fff; margin-bottom:10px;">This is your requested full market value. Enter this exact number in Part B of the AROW form. No dollar signs, no decimals, no commas — just the number.</p>
-      <div class="copy-box" id="partb-box" style="border-color:var(--gold); background:rgba(255,217,61,0.06);">
-        <span id="partb-text" style="color:#fff; font-size:22px;">—</span>
-      </div>
+<div class="copy-box" id="partb-box" style="border-color:var(--gold); background:rgba(255,217,61,0.06);"><span id="partb-text" style="color:#fff; font-size:22px;">—</span></div>
       <div class="tip" style="margin-top:14px;">
         <strong>Important:</strong> The number you put in Part B is your <em>floor</em>. ARC cannot reduce your assessment below what you request. This is not a negotiating starting point — enter the number the calculator gives you.
       </div>
@@ -695,9 +693,7 @@ footer a { color: var(--ac); text-decoration:none; }
     <div class="copy-section">
       <h4 style="color:#fff; font-size:18px;">&#x1F4DD; Copy the Statement Below Into Part D</h4>
       <p style="font-size:14px; color:#fff; margin-bottom:10px;">Paste everything below into the “Other Facts” text box in Part D of your AROW application.</p>
-      <div class="copy-box" id="partd-box" style="border-color:var(--ac); background:rgba(78,205,196,0.06);">
-        <span id="partd-text" style="color:#fff;">Enter both values above and your Part D statement will appear here.</span>
-      </div>
+<div class="copy-box" id="partd-box" style="border-color:var(--ac); background:rgba(78,205,196,0.06);"><span id="partd-text" style="color:#fff;">Enter both values above and your Part D statement will appear here.</span></div>
     </div>
   </div>
 </section>
@@ -1036,7 +1032,7 @@ function autoCalculate() {
 
   document.getElementById('partb-text').textContent = fmt(partB);
 
-  const partDText = 'My home at the correct LOA of .00053 is being valued at ' + fmtDollar(countyFMV) + '. The first five AROW comps indicate a fair market value of ' + fmtDollar(wasp) + ', which at the correct level of assessment .00053 equals ' + fmt(correctAV) + '. Please review and revise. Thank you.';
+  const partDText = 'My house at the correct LOA of .00053 is being valued at ' + fmtDollar(countyFMV) + '. The first five AROW comps indicate a fair market value of ' + fmtDollar(wasp) + ', which at the correct level of assessment .00053 equals ' + fmt(correctAV) + '. Please review and revise. Thank you.';
   document.getElementById('partd-text').textContent = partDText;
 
   var scrollY = window.scrollY;
