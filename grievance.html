@@ -453,7 +453,8 @@ footer a { color: var(--ac); text-decoration:none; }
 .site-links a{padding:6px 14px;font-size:11.5px;font-weight:600;color:var(--mt);text-decoration:none;border-radius:var(--Rs);transition:all .2s;white-space:nowrap;font-family:var(--sans)}
 .site-links a:hover{color:var(--tx);background:var(--bg4)}
 .site-links a.active{color:var(--ac);background:var(--acd)}
-@media(max-width:480px){.site-logo{font-size:13px}.site-links a{font-size:10px;padding:5px 10px}}
+@media(max-width:600px){.site-nav{height:auto;padding:8px 16px}.site-nav-inner{flex-direction:column;gap:6px}.site-logo{font-size:13px}.site-links{justify-content:center}.site-links a{font-size:10px;padding:5px 10px}}
+@media(max-width:480px){.site-links a{font-size:9.5px;padding:4px 8px}}
 </style>
 </head>
 <body>
@@ -1038,7 +1039,9 @@ function autoCalculate() {
   const partDText = `When the correct Level of Assessment of .0053 is applied, my home's assessed value of ${fmt(tav)} implies a fair market value of ${fmtDollar(countyFMV)}. I could never sell my home for ${fmtDollar(countyFMV)}. The first 5 AROW comparable sales indicate a fair market value of ${fmtDollar(wasp)}, which at the correct LOA of .00053 should result in an assessed value of ${fmt(correctAV)} \u2014 a reduction from the current ${fmt(tav)}. Please review and revise accordingly. Thank you.`;
   document.getElementById('partd-text').textContent = partDText;
 
+  var scrollY = window.scrollY;
   renderChart();
+  window.scrollTo(0, scrollY);
   updateProgress();
   autoCalcSavings();
 }
@@ -1053,7 +1056,7 @@ function renderChart() {
       datasets: [{
         data: [STATE.countyFMV, STATE.wasp, STATE.gap],
         backgroundColor: ['rgba(255,82,82,0.25)', 'rgba(0,212,116,0.25)', 'rgba(255,193,7,0.25)'],
-        borderColor: ['#ff5252' : '#ff5252', '#00d474', '#ffc107'],
+        borderColor: ['#ff5252', '#00d474', '#ffc107'],
         borderWidth: 2,
         borderRadius: 8,
       }]
