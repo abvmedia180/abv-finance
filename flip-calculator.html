@@ -55,8 +55,11 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 .qsplit{display:inline-flex;padding:6px 12px;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--Rs);font-size:11px;font-weight:600;color:var(--mt);cursor:pointer;transition:all .2s;font-family:var(--sans)}
 .qsplit:hover{border-color:var(--ac);color:var(--ac)}
 .qsplit.active{background:var(--ac);border-color:var(--ac);color:var(--bg)}
-input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:var(--bg4);outline:none;border:1px solid var(--bd)}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:4px;background:var(--ac);cursor:pointer;border:2px solid var(--bg)}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:var(--bg4);outline:none;border:1px solid var(--bd);cursor:pointer;transition:background .15s}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:6px;background:var(--ac);cursor:grab;border:2px solid var(--bg);box-shadow:0 2px 8px rgba(0,212,116,.3);transition:transform .1s,box-shadow .1s}
+input[type=range]::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.15);box-shadow:0 2px 12px rgba(0,212,116,.5)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:6px;background:var(--ac);cursor:grab;border:2px solid var(--bg);box-shadow:0 2px 8px rgba(0,212,116,.3)}
+input[type=range]::-moz-range-thumb:active{cursor:grabbing;transform:scale(1.15)}
 .sec{display:none;animation:fu .3s ease}.sec.a{display:block}
 @keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .summary-bar{position:sticky;bottom:0;z-index:50;background:rgba(8,10,15,.95);backdrop-filter:blur(16px);border-top:1px solid var(--bd);padding:8px 16px}
@@ -89,7 +92,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .site-links a{padding:6px 14px;font-size:11.5px;font-weight:600;color:var(--mt);text-decoration:none;border-radius:var(--Rs);transition:all .2s;white-space:nowrap;font-family:var(--sans)}
 .site-links a:hover{color:var(--tx);background:var(--bg4)}
 .site-links a.active{color:var(--ac);background:var(--acd)}
-@media(max-width:480px){.site-logo{font-size:13px}.site-links a{font-size:10px;padding:5px 10px}}
+@media(max-width:600px){.site-nav{height:auto;padding:8px 16px}.site-nav-inner{flex-direction:column;gap:6px}.site-logo{font-size:13px}.site-links{justify-content:center}.site-links a{font-size:10px;padding:5px 10px}}
+@media(max-width:480px){.site-links a{font-size:9.5px;padding:4px 8px}}
 </style></head>
 <body>
 <div class="site-nav"><div class="site-nav-inner">
@@ -398,24 +402,43 @@ function adjustSplits(changedIdx, newVal){
   for(let i=invCount;i<4;i++)splits[i]=0;
 }
 
+function updateSplitDisplay(dragIdx){
+  let p=getNum('flipProfit');
+  let tot=splits.slice(0,invCount).reduce((a,b)=>a+b,0);
+  // Update stacked bar segments
+  var barSegs=document.querySelectorAll('#splitControls .split-bar-seg');
+  barSegs.forEach(function(seg,i){if(i<invCount)seg.style.width=splits[i]+'%'});
+  // Update slider values and text (skip the one being dragged)
+  for(let i=0;i<invCount;i++){
+    var slider=document.getElementById('splitRange'+i);
+    var numInput=document.getElementById('splitNum'+i);
+    var spanEl=document.getElementById('splitLabel'+i);
+    if(slider&&i!==dragIdx)slider.value=splits[i];
+    if(numInput)numInput.value=splits[i];
+    if(spanEl)spanEl.textContent='% · '+$f(p*splits[i]/100);
+  }
+  let w=document.getElementById('splitWarning');
+  if(tot!==100){w.style.display='block';w.textContent='⚠️ '+tot+'% allocated'}else w.style.display='none';
+}
+
 function buildSplitUI(){
   let p=getNum('flipProfit');
   let tot=splits.slice(0,invCount).reduce((a,b)=>a+b,0);
-  
+
   // Visual: stacked bar showing split allocation
   let barH='<div style="display:flex;height:8px;border-radius:4px;overflow:hidden;margin-bottom:16px;background:var(--bg4)">';
   for(let i=0;i<invCount;i++){
-    if(splits[i]>0)barH+='<div style="width:'+splits[i]+'%;background:'+INV_C[i]+';transition:width .2s" title="'+getLabel(i)+': '+splits[i]+'%"></div>';
+    if(splits[i]>0)barH+='<div class="split-bar-seg" style="width:'+splits[i]+'%;background:'+INV_C[i]+';transition:width .2s" title="'+getLabel(i)+': '+splits[i]+'%"></div>';
   }
   barH+='</div>';
-  
+
   let h=barH+'<div style="display:grid;grid-template-columns:repeat('+invCount+',1fr);gap:14px">';
   for(let i=0;i<invCount;i++){
     h+='<div><label style="font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:'+INV_C[i]+';margin-bottom:4px;display:block">'+getLabel(i)+'</label>';
-    h+='<input type="range" min="0" max="100" value="'+splits[i]+'" style="accent-color:'+INV_C[i]+'" oninput="adjustSplits('+i+',+this.value);buildSplitUI();renderResults()">';
+    h+='<input type="range" id="splitRange'+i+'" min="0" max="100" value="'+splits[i]+'" style="accent-color:'+INV_C[i]+'" oninput="adjustSplits('+i+',+this.value);updateSplitDisplay('+i+');renderResults()" onchange="buildSplitUI();renderResults()">';
     h+='<div style="display:flex;align-items:center;gap:6px;margin-top:4px">';
-    h+='<input type="number" min="0" max="100" value="'+splits[i]+'" class="ninput" style="width:56px;text-align:center;padding:6px" onchange="adjustSplits('+i+',+this.value);buildSplitUI();renderResults()">';
-    h+='<span style="font-size:11px;color:var(--mt)">% · '+$f(p*splits[i]/100)+'</span></div></div>';
+    h+='<input type="number" id="splitNum'+i+'" min="0" max="100" value="'+splits[i]+'" class="ninput" style="width:56px;text-align:center;padding:6px" onchange="adjustSplits('+i+',+this.value);buildSplitUI();renderResults()">';
+    h+='<span id="splitLabel'+i+'" style="font-size:11px;color:var(--mt)">% · '+$f(p*splits[i]/100)+'</span></div></div>';
   }
   h+='</div>';
   document.getElementById('splitControls').innerHTML=h;
