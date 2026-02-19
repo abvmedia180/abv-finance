@@ -109,6 +109,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 @media(max-width:600px){
 .con div[style*='repeat(3,1fr)']{grid-template-columns:1fr!important}
 .rg{grid-template-columns:1fr!important}
+.hero h1{display:none}
+.hero .htag{margin-bottom:8px}
 }
 input[type=range]{height:6px;border-radius:3px}
 @media(max-width:480px){
@@ -171,7 +173,7 @@ div[style*='grid-template-columns:repeat(auto-fit']{grid-template-columns:1fr!im
 <div class="htag"><div class="pulse-dot"></div> Financial Intelligence Platform</div>
 <h1>ABV <em>Financial Intelligence</em></h1>
 <p>Tax analysis · Retirement projections · Net worth modeling · Investment education</p>
-<div class="hdiscl">⚠️ Educational purposes only. Not financial advice. Consult a licensed professional.<br>Tax laws as of February 2026.</div>
+<div class="hdiscl">⚠️ Educational purposes only. Not financial advice. Consult a licensed professional. Tax laws as of February 2026.</div>
 </div>
 
 <div class="nb"><div class="ni">
@@ -1158,13 +1160,12 @@ document.addEventListener('DOMContentLoaded',function(){
 
 </script>
 <div id="discModal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box">
-<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:12px;max-width:520px;width:100%;padding:32px;text-align:center">
-<div style="font-family:var(--disp);font-size:24px;font-weight:700;color:var(--wh);margin-bottom:16px">ABV Financial Intelligence</div>
-<div style="font-size:13px;color:var(--br);line-height:1.8;text-align:left;margin-bottom:20px">
-I built this to help friends, family, and anyone who wants to learn about personal finance, investing, real estate, and taxes.<br><br>
-This site has three sections — <b style="color:var(--ac)">Personal Finance</b>, <b style="color:var(--ac)">Tax Grievance Guide</b>, and <b style="color:var(--ac)">Real Estate Calculators</b> — accessible from the navigation bar at the top.<br><br>
-<b style="color:var(--wh)">This is not financial, investment, tax, or legal advice.</b> Everything here is for educational purposes only. Projections are estimates. Past performance does not guarantee future results. Consult a qualified professional before making financial, tax, or real estate decisions.<br><br>
-The difference between paying attention and not can be <b style="color:var(--ac)">millions of dollars over your lifetime</b>. Play with the numbers. See for yourself.
+<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:12px;max-width:520px;width:100%;padding:24px 28px;text-align:center">
+<div style="font-family:var(--disp);font-size:22px;font-weight:700;color:var(--wh);margin-bottom:12px">ABV Financial Intelligence</div>
+<div style="font-size:12.5px;color:var(--br);line-height:1.7;text-align:left;margin-bottom:16px">
+I built this to help anyone learn about personal finance, investing, real estate, and taxes. Explore three sections from the top nav: <b style="color:var(--ac)">Personal Finance</b>, <b style="color:var(--ac)">Tax Grievance Guide</b>, and <b style="color:var(--ac)">Real Estate Calculators</b>.<br><br>
+<b style="color:var(--wh)">This is not financial, investment, tax, or legal advice.</b> Everything here is for educational purposes only. Consult a qualified professional before making any decisions.<br><br>
+The difference between paying attention and not can be <b style="color:var(--ac)">millions of dollars over your lifetime</b>. Play with the numbers.
 </div>
 <button onclick="document.getElementById('discModal').style.display='none'" style="background:var(--ac);color:#000000;border:none;padding:12px 28px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--body)">I Agree - This Is Not Financial or Legal Advice<br><span style="font-size:11px;font-weight:400;opacity:.8">Wow, Abe is really a nice guy huh?</span></button>
 </div>
