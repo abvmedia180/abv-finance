@@ -186,6 +186,7 @@ div[style*='grid-template-columns:repeat(auto-fit']{grid-template-columns:1fr!im
 <div class="nt" data-s="statecomp">State Comparison</div>
 <div class="nt" data-s="compare">Compare Scenarios</div>
 <div class="nt" data-s="rules">Abe's Rules</div>
+<div class="nt" data-s="w4">W-4 Calculator</div>
 </div></div>
 
 <div class="con">
@@ -526,6 +527,59 @@ div[style*='grid-template-columns:repeat(auto-fit']{grid-template-columns:1fr!im
 <p class="ts">Plain-English breakdown of retirement accounts, tax advantages, and my personal investment approach.</p>
 <div id="acctRes"></div>
 </div>
+<!-- W-4 CALCULATOR -->
+<div class="sec" id="sec-w4">
+<div class="tl">Paycheck Optimizer</div><h2 class="tl2">W-4 Withholding Calculator</h2>
+<p class="ts">Find out if you're overpaying or underpaying taxes, and get the exact W-4 values to fix it. Based on 2026 IRS Publication 15-T.</p>
+
+<div class="card">
+<div class="ct">Your Income & Filing Status</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<div class="igrp"><label>Filing Status</label><select class="nselect" id="w4FS" onchange="runW4()"><option value="single">Single</option><option value="mfj">Married Filing Jointly</option><option value="mfs">Married Filing Separately</option><option value="hoh">Head of Household</option></select></div>
+<div class="igrp"><label>Pay Frequency</label><select class="nselect" id="w4Freq" onchange="runW4()"><option value="52">Weekly</option><option value="26" selected>Biweekly (Every 2 Weeks)</option><option value="24">Semimonthly (Twice a Month)</option><option value="12">Monthly</option></select></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<div class="igrp"><label>Gross Pay Per Paycheck ($)</label><input type="number" class="ninput" id="w4Gross" value="3846" min="0" step="1" oninput="runW4()">
+<div style="font-size:10px;color:var(--mt);margin-top:4px">Before any deductions. <span id="w4AnnualLabel" style="color:var(--ac)">= $100,000/year</span></div></div>
+<div class="igrp"><label>State</label><select class="nselect" id="w4State" onchange="runW4()"><option value="NY">New York</option><option value="NJ">New Jersey</option><option value="CA">California</option><option value="FL">Florida (No State Tax)</option><option value="TX">Texas (No State Tax)</option></select></div>
+</div>
+<div id="w4NYCwrap"><div class="dchk" id="w4NYC" style="margin-bottom:0"><input type="checkbox"><div class="cm"></div><span style="font-size:12px">I live in NYC (adds city tax)</span></div></div>
+</div>
+
+<div class="card">
+<div class="ct">Your Household</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<div class="igrp"><label>Qualifying Children Under 17</label><input type="number" class="ninput" id="w4Kids" value="0" min="0" max="20" oninput="runW4()">
+<div style="font-size:10px;color:var(--mt);margin-top:4px">$2,200 credit each (2026)</div></div>
+<div class="igrp"><label>Other Dependents</label><input type="number" class="ninput" id="w4OtherDep" value="0" min="0" max="20" oninput="runW4()">
+<div style="font-size:10px;color:var(--mt);margin-top:4px">$500 credit each</div></div>
+</div>
+<div id="w4SpouseWrap" style="display:none">
+<div class="dchk" id="w4SpouseWorks" style="margin-bottom:8px"><input type="checkbox"><div class="cm"></div><span style="font-size:12px">My spouse also works</span></div>
+<div id="w4SpouseIncWrap" style="display:none">
+<div class="igrp"><label>Spouse's Annual Gross Income ($)</label><input type="number" class="ninput" id="w4SpouseInc" value="0" min="0" step="1000" oninput="runW4()"></div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="ct">Deductions & Other Income</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<div class="igrp"><label>Other Non-Job Income ($/year)</label><input type="number" class="ninput" id="w4OtherInc" value="0" min="0" step="100" oninput="runW4()">
+<div style="font-size:10px;color:var(--mt);margin-top:4px">Interest, dividends, side income without withholding</div></div>
+<div class="igrp"><label>401(k) / Retirement Contributions ($/year)</label><input type="number" class="ninput" id="w4Retire" value="0" min="0" step="500" oninput="runW4()">
+<div style="font-size:10px;color:var(--mt);margin-top:4px">Pre-tax contributions reduce your taxable income</div></div>
+</div>
+<div class="dchk" id="w4Itemize" style="margin-bottom:8px"><input type="checkbox"><div class="cm"></div><span style="font-size:12px">I will itemize deductions (most people don't)</span></div>
+<div id="w4ItemizeWrap" style="display:none">
+<div class="igrp"><label>Total Itemized Deductions ($)</label><input type="number" class="ninput" id="w4ItemAmt" value="0" min="0" step="1000" oninput="runW4()">
+<div style="font-size:10px;color:var(--mt);margin-top:4px">Mortgage interest, state/local taxes (up to $10K), charitable gifts, etc.</div></div>
+</div>
+</div>
+
+<div id="w4Results"></div>
+</div>
+
 <footer class="ft"><div class="v">ABV Financial Intelligence Platform V3.1 · Educational Use Only</div>
 <div class="d">This platform is for informational and educational purposes only. It is not financial, investment, tax, or legal advice. All projections are estimates based on simplified assumptions. Past performance does not guarantee future results. Consult a qualified professional before making financial decisions.<br>Built by Abe Varughese</div></footer>
 </div>
@@ -1141,6 +1195,254 @@ h+='</div>'; // close card
 
 document.getElementById('acctRes').innerHTML=h;
 }
+// ========== W-4 CALCULATOR (2026) ==========
+// 2026 Federal filing brackets
+var W4_FED={single:[[0,12400,.10],[12400,50400,.12],[50400,105700,.22],[105700,201775,.24],[201775,256225,.32],[256225,640600,.35],[640600,1e15,.37]],mfj:[[0,24800,.10],[24800,100800,.12],[100800,211400,.22],[211400,403550,.24],[403550,512450,.32],[512450,768700,.35],[768700,1e15,.37]],mfs:[[0,12400,.10],[12400,50400,.12],[50400,105700,.22],[105700,201775,.24],[201775,256225,.32],[256225,384350,.35],[384350,1e15,.37]],hoh:[[0,17700,.10],[17700,67450,.12],[67450,105700,.22],[105700,201775,.24],[201775,256200,.32],[256200,640600,.35],[640600,1e15,.37]]};
+// 2026 Standard deductions (filing)
+var W4_SD={single:16100,mfj:32200,mfs:16100,hoh:24150};
+// 2026 Pub 15-T withholding standard deductions
+var W4_WH_SD={single:8600,mfj:12900,mfs:8600,hoh:11275};
+// 2026 Pub 15-T percentage method tables [floor, ceiling, base_tax, rate]
+var W4_WH={single:[[0,7500,0,.00],[7500,19900,0,.10],[19900,57900,1240,.12],[57900,113200,5800,.22],[113200,209275,17966,.24],[209275,263725,41024,.32],[263725,648100,58448,.35],[648100,1e15,192979.25,.37]],mfj:[[0,19300,0,.00],[19300,44100,0,.10],[44100,120100,2480,.12],[120100,230700,11600,.22],[230700,422850,35932,.24],[422850,531750,82048,.32],[531750,788000,116896,.35],[788000,1e15,206583.50,.37]],hoh:[[0,15550,0,.00],[15550,33250,0,.10],[33250,83000,1770,.12],[83000,121250,7740,.22],[121250,217300,16155,.24],[217300,271750,39207,.32],[271750,656150,56631,.35],[656150,1e15,191171,.37]]};
+W4_WH.mfs=W4_WH.single;
+// 2026 FICA
+var W4_FICA={ssR:.062,ssC:184500,medR:.0145,addMedR:.009,addMedTh:{single:200000,mfj:250000,mfs:125000,hoh:200000}};
+// 2026 State brackets (NY, NJ, CA only - FL/TX have no state tax)
+var W4_ST={
+NY:{n:'New York',sd:{single:8000,mfj:16050,mfs:8000,hoh:11200},single:[[0,8500,.039],[8500,11700,.044],[11700,13900,.0515],[13900,80650,.054],[80650,96800,.059],[96800,107650,.0703],[107650,157650,.0753],[157650,215400,.064],[215400,265400,.1144],[265400,1077550,.0735],[1077550,5000000,.1045],[5000000,25000000,.111],[25000000,1e15,.117]],mfj:[[0,8500,.039],[8500,11700,.044],[11700,13900,.0515],[13900,80650,.054],[80650,96800,.059],[96800,107650,.0657],[107650,157650,.0707],[157650,211550,.0801],[211550,323200,.064],[323200,373200,.1349],[373200,1077550,.0735],[1077550,2155350,.0765],[2155350,5000000,.1045],[5000000,25000000,.111],[25000000,1e15,.117]]},
+NJ:{n:'New Jersey',sd:{},single:[[0,20000,.015],[20000,35000,.02],[35000,40000,.039],[40000,75000,.061],[75000,500000,.07],[500000,1000000,.099],[1000000,1e15,.118]],mfj:[[0,20000,.015],[20000,50000,.02],[50000,70000,.027],[70000,80000,.039],[80000,150000,.061],[150000,500000,.07],[500000,1000000,.099],[1000000,1e15,.118]]},
+CA:{n:'California',sd:{single:5706,mfj:11412,mfs:5706,hoh:5706},single:[[0,11079,.011],[11079,26264,.022],[26264,41452,.044],[41452,57542,.066],[57542,72724,.088],[72724,371479,.1023],[371479,445771,.1133],[445771,742953,.1243],[742953,1000000,.1353],[1000000,1e15,.1463]],mfj:[[0,22158,.011],[22158,52528,.022],[52528,82904,.044],[82904,115084,.066],[115084,145448,.088],[145448,742958,.1023],[742958,891542,.1133],[891542,1000000,.1243],[1000000,1485906,.1353],[1485906,1e15,.1463]]},
+FL:{n:'Florida',flat:0},TX:{n:'Texas',flat:0}};
+var W4_NYC_B=[[0,12000,.03078],[12000,25000,.03762],[25000,50000,.03819],[50000,1e15,.03876]];
+
+function w4CalcBrk(inc,brk){var t=0,bd=[];for(var i=0;i<brk.length;i++){var lo=brk[i][0],hi=brk[i][1],r=brk[i][2];if(inc<=lo)break;var tx=Math.min(inc,hi)-lo,tax=tx*r;if(tax>0)bd.push({lo:lo,hi:Math.min(inc,hi),r:r,tx:tx,tax:tax});t+=tax}return{t:t,bd:bd}}
+
+function w4LookupWH(adjWage,table){
+  if(adjWage<=0)return 0;
+  for(var i=table.length-1;i>=0;i--){
+    if(adjWage>table[i][0]){
+      return table[i][2]+(adjWage-table[i][0])*table[i][3];
+    }
+  }
+  return 0;
+}
+
+function runW4(){
+  var fs=document.getElementById('w4FS').value;
+  var freq=+document.getElementById('w4Freq').value;
+  var grossPP=+document.getElementById('w4Gross').value||0;
+  var stCode=document.getElementById('w4State').value;
+  var kids=+document.getElementById('w4Kids').value||0;
+  var otherDep=+document.getElementById('w4OtherDep').value||0;
+  var otherInc=+document.getElementById('w4OtherInc').value||0;
+  var retire=Math.min(+document.getElementById('w4Retire').value||0,23500);
+  var isNYC=stCode==='NY'&&document.getElementById('w4NYC').classList.contains('checked');
+  var itemize=document.getElementById('w4Itemize').classList.contains('checked');
+  var itemAmt=itemize?(+document.getElementById('w4ItemAmt').value||0):0;
+  var spouseWorks=fs==='mfj'&&document.getElementById('w4SpouseWorks').classList.contains('checked');
+  var spouseInc=spouseWorks?(+document.getElementById('w4SpouseInc').value||0):0;
+
+  // Show/hide conditional fields
+  document.getElementById('w4NYCwrap').style.display=stCode==='NY'?'block':'none';
+  document.getElementById('w4SpouseWrap').style.display=fs==='mfj'?'block':'none';
+  document.getElementById('w4SpouseIncWrap').style.display=spouseWorks?'block':'none';
+  document.getElementById('w4ItemizeWrap').style.display=itemize?'block':'none';
+
+  var annualGross=grossPP*freq;
+  document.getElementById('w4AnnualLabel').textContent='= '+$f(annualGross)+'/year';
+
+  var totalHouseholdInc=annualGross+spouseInc+otherInc;
+
+  // === 1. ACTUAL TAX LIABILITY ===
+  var agi=totalHouseholdInc-retire;
+  var stdDed=W4_SD[fs]||16100;
+  var deduction=Math.max(stdDed,itemAmt);
+  var taxableIncome=Math.max(0,agi-deduction);
+  var fedBrk=W4_FED[fs]||W4_FED.single;
+  var fedResult=w4CalcBrk(taxableIncome,fedBrk);
+  var fedTax=fedResult.t;
+
+  // Child tax credit ($2,200 per child, phases out at $200K single / $400K MFJ)
+  var ctcPhaseout=(fs==='mfj')?400000:200000;
+  var ctcFull=kids*2200+otherDep*500;
+  var ctcReduction=0;
+  if(agi>ctcPhaseout)ctcReduction=Math.floor((agi-ctcPhaseout)/1000)*50;
+  var credits=Math.max(0,ctcFull-ctcReduction);
+  var netFedTax=Math.max(0,fedTax-credits);
+
+  // FICA on employee wages only (not spouse or other income)
+  var ficaGross=annualGross;
+  var ssTax=Math.min(ficaGross,W4_FICA.ssC)*W4_FICA.ssR;
+  var medTax=ficaGross*W4_FICA.medR;
+  var addMedTh=W4_FICA.addMedTh[fs]||200000;
+  var addMed=ficaGross>addMedTh?(ficaGross-addMedTh)*W4_FICA.addMedR:0;
+  var totalFICA=ssTax+medTax+addMed;
+
+  // State tax on total household income
+  var stInfo=W4_ST[stCode];
+  var stateTax=0,stName=stInfo?stInfo.n:stCode;
+  if(stInfo){
+    if(stInfo.flat!==undefined){stateTax=Math.max(0,agi-(stInfo.sd&&stInfo.sd[fs]||0))*stInfo.flat}
+    else{var stTI=Math.max(0,agi-(stInfo.sd&&stInfo.sd[fs]||0));var stBrk=stInfo[fs]||stInfo.single||[];stateTax=w4CalcBrk(stTI,stBrk).t}
+  }
+  var nycTax=0;
+  if(isNYC){nycTax=w4CalcBrk(Math.max(0,agi-8000),W4_NYC_B).t}
+
+  var totalActualTax=netFedTax+totalFICA+stateTax+nycTax;
+
+  // === 2. PROJECTED WITHHOLDING (what current default W-4 does) ===
+  // Pub 15-T percentage method for your job only
+  var whSD=W4_WH_SD[fs]||8600;
+  var adjAnnualWage=Math.max(0,annualGross-whSD);
+  var whTable=W4_WH[fs]||W4_WH.single;
+  var tentativeWH=w4LookupWH(adjAnnualWage,whTable);
+  // Default W-4 has no credits, no 4a/4b/4c
+  var defaultAnnualFedWH=Math.max(0,tentativeWH);
+
+  // Default state withholding estimate (simplified)
+  var defaultStateWH=stateTax; // Approximate: state withholding roughly equals state tax liability
+  var defaultNYCWH=nycTax;
+
+  var defaultTotalWH=defaultAnnualFedWH+totalFICA+defaultStateWH+defaultNYCWH;
+
+  // === 3. OPTIMAL W-4 VALUES ===
+  var optStep3=Math.max(0,credits);
+  var optStep4a=otherInc; // non-job income
+  var optStep4b=itemAmt>stdDed?Math.round(itemAmt-stdDed):0;
+  // Add retirement deduction to 4b since it reduces taxable income
+  if(retire>0)optStep4b+=retire;
+  var optStep2=spouseWorks; // check box if spouse works
+
+  // Calculate what optimal W-4 would withhold
+  var optAdjWage=Math.max(0,annualGross+optStep4a-whSD-optStep4b);
+  if(optStep2){
+    // Step 2 checkbox uses half the SD and narrower brackets - approximate by doubling
+    var halfSD=Math.round(whSD/2);
+    optAdjWage=Math.max(0,annualGross+optStep4a-halfSD-optStep4b);
+  }
+  var optTentativeWH=w4LookupWH(optAdjWage,whTable);
+  var optAnnualFedWH=Math.max(0,optTentativeWH-optStep3);
+
+  // Calculate the remaining gap
+  var targetFedWH=netFedTax;
+  // If spouse works, we only need to withhold our share of federal tax
+  if(spouseWorks&&totalHouseholdInc>0){
+    targetFedWH=Math.round(netFedTax*(annualGross/totalHouseholdInc));
+  }
+  var gap=targetFedWH-optAnnualFedWH;
+  var optStep4c=gap>0?Math.max(0,Math.round(gap/freq)):0;
+  // If we're overwitholding, reduce 4b further or just set 4c to 0
+  if(gap<0)optStep4c=0;
+
+  var optTotalFedWH=optAnnualFedWH+optStep4c*freq;
+
+  // Difference: default vs actual needed
+  var diffDefault=defaultAnnualFedWH-targetFedWH;
+  var diffOptimal=optTotalFedWH-targetFedWH;
+
+  // Per paycheck numbers
+  var ppFedWH=Math.round(optTotalFedWH/freq);
+  var ppStateWH=Math.round(stateTax/freq);
+  var ppNYCWH=Math.round(nycTax/freq);
+  var ppFICA=Math.round(totalFICA/freq);
+  var ppNet=grossPP-ppFedWH-ppStateWH-ppNYCWH-ppFICA;
+
+  var effRate=totalHouseholdInc>0?(totalActualTax/totalHouseholdInc*100):0;
+
+  // === RENDER ===
+  var h='';
+
+  // Verdict card
+  var verdictColor,verdictIcon,verdictText,verdictSub;
+  if(Math.abs(diffDefault)<200){
+    verdictColor='var(--ac)';verdictIcon='';verdictText='Your withholding looks about right';
+    verdictSub='Your current default W-4 is within $200 of your actual tax. No major changes needed.';
+  } else if(diffDefault>0){
+    verdictColor='var(--am)';verdictIcon='';verdictText='You\'re overpaying by '+$f(Math.round(diffDefault))+'/year';
+    verdictSub='That\'s <b style="color:var(--wh)">'+$f(Math.round(diffDefault/freq))+' per paycheck</b> you\'re lending the government at 0% interest. You\'ll get it back as a refund, but you could keep it now.';
+  } else {
+    verdictColor='var(--rd)';verdictIcon='';verdictText='You\'ll owe '+$f(Math.round(Math.abs(diffDefault)))+' at tax time';
+    verdictSub='Your withholding is <b style="color:var(--wh)">'+$f(Math.round(Math.abs(diffDefault)/freq))+' short per paycheck</b>. Update your W-4 to avoid a surprise bill in April.';
+  }
+  h+='<div class="card" style="border-top:3px solid '+verdictColor+'"><div style="text-align:center;padding:16px 0">';
+  h+='<div style="font-size:48px;margin-bottom:8px">'+verdictIcon+'</div>';
+  h+='<div style="font-family:var(--disp);font-size:24px;font-weight:700;color:'+verdictColor+';margin-bottom:8px">'+verdictText+'</div>';
+  h+='<div style="font-size:13px;color:var(--br);max-width:500px;margin:0 auto;line-height:1.7">'+verdictSub+'</div>';
+  h+='</div></div>';
+
+  // Paycheck breakdown
+  h+='<div class="card"><div class="ct">Your Paycheck Breakdown</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">';
+  h+='<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);text-align:center"><div style="font-size:10px;font-weight:700;color:var(--mt)">GROSS PAY</div><div style="font-family:var(--disp);font-size:22px;font-weight:700;color:var(--wh)">'+$f(grossPP)+'</div><div style="font-size:10px;color:var(--mt)">per paycheck</div></div>';
+  h+='<div style="padding:12px;background:var(--acd);border:1px solid var(--ac15);border-radius:var(--Rs);text-align:center"><div style="font-size:10px;font-weight:700;color:var(--ac)">TAKE-HOME</div><div style="font-family:var(--disp);font-size:22px;font-weight:700;color:var(--ac)">'+$f(ppNet)+'</div><div style="font-size:10px;color:var(--ac)">per paycheck</div></div>';
+  h+='</div>';
+  h+='<div class="tw"><table class="tbl"><thead><tr><th>Deduction</th><th>Per Paycheck</th><th>Annual</th><th>% of Gross</th></tr></thead><tbody>';
+  h+='<tr><td style="color:var(--wh)">Federal Income Tax</td><td style="color:var(--rd);font-weight:600">'+$f(ppFedWH)+'</td><td>'+$f(optTotalFedWH)+'</td><td>'+pct2(optTotalFedWH,annualGross)+'</td></tr>';
+  if(stateTax>0)h+='<tr><td style="color:var(--wh)">'+stName+' State Tax</td><td style="color:var(--rd);font-weight:600">'+$f(ppStateWH)+'</td><td>'+$f(Math.round(stateTax))+'</td><td>'+pct2(stateTax,annualGross)+'</td></tr>';
+  if(nycTax>0)h+='<tr><td style="color:var(--wh)">NYC City Tax</td><td style="color:var(--rd);font-weight:600">'+$f(ppNYCWH)+'</td><td>'+$f(Math.round(nycTax))+'</td><td>'+pct2(nycTax,annualGross)+'</td></tr>';
+  h+='<tr><td style="color:var(--wh)">Social Security</td><td style="color:var(--rd);font-weight:600">'+$f(Math.round(ssTax/freq))+'</td><td>'+$f(Math.round(ssTax))+'</td><td>'+pct2(ssTax,annualGross)+'</td></tr>';
+  h+='<tr><td style="color:var(--wh)">Medicare</td><td style="color:var(--rd);font-weight:600">'+$f(Math.round((medTax+addMed)/freq))+'</td><td>'+$f(Math.round(medTax+addMed))+'</td><td>'+pct2(medTax+addMed,annualGross)+'</td></tr>';
+  h+='<tr style="border-top:2px solid var(--bd)"><td style="font-weight:700;color:var(--wh)">Total Deductions</td><td style="color:var(--rd);font-weight:700">'+$f(grossPP-ppNet)+'</td><td style="color:var(--rd);font-weight:700">'+$f(Math.round(totalActualTax))+'</td><td style="font-weight:700">'+pct2(totalActualTax,annualGross)+'</td></tr>';
+  h+='<tr><td style="font-weight:700;color:var(--ac)">You Keep</td><td style="color:var(--ac);font-weight:700">'+$f(ppNet)+'</td><td style="color:var(--ac);font-weight:700">'+$f(Math.round(annualGross-totalActualTax))+'</td><td style="color:var(--ac);font-weight:700">'+pct2(annualGross-totalActualTax,annualGross)+'</td></tr>';
+  h+='</tbody></table></div></div>';
+
+  // What to put on your W-4
+  h+='<div class="card" style="border-top:2px solid var(--ac)"><div class="ct">Exactly What to Put on Your W-4</div>';
+  h+='<div style="font-size:12px;color:var(--br);margin-bottom:16px;line-height:1.7">Take these values to your employer\'s HR or payroll portal (ADP, Gusto, Paychex, Workday, etc.). If your employer only asks for "allowances," that\'s the old system - ask them for the current W-4 form.</div>';
+
+  h+='<div style="border:1px solid var(--bd);border-radius:var(--Rs);overflow:hidden">';
+  // Step 1
+  h+='<div style="padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center">';
+  h+='<div><div style="font-size:10px;font-weight:700;color:var(--ac);margin-bottom:2px">STEP 1 - FILING STATUS</div>';
+  h+='<div style="font-size:12px;color:var(--mt)">How you\'ll file your tax return</div></div>';
+  var fsLabels={single:'Single',mfj:'Married Filing Jointly',mfs:'Married Filing Separately',hoh:'Head of Household'};
+  h+='<div style="font-family:var(--disp);font-size:16px;font-weight:700;color:var(--wh)">'+fsLabels[fs]+'</div></div>';
+  // Step 2
+  h+='<div style="padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;background:'+(optStep2?'var(--acd)':'transparent')+'">';
+  h+='<div><div style="font-size:10px;font-weight:700;color:var(--ac);margin-bottom:2px">STEP 2 - MULTIPLE JOBS / SPOUSE WORKS</div>';
+  h+='<div style="font-size:12px;color:var(--mt)">Check this box if you and your spouse both work</div></div>';
+  h+='<div style="font-family:var(--disp);font-size:16px;font-weight:700;color:'+(optStep2?'var(--ac)':'var(--mt)')+'">'+( optStep2?'Check the Box':'Leave Blank')+'</div></div>';
+  // Step 3
+  h+='<div style="padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;background:'+(optStep3>0?'var(--acd)':'transparent')+'">';
+  h+='<div><div style="font-size:10px;font-weight:700;color:var(--ac);margin-bottom:2px">STEP 3 - CLAIM DEPENDENTS</div>';
+  var step3Explain=[];
+  if(kids>0)step3Explain.push(kids+' child'+(kids>1?'ren':'')+' x $2,200');
+  if(otherDep>0)step3Explain.push(otherDep+' other x $500');
+  h+='<div style="font-size:12px;color:var(--mt)">'+(step3Explain.length>0?step3Explain.join(' + '):'No dependents claimed')+'</div></div>';
+  h+='<div style="font-family:var(--disp);font-size:18px;font-weight:700;color:'+(optStep3>0?'var(--ac)':'var(--mt)')+'">'+$f(optStep3)+'</div></div>';
+  // Step 4a
+  h+='<div style="padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;background:'+(optStep4a>0?'var(--acd)':'transparent')+'">';
+  h+='<div><div style="font-size:10px;font-weight:700;color:var(--ac);margin-bottom:2px">STEP 4(a) - OTHER INCOME</div>';
+  h+='<div style="font-size:12px;color:var(--mt)">Non-job income you want taxes withheld for</div></div>';
+  h+='<div style="font-family:var(--disp);font-size:18px;font-weight:700;color:'+(optStep4a>0?'var(--wh)':'var(--mt)')+'">'+$f(optStep4a)+'</div></div>';
+  // Step 4b
+  h+='<div style="padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;background:'+(optStep4b>0?'var(--acd)':'transparent')+'">';
+  h+='<div><div style="font-size:10px;font-weight:700;color:var(--ac);margin-bottom:2px">STEP 4(b) - DEDUCTIONS</div>';
+  h+='<div style="font-size:12px;color:var(--mt)">Extra deductions beyond standard'+(retire>0?' (includes 401k)':'')+'</div></div>';
+  h+='<div style="font-family:var(--disp);font-size:18px;font-weight:700;color:'+(optStep4b>0?'var(--wh)':'var(--mt)')+'">'+$f(optStep4b)+'</div></div>';
+  // Step 4c
+  h+='<div style="padding:14px 16px;display:flex;justify-content:space-between;align-items:center;background:'+(optStep4c>0?'var(--acd)':'transparent')+'">';
+  h+='<div><div style="font-size:10px;font-weight:700;color:var(--ac);margin-bottom:2px">STEP 4(c) - EXTRA WITHHOLDING</div>';
+  h+='<div style="font-size:12px;color:var(--mt)">Additional amount to withhold each paycheck</div></div>';
+  h+='<div style="font-family:var(--disp);font-size:18px;font-weight:700;color:'+(optStep4c>0?'var(--am)':'var(--mt)')+'">'+$f(optStep4c)+'</div></div>';
+  h+='</div>';
+
+  h+='<div style="margin-top:12px;padding:10px 14px;background:var(--bg4);border-radius:var(--Rs);font-size:11px;color:var(--mt);line-height:1.7">';
+  h+='<b style="color:var(--br)">How to use this:</b> Print or screenshot the values above. Log into your payroll system or give these to HR. Most companies let you update your W-4 online anytime. Changes typically take effect within 1-2 pay periods.';
+  h+='</div></div>';
+
+  // Federal bracket breakdown
+  h+='<div class="card"><div class="ct">Federal Bracket Breakdown</div>';
+  h+='<div style="font-size:12px;color:var(--mt);margin-bottom:10px">You don\'t pay your top rate on ALL your income. Each bracket only applies to income <b style="color:var(--wh)">within that range</b>.</div>';
+  h+='<div class="tw"><table class="tbl"><thead><tr><th>Rate</th><th>Applies To</th><th>Amount Taxed</th><th>Tax</th></tr></thead><tbody>';
+  fedResult.bd.forEach(function(b){h+='<tr><td style="color:var(--ac);font-weight:700">'+(b.r*100).toFixed(0)+'%</td><td>'+$f(b.lo)+' - '+(b.hi>=1e12?'...':$f(b.hi))+'</td><td style="color:var(--wh)">'+$f(Math.round(b.tx))+'</td><td style="color:var(--rd);font-weight:600">'+$f(Math.round(b.tax))+'</td></tr>'});
+  h+='</tbody></table></div></div>';
+
+  h+='<div style="font-size:10px;color:var(--mt);margin-top:10px;font-style:italic;line-height:1.7">Based on 2026 IRS Publication 15-T percentage method tables. FICA calculated on your wages only (not spouse). State taxes use 2026 brackets. This is an estimate - your actual withholding may vary slightly based on pre-tax benefits, pay period timing, and employer payroll calculations. Not tax advice.</div>';
+
+  document.getElementById('w4Results').innerHTML=h;
+}
+
 document.addEventListener('DOMContentLoaded',function(){
   // Nav
   document.querySelectorAll('.nt').forEach(function(t){t.addEventListener('click',function(){document.querySelectorAll('.nt').forEach(function(x){x.classList.remove('a')});document.querySelectorAll('.sec').forEach(function(x){x.classList.remove('a')});t.classList.add('a');document.getElementById('sec-'+t.dataset.s).classList.add('a')})});
@@ -1155,7 +1457,11 @@ document.addEventListener('DOMContentLoaded',function(){
   // Run all on load
   // NW rate toggle buttons
   document.querySelectorAll('.nwrg button').forEach(function(b){b.addEventListener('click',function(){b.parentElement.querySelectorAll('button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');runNW()})});
-  runDual();runSL();runCalc();runRet();runNW();runTax();runSC();runCmp();buildRules();buildAccts();
+  // W-4 checkboxes
+  var w4NYCel=document.getElementById('w4NYC');if(w4NYCel)w4NYCel.addEventListener('click',function(e){e.preventDefault();this.classList.toggle('checked');runW4()});
+  var w4ItemEl=document.getElementById('w4Itemize');if(w4ItemEl)w4ItemEl.addEventListener('click',function(e){e.preventDefault();this.classList.toggle('checked');runW4()});
+  var w4SpWEl=document.getElementById('w4SpouseWorks');if(w4SpWEl)w4SpWEl.addEventListener('click',function(e){e.preventDefault();this.classList.toggle('checked');runW4()});
+  runDual();runSL();runCalc();runRet();runNW();runTax();runSC();runCmp();buildRules();buildAccts();runW4();
 });
 
 </script>
