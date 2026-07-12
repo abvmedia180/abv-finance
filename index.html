@@ -78,7 +78,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .rc-l{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt);margin-bottom:5px}
 .rc-v{font-family:var(--disp);font-size:22px;font-weight:700;color:var(--wh)}
 .rc-s{font-size:11px;color:var(--mt);margin-top:3px}
-.chart-wrap{position:relative;width:100%;height:320px;margin:16px 0}.chart-wrap canvas{width:100%!important;height:100%!important}
+.chart-wrap{position:relative;width:100%;height:320px;margin:16px 0}.cv-tg{display:flex;align-items:center;gap:8px;margin:14px 0 -4px;flex-wrap:wrap}.cv-lbl{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt)}.tg-sm button{padding:4px 10px!important;font-size:10px!important}.chart-wrap canvas{width:100%!important;height:100%!important}
 .tw{overflow-x:auto;border-radius:var(--Rs);border:1px solid var(--bd)}
 .tbl{width:100%;border-collapse:collapse}
 .tbl th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);padding:8px 10px;border-bottom:1px solid var(--bd);background:var(--bg4)}
@@ -214,7 +214,7 @@ div[style*='grid-template-columns:repeat(auto-fit']{grid-template-columns:1fr!im
 <div class="tg" id="cRateGroup"><button class="on" data-v="7">Conservative 7%</button><button data-v="10">Average 10%</button><button data-v="12">Optimistic 12%</button></div>
 <div class="tooltip">Conservative = inflation-adjusted. Average = S&P 500 historical. Optimistic = growth-tilted portfolio.</div></div>
 </div></div>
-<div><div id="calcRes"></div><div class="chart-wrap"><canvas id="calcChart"></canvas></div><div id="calcExtra"></div></div>
+<div><div id="calcRes"></div><div class="cv-tg"><span class="cv-lbl">Chart view</span><div class="tg tg-sm" data-cv="real"><button class="on" data-v="0">Nominal $</button><button data-v="1">Today's $</button></div><div class="tg tg-sm" data-cv="log"><button class="on" data-v="0">Linear</button><button data-v="1">Log</button></div></div><div class="chart-wrap"><canvas id="calcChart"></canvas></div><div id="calcExtra"></div></div>
 </div></div>
 
 <!-- RETIREMENT PLANNER -->
@@ -240,7 +240,7 @@ div[style*='grid-template-columns:repeat(auto-fit']{grid-template-columns:1fr!im
 <div class="igrp"><label>Expected Social Security ($/month)</label><input type="number" class="ninput" id="rSS" value="0" min="0" step="100" oninput="runRet()"><div class="tooltip">Average is ~$2,100/mo (2026). Max at full retirement age 67: ~$4,150; claiming at 70: ~$5,200. Check ssa.gov/myaccount for your estimate.</div></div>
 <div class="igrp"><label>Pension ($/month, if any)</label><input type="number" class="ninput" id="rPen" value="0" min="0" step="100" oninput="runRet()"><div class="tooltip">If your employer provides a pension, enter your expected monthly benefit at retirement.</div></div>
 </div></div>
-<div><div id="retRes"></div><div class="chart-wrap"><canvas id="retChart"></canvas></div></div>
+<div><div id="retRes"></div><div class="cv-tg"><span class="cv-lbl">Chart view</span><div class="tg tg-sm" data-cv="real"><button class="on" data-v="0">Nominal $</button><button data-v="1">Today's $</button></div><div class="tg tg-sm" data-cv="log"><button class="on" data-v="0">Linear</button><button data-v="1">Log</button></div></div><div class="chart-wrap"><canvas id="retChart"></canvas></div></div>
 </div></div>
 
 <!-- NET WORTH BUILDER -->
@@ -310,7 +310,7 @@ div[style*='grid-template-columns:repeat(auto-fit']{grid-template-columns:1fr!im
 <div class="igrp" style="margin-bottom:0"><label>Project To Age</label><input type="number" class="ninput" id="nwTo" value="65" min="40" max="90" oninput="runNW()" style="width:70px"></div>
 
 </div>
-<div id="nwRes"></div><div class="chart-wrap"><canvas id="nwChart"></canvas></div>
+<div id="nwRes"></div><div class="cv-tg"><span class="cv-lbl">Chart view</span><div class="tg tg-sm" data-cv="real"><button class="on" data-v="0">Nominal $</button><button data-v="1">Today's $</button></div><div class="tg tg-sm" data-cv="log"><button class="on" data-v="0">Linear</button><button data-v="1">Log</button></div></div><div class="chart-wrap"><canvas id="nwChart"></canvas></div>
 </div>
 
 <!-- MY STRATEGY -->
@@ -561,7 +561,20 @@ function yearByYear(P,PMT,rate,yrs){const r=rate/100/12;let bal=P,tc=P,data=[];f
 // CHARTS
 let calcChartObj=null,retChartObj=null,cmpChartObj=null,nwChartObj=null;
 function getCC(){return{c1:'rgba(0,150,255,.6)',c2:'rgba(0,212,116,.6)',c1b:'rgba(0,150,255,.1)',c2b:'rgba(0,212,116,.1)',grid:'rgba(255,255,255,.04)',mt:'#6b7394',wh:'#e6f1ff'}}
-function mkChart(id,labels,d1,d2,l1,l2,old){if(old)old.destroy();const c=getCC();const ctx=document.getElementById(id);if(!ctx)return null;return new Chart(ctx,{type:'line',data:{labels,datasets:[{label:l1,data:d1,borderColor:c.c2,backgroundColor:c.c2b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:l2,data:d2,borderColor:c.c1,backgroundColor:c.c1b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:c.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:c.wh,bodyColor:c.mt,padding:12,cornerRadius:6,callbacks:{label:function(ctx){return ctx.dataset.label+': '+$f(ctx.parsed.y)}}}},scales:{x:{ticks:{color:c.mt,font:{size:10},maxTicksLimit:12},grid:{color:c.grid}},y:{ticks:{color:c.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:c.grid}}}}})}
+// ── Chart feel: view state, gradients, glow, crosshair, draw-in, tickers ──
+var chartView={real:false,log:false};
+function cvT(v,yr){return chartView.real?v/Math.pow(1.03,yr):v}
+function cvGrad(rgb){return function(cx){var ch=cx.chart,ca=ch.chartArea;if(!ca)return 'rgba(0,0,0,0)';var g=ch.ctx.createLinearGradient(0,ca.top,0,ca.bottom);g.addColorStop(0,'rgba('+rgb+',.30)');g.addColorStop(1,'rgba('+rgb+',0)');return g}}
+var glowP={id:'glowP',beforeDatasetDraw:function(ch,args){var o=args.meta.dataset&&args.meta.dataset.options;ch.ctx.save();ch.ctx.shadowColor=(o&&typeof o.borderColor==='string')?o.borderColor:'rgba(0,212,116,.6)';ch.ctx.shadowBlur=9},afterDatasetDraw:function(ch){ch.ctx.restore()}};
+var crossP={id:'crossP',afterDraw:function(ch){var t=ch.tooltip;if(t&&t.getActiveElements&&t.getActiveElements().length){var x=t.getActiveElements()[0].element.x,ys=ch.scales.y;if(!ys)return;var c=ch.ctx;c.save();c.beginPath();c.setLineDash([4,4]);c.strokeStyle='rgba(230,241,255,.28)';c.lineWidth=1;c.moveTo(x,ys.top);c.lineTo(x,ys.bottom);c.stroke();c.restore()}}};
+var __lastAnim={};
+function animCfg(key,n){var now=Date.now(),last=__lastAnim[key]||0;__lastAnim[key]=now;if(now-last<700)return false;var per=Math.max(700/Math.max(n,1),4);return{x:{type:'number',easing:'linear',duration:per,from:NaN,delay:function(c){if(c.type!=='data'||c.xStarted)return 0;c.xStarted=true;return c.index*per}},y:{type:'number',easing:'linear',duration:per,from:'previous',delay:function(c){if(c.type!=='data'||c.yStarted)return 0;c.yStarted=true;return c.index*per}}}}
+function yCfg(cc,maxV){return{type:(chartView.log&&maxV>0)?'logarithmic':'linear',ticks:{color:cc.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:cc.grid}}}
+function ttCfg(cc,extra){return{backgroundColor:'rgba(8,10,15,.94)',borderColor:'rgba(0,212,116,.25)',borderWidth:1,titleColor:cc.wh,bodyColor:'#aeb7d0',titleFont:{size:12,weight:'700'},padding:12,cornerRadius:8,filter:function(it){return it.parsed.y!==null},callbacks:Object.assign({label:function(ctx){return ctx.dataset.label+': '+$f(ctx.parsed.y)}},extra||{})}}
+function snapTiles(id){var el=document.getElementById(id);if(!el)return{};var m={};el.querySelectorAll('.rc').forEach(function(rc){var l=rc.querySelector('.rc-l'),v=rc.querySelector('.rc-v');if(l&&v)m[l.textContent]=v.textContent});return m}
+function animTiles(id,prev){var el=document.getElementById(id);if(!el)return;el.querySelectorAll('.rc').forEach(function(rc){var l=rc.querySelector('.rc-l'),v=rc.querySelector('.rc-v');if(!l||!v)return;var o=prev[l.textContent],n=v.textContent;if(!o||o===n||o.charAt(0)!=='$'||n.charAt(0)!=='$')return;var ov=parseFloat(o.replace(/[^0-9.\-]/g,'')),nv=parseFloat(n.replace(/[^0-9.\-]/g,''));if(!isFinite(ov)||!isFinite(nv))return;if(v.__raf)cancelAnimationFrame(v.__raf);var t0=performance.now();var step=function(t){var pr=Math.min((t-t0)/420,1),e=1-Math.pow(1-pr,3);v.textContent=$f(ov+(nv-ov)*e);if(pr<1)v.__raf=requestAnimationFrame(step);else v.textContent=n};v.__raf=requestAnimationFrame(step)})}
+function initCV(){document.querySelectorAll('.tg[data-cv]').forEach(function(g){g.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){chartView[g.dataset.cv]=b.dataset.v==='1';document.querySelectorAll('.tg[data-cv="'+g.dataset.cv+'"]').forEach(function(g2){g2.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x.dataset.v===b.dataset.v)})});__lastAnim={};runCalc();runRet();runNW()})})})}
+function mkChart(id,labels,d1,d2,l1,l2,old){if(old)old.destroy();const c=getCC();const ctx=document.getElementById(id);if(!ctx)return null;return new Chart(ctx,{type:'line',data:{labels,datasets:[{label:l1,data:d1,borderColor:c.c2,backgroundColor:cvGrad('0,212,116'),fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2.5},{label:l2,data:d2,borderColor:c.c1,backgroundColor:cvGrad('0,150,255'),fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2.5}]},plugins:[glowP,crossP],options:{responsive:true,maintainAspectRatio:false,animation:animCfg(id,labels.length),interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:c.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},tooltip:ttCfg(c)},scales:{x:{ticks:{color:c.mt,font:{size:10},maxTicksLimit:8,autoSkip:true,maxRotation:0},grid:{color:c.grid}},y:yCfg(c,Math.max.apply(null,d1.concat(d2).filter(function(v){return v!=null})))}}})}
 
 // ========== INVESTMENT CALCULATOR ==========
 function runCalc(){
@@ -582,14 +595,23 @@ function runCalc(){
   h+='<div class="rc"><div class="rc-l">Growth Multiple</div><div class="rc-v">'+(res.contrib>0?(res.bal/res.contrib).toFixed(1):'0')+'x</div></div></div>';
   h+='<div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">Your Money vs The Market\'s Money</div>';
   h+='<div class="pbar"><div style="width:'+cPct+'%;background:var(--cc1);color:var(--bg)">'+(cPct>10?cPct.toFixed(0)+'% You':'')+'</div><div style="width:'+iPct+'%;background:var(--ac);color:var(--bg)">'+(iPct>10?iPct.toFixed(0)+'% Growth':'')+'</div></div>';
-  document.getElementById('calcRes').innerHTML=h;
+  var __pt=snapTiles('calcRes');document.getElementById('calcRes').innerHTML=h;animTiles('calcRes',__pt);
   // Chart to age 90
   // Chart with retirement line and year labels
-  var calcLabels=yd.map(function(y){var age=cAge+y.yr;return age%5===0||y.yr===Y?'Age '+age+' ('+(CY+y.yr)+')':''});
+  var calcLabels=yd.map(function(y){return 'Age '+(cAge+y.yr)+' ('+(CY+y.yr)+')'});
   
   if(calcChartObj)calcChartObj.destroy();var cc=getCC();
-  var msDots=yd.map(function(y){var hit=ms.find(function(m){return m.yr===y.yr});return hit?y.bal:null});
-  calcChartObj=new Chart(document.getElementById('calcChart'),{type:'line',data:{labels:calcLabels,datasets:[{label:'Total Balance',data:yd.map(function(y){return y.bal}),borderColor:cc.c2,backgroundColor:cc.c2b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Your Contributions',data:yd.map(function(y){return y.contrib}),borderColor:cc.c1,backgroundColor:cc.c1b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Milestones',data:msDots,borderColor:'#ffc107',backgroundColor:'#ffc107',pointRadius:4,pointHoverRadius:6,showLine:false,fill:false}]},plugins:[mkPhaseLine(Y-1,'Age '+retAge,res.bal)],options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:cc.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:cc.wh,bodyColor:cc.mt,padding:12,cornerRadius:6,callbacks:{label:function(ctx){return ctx.dataset.label+': '+$f(ctx.parsed.y)}}}},scales:{x:{ticks:{color:cc.mt,maxTicksLimit:10,autoSkip:true,font:{size:10},maxTicksLimit:12},grid:{color:cc.grid}},y:{ticks:{color:cc.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:cc.grid}}}}});
+  var balD=yd.map(function(y){return cvT(y.bal,y.yr)}),conD=yd.map(function(y){return cvT(y.contrib,y.yr)});
+  var msDots=yd.map(function(y){var hit=ms.find(function(m){return m.yr===y.yr});return hit?cvT(y.bal,y.yr):null});
+  calcChartObj=new Chart(document.getElementById('calcChart'),{type:'line',data:{labels:calcLabels,datasets:[
+    {label:'Total Balance',data:balD,borderColor:cc.c2,backgroundColor:cvGrad('0,212,116'),fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2.5},
+    {label:'Your Contributions',data:conD,borderColor:cc.c1,backgroundColor:cvGrad('0,150,255'),fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},
+    {label:'Milestones',data:msDots,borderColor:'#ffc107',backgroundColor:'#ffc107',pointRadius:4,pointHoverRadius:6,showLine:false,fill:false}]},
+    plugins:[mkPhaseLine(Y-1,'Age '+retAge,cvT(res.bal,Y)),glowP,crossP],
+    options:{responsive:true,maintainAspectRatio:false,animation:animCfg('calc',yd.length),interaction:{intersect:false,mode:'index'},
+    plugins:{legend:{labels:{color:cc.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},
+    tooltip:ttCfg(cc,{afterBody:function(items){var i=items[0].dataIndex,d=yd[i];var out=['Gains: '+$f(cvT(d.bal-d.contrib,d.yr))+(d.contrib>0?'  ('+(d.bal/d.contrib).toFixed(1)+'x your money)':'')];if(d.yr>Y)out.push('Growth only \u2014 no new contributions');if(chartView.real)out.push("In today's dollars (3%/yr inflation)");return out}})},
+    scales:{x:{ticks:{color:cc.mt,maxTicksLimit:8,autoSkip:true,maxRotation:0,font:{size:10}},grid:{color:cc.grid}},y:yCfg(cc,Math.max.apply(null,balD))}}});
   let ex='';
   if(ms.length){ex+='<div style="margin-top:12px"><div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt);margin-bottom:6px">Milestones</div>';ms.forEach(function(m){var after=m.yr>Y;ex+='<div class="ms"><div class="ms-i">'+(m.t>=1e6?'\u{1F3C6}':'\u{1F3AF}')+'</div><div class="ms-t">Hit <b>'+$f(m.t)+'</b>'+(after?' <span style="font-size:9px;color:var(--mt)">(growth only, no new money)</span>':'')+'</div><div class="ms-v">Year '+m.yr+' &middot; '+(CY+m.yr)+' &middot; Age '+(cAge+m.yr)+'</div></div>'});ex+='</div>'}
   if(Y>5){ex+='<div style="padding:10px 12px;background:var(--rdd);border:1px solid rgba(255,82,82,.1);border-radius:var(--Rs);margin-top:10px"><div style="font-size:11px;font-weight:700;color:var(--rd);margin-bottom:3px">\u23F0 What If You Wait 5 Years?</div><div style="font-size:12px;color:var(--tx)">Starting at age '+(cAge+5)+' instead: <b>'+$f(wait.bal)+'</b>  - that\'s <b style="color:var(--rd)">'+$f(cost)+' less</b>. Time is your biggest asset.</div></div>'}
@@ -629,12 +651,20 @@ function runRet(){
   if(depl)h+='<div style="padding:10px 12px;background:var(--rdd);border:1px solid rgba(255,82,82,.15);border-radius:var(--Rs);margin-bottom:10px;font-size:12px;color:var(--tx)">\u26A0\uFE0F <b style="color:var(--rd)">At a '+wd+'% withdrawal ('+$f(portInc)+'/yr), this portfolio runs out at age '+(age+depl.yr)+'.</b> Lower the withdrawal rate, retire later, or save more.</div>';
   else h+='<div style="padding:10px 12px;background:var(--acd);border:1px solid var(--ac15);border-radius:var(--Rs);margin-bottom:10px;font-size:12px;color:var(--tx)">\u2705 <b style="color:var(--ac)">Withdrawing '+$f(portInc)+'/yr, you\'d still have '+$f(endBal)+' at age 90</b> \u2014 growth outpaces the withdrawals. (Fixed-dollar withdrawals, nominal returns, no taxes modeled.)</div>';
   if(ssMo===0)h+='<div class="note"><b>About Social Security:</b> Average benefit is ~$2,100/mo (2026). Max at full retirement age 67: ~$4,150/mo; waiting until 70: ~$5,200/mo. Check <b>ssa.gov/myaccount</b> for your personal estimate. Enter it above to see how it supplements your retirement.</div>';
-  document.getElementById('retRes').innerHTML=h;
-  var retLabels=yd.map(function(y){var a=age+y.yr;return a%5===0||y.yr===yrs?'Age '+a+' ('+(CY+y.yr)+')':''});
+  var __pt=snapTiles('retRes');document.getElementById('retRes').innerHTML=h;animTiles('retRes',__pt);
+  var retLabels=yd.map(function(y){return 'Age '+(age+y.yr)+' ('+(CY+y.yr)+')'});
   
   if(retChartObj)retChartObj.destroy();var rc=getCC();
-  var accD=yd.map(function(y){return y.yr<=yrs?y.bal:null}),wdD=yd.map(function(y){return y.yr>=yrs?y.bal:null});
-  retChartObj=new Chart(document.getElementById('retChart'),{type:'line',data:{labels:retLabels,datasets:[{label:'Saving (to '+rAge+')',data:accD,borderColor:rc.c2,backgroundColor:rc.c2b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Withdrawing '+wd+'%/yr',data:wdD,borderColor:'#ffc107',backgroundColor:'rgba(255,193,7,.08)',fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Your Contributions',data:yd.map(function(y){return y.contrib}),borderColor:rc.c1,backgroundColor:rc.c1b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2}]},plugins:[mkPhaseLine(yrs-1,'Retire at '+rAge,res.bal)],options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:rc.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:rc.wh,bodyColor:rc.mt,padding:12,cornerRadius:6,callbacks:{label:function(ctx){return ctx.dataset.label+': '+$f(ctx.parsed.y)}}}},scales:{x:{ticks:{color:rc.mt,maxTicksLimit:10,autoSkip:true,font:{size:10},maxTicksLimit:12},grid:{color:rc.grid}},y:{ticks:{color:rc.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:rc.grid}}}}});
+  var accD=yd.map(function(y){return y.yr<=yrs?cvT(y.bal,y.yr):null}),wdD=yd.map(function(y){return y.yr>=yrs?cvT(y.bal,y.yr):null});
+  retChartObj=new Chart(document.getElementById('retChart'),{type:'line',data:{labels:retLabels,datasets:[
+    {label:'Saving (to '+rAge+')',data:accD,borderColor:rc.c2,backgroundColor:cvGrad('0,212,116'),fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2.5},
+    {label:'Withdrawing '+wd+'%/yr',data:wdD,borderColor:'#ffc107',backgroundColor:cvGrad('255,193,7'),fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2.5},
+    {label:'Your Contributions',data:yd.map(function(y){return cvT(y.contrib,y.yr)}),borderColor:rc.c1,backgroundColor:cvGrad('0,150,255'),fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2}]},
+    plugins:[mkPhaseLine(yrs-1,'Retire at '+rAge,cvT(res.bal,yrs)),glowP,crossP],
+    options:{responsive:true,maintainAspectRatio:false,animation:animCfg('ret',yd.length),interaction:{intersect:false,mode:'index'},
+    plugins:{legend:{labels:{color:rc.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},
+    tooltip:ttCfg(rc,{afterBody:function(items){var i=items[0].dataIndex,d=yd[i];var out=[];if(d.yr>yrs){out.push('Withdrawing '+$f(cvT(portInc,d.yr))+'/yr');out.push('Growth still compounding at '+R+'%')}else{out.push('Gains so far: '+$f(cvT(Math.max(0,d.bal-d.contrib),d.yr)))}if(chartView.real)out.push("In today's dollars (3%/yr inflation)");return out}})},
+    scales:{x:{ticks:{color:rc.mt,maxTicksLimit:8,autoSkip:true,maxRotation:0,font:{size:10}},grid:{color:rc.grid}},y:yCfg(rc,Math.max.apply(null,yd.map(function(y){return cvT(y.bal,y.yr)})))}}});
 }
 
 // ========== NET WORTH BUILDER ==========
@@ -788,12 +818,13 @@ function runNW(){
   if(bRE>0)h+='<div class="rc"><div class="rc-l">Investment Property</div><div class="rc-v" style="color:var(--am)">'+$f(reEquity)+'</div></div>';
   h+='</div>';
   h+='<div class="note"><b>401(k) Breakdown:</b> You contribute '+empPct+'% of '+$f(sal401)+' = <b>'+$f(sal401*(empPct/100))+'</b>'+(capHit?' → <b style="color:var(--am)">capped at $24,500</b>':'')+'. Employer adds '+matchPct+'% = <b>'+$f(empMatch)+'</b>. Total: <b style="color:var(--ac)">'+$f(total401yr)+'/yr</b>'+(total401yr>=72000?' (hit $72K IRS max)':'')+'.</div>';
-  document.getElementById('nwRes').innerHTML=h;
+  var __pt=snapTiles('nwRes');document.getElementById('nwRes').innerHTML=h;animTiles('nwRes',__pt);
   // Chart with retirement annotation line
   if(nwChartObj)nwChartObj.destroy();var c=getCC();
-  var retVal=dTotal[retirementIdx]||0;
+  var retVal=cvT(dTotal[retirementIdx]||0,yrs);
   var annotPlugin={id:'retLine',afterDraw:function(chart){if(retirementIdx>=0&&retirementIdx<dTotal.length){var xScale=chart.scales.x,yScale=chart.scales.y;var x=xScale.getPixelForValue(retirementIdx);var ctx=chart.ctx;ctx.save();ctx.beginPath();ctx.setLineDash([6,4]);ctx.strokeStyle='rgba(255,193,7,.6)';ctx.lineWidth=1.5;ctx.moveTo(x,yScale.top);ctx.lineTo(x,yScale.bottom);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='rgba(255,193,7,.9)';ctx.font='bold 11px Inter';ctx.textAlign='center';var midY=(yScale.top+yScale.bottom)/2;ctx.fillText('Retirement (Age '+nwTo+')',x,midY-14);ctx.font='bold 12px Fraunces';ctx.fillStyle='#e6f1ff';ctx.fillText($f(retVal),x,midY+4);ctx.restore()}}};
-  nwChartObj=new Chart(document.getElementById('nwChart'),{type:'line',data:{labels:labels,datasets:[{label:'Total Net Worth',data:dTotal,borderColor:c.c2,backgroundColor:c.c2b,fill:true,tension:.3,pointRadius:0,borderWidth:2.5}]},plugins:[annotPlugin],options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:30}},interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:c.mt,font:{size:11,family:'Inter'},boxWidth:12}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:c.wh,bodyColor:c.mt,padding:12,cornerRadius:6,callbacks:{label:function(ctx){return'Net Worth: '+$f(ctx.parsed.y)}}}},scales:{x:{ticks:{color:c.mt,font:{size:10},maxTicksLimit:12},grid:{color:c.grid}},y:{ticks:{color:c.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:c.grid}}}}});
+  var nwD=dTotal.map(function(v,i){return cvT(v,i+1)});
+  nwChartObj=new Chart(document.getElementById('nwChart'),{type:'line',data:{labels:labels,datasets:[{label:'Total Net Worth',data:nwD,borderColor:c.c2,backgroundColor:cvGrad('0,212,116'),fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2.5}]},plugins:[annotPlugin,glowP,crossP],options:{responsive:true,maintainAspectRatio:false,animation:animCfg('nw',nwD.length),layout:{padding:{top:30}},interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:c.mt,font:{size:11,family:'Inter'},boxWidth:12}},tooltip:ttCfg(c,{label:function(ctx){return 'Net Worth: '+$f(ctx.parsed.y)},afterBody:function(){return chartView.real?["In today's dollars (3%/yr inflation)"]:[]}})},scales:{x:{ticks:{color:c.mt,font:{size:10},maxTicksLimit:8,autoSkip:true,maxRotation:0},grid:{color:c.grid}},y:yCfg(c,Math.max.apply(null,nwD))}}});
 }
 
 // ========== TAX CALCULATOR ==========
@@ -839,7 +870,7 @@ function runTax(){
   if(empType==='scorp'){var dist=gross-scorpSal,saved=Math.min(dist,Math.max(0,FICA.ssC-scorpSal))*FICA.ssR*2+dist*FICA.medR*2;h+='<div class="card"><div class="ct">S-Corp Tax Savings</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px"><div style="padding:10px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--mt)">YOUR SALARY</div><div style="font-size:18px;font-weight:700;color:var(--wh);font-family:var(--disp)">'+$f(scorpSal)+'</div><div style="font-size:11px;color:var(--mt)">Taxed for FICA (15.3%)</div></div><div style="padding:10px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--mt)">YOUR DISTRIBUTION</div><div style="font-size:18px;font-weight:700;color:var(--ac);font-family:var(--disp)">'+$f(dist)+'</div><div style="font-size:11px;color:var(--ac)">No FICA tax on this</div></div></div><div class="ic-hl"><b>You save approximately '+$f(Math.round(saved))+'/year</b> by taking '+$f(dist)+' as distribution instead of salary.</div></div>'}
   if(empType==='1099')h+='<div class="note"><b>1099 Self-Employment:</b> You pay both halves of FICA (15.3% total). The good news: half is deductible ('+$f(Math.round(seDed))+').</div>';
   if(k401>0){var mr=fedRes.bd.length>0?fedRes.bd[fedRes.bd.length-1].r:.22;h+='<div class="note"><b>401(k) Impact:</b> Your '+$f(k401)+' contribution saves ~<b style="color:var(--ac)">'+$f(Math.round(k401*mr))+'</b> in federal tax at your '+(mr*100).toFixed(0)+'% bracket.</div>'}
-  document.getElementById('txRes').innerHTML=h;
+  var __pt=snapTiles('txRes');document.getElementById('txRes').innerHTML=h;animTiles('txRes',__pt);
 }
 
 // ========== STATE COMPARISON ==========
@@ -1164,7 +1195,7 @@ document.getElementById('acctRes').innerHTML=h;
 }
 document.addEventListener('DOMContentLoaded',function(){
   // Nav
-  document.querySelectorAll('.nt').forEach(function(t){t.addEventListener('click',function(){document.querySelectorAll('.nt').forEach(function(x){x.classList.remove('a')});document.querySelectorAll('.sec').forEach(function(x){x.classList.remove('a')});t.classList.add('a');document.getElementById('sec-'+t.dataset.s).classList.add('a');t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'nearest'})})});var niEl=document.querySelector('.ni'),nbEl=document.querySelector('.nb');function updNb(){if(!niEl||!nbEl)return;nbEl.classList.toggle('at-end',niEl.scrollLeft+niEl.clientWidth>=niEl.scrollWidth-6)}if(niEl){niEl.addEventListener('scroll',updNb);window.addEventListener('resize',updNb);updNb()}
+  document.querySelectorAll('.nt').forEach(function(t){t.addEventListener('click',function(){document.querySelectorAll('.nt').forEach(function(x){x.classList.remove('a')});document.querySelectorAll('.sec').forEach(function(x){x.classList.remove('a')});t.classList.add('a');document.getElementById('sec-'+t.dataset.s).classList.add('a');var rr={calculator:runCalc,retirement:runRet,networth:runNW,compare:runCmp}[t.dataset.s];if(rr)setTimeout(rr,30);t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'nearest'})})});var niEl=document.querySelector('.ni'),nbEl=document.querySelector('.nb');function updNb(){if(!niEl||!nbEl)return;nbEl.classList.toggle('at-end',niEl.scrollLeft+niEl.clientWidth>=niEl.scrollWidth-6)}if(niEl){niEl.addEventListener('scroll',updNb);window.addEventListener('resize',updNb);updNb()}
   // Rate toggle buttons
   ['cRateGroup','rRateGroup'].forEach(function(gid){document.querySelectorAll('#'+gid+' button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('#'+gid+' button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');if(gid==='cRateGroup')runCalc();else runRet()})})});
   // Tax type toggles
@@ -1176,7 +1207,7 @@ document.addEventListener('DOMContentLoaded',function(){
   // Run all on load
   // NW rate toggle buttons
   document.querySelectorAll('.nwrg button').forEach(function(b){b.addEventListener('click',function(){b.parentElement.querySelectorAll('button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');runNW()})});
-  runDual();runSL();runCalc();runRet();runNW();runTax();runSC();runCmp();buildRules();buildAccts();
+  initCV();runDual();runSL();runCalc();runRet();runNW();runTax();runSC();runCmp();buildRules();buildAccts();
 });
 
 </script>

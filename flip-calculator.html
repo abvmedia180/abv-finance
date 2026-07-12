@@ -251,6 +251,8 @@ const NYC_B={single:[[0,12000,.03078],[12000,25000,.03762],[25000,50000,.03819],
 const STATES=[{c:'NY',n:'New York',city:1},{c:'NJ',n:'New Jersey'},{c:'CT',n:'Connecticut'},{c:'PA',n:'Pennsylvania'},{c:'CA',n:'California'},{c:'NC',n:'North Carolina'},{c:'SC',n:'South Carolina'},{c:'GA',n:'Georgia'},{c:'IL',n:'Illinois'},{c:'WV',n:'West Virginia'},{c:'NM',n:'New Mexico'},{c:'FL',n:'Florida'},{c:'TX',n:'Texas'},{c:'NV',n:'Nevada'},{c:'WA',n:'Washington'},{c:'WY',n:'Wyoming'}];
 
 // ═══ TAX CALC ═══
+const glowPF={id:'glowPF',beforeDatasetDraw(ch,a){const o=a.meta.dataset&&a.meta.dataset.options;ch.ctx.save();ch.ctx.shadowColor=(o&&typeof o.borderColor==='string')?o.borderColor:'rgba(0,212,116,.5)';ch.ctx.shadowBlur=8},afterDatasetDraw(ch){ch.ctx.restore()}};
+const crossPF={id:'crossPF',afterDraw(ch){const t=ch.tooltip;if(t&&t.getActiveElements&&t.getActiveElements().length){const x=t.getActiveElements()[0].element.x,ys=ch.scales.y;if(!ys)return;const c=ch.ctx;c.save();c.beginPath();c.setLineDash([4,4]);c.strokeStyle='rgba(230,241,255,.25)';c.lineWidth=1;c.moveTo(x,ys.top);c.lineTo(x,ys.bottom);c.stroke();c.restore()}}};
 function calcBrk(inc,brk){let t=0;for(const[lo,hi,r]of brk){if(inc<=lo)break;t+=(Math.min(inc,hi)-lo)*r}return t}
 function calcSt(inc,code,fs){
   const s=ST[code];if(!s)return 0;
@@ -554,7 +556,7 @@ function renderCharts(){
     ds1.push({label:getLabel(i)+' Net',data:scenarios.map(s=>s.results[i].net),backgroundColor:INV_C[i]+'33',borderColor:INV_C[i],borderWidth:1,borderDash:[4,4],stack:'net'});
   }
   let ctx1=document.getElementById('chartTaxNet').getContext('2d');
-  chartA=new Chart(ctx1,{type:'bar',data:{labels,datasets:ds1},options:{
+  chartA=new Chart(ctx1,{type:'bar',data:{labels,datasets:ds1},plugins:[glowPF],options:{
     responsive:true,maintainAspectRatio:false,
     plugins:{legend:{labels:{color:'#6b7394',font:{size:10,family:'Inter'}}},tooltip:{backgroundColor:'#111521',borderColor:'#1e2740',borderWidth:1,titleColor:'#e6f1ff',bodyColor:'#a0a8c0',callbacks:{label:c=>c.dataset.label+': $'+Math.round(c.raw).toLocaleString()}}},
     scales:{x:{ticks:{color:'#6b7394',font:{size:9},maxRotation:45},grid:{color:'rgba(30,39,64,.3)'}},y:{ticks:{color:'#6b7394',font:{size:9},callback:v=>'$'+(v/1000).toFixed(0)+'k'},grid:{color:'rgba(30,39,64,.3)'}}}
@@ -568,8 +570,8 @@ function renderCharts(){
   }
   ds2.push({label:'Combined Rate',data:scenarios.map(s=>parseFloat(s.cRate.toFixed(1))),borderColor:'#e6f1ff',backgroundColor:'transparent',borderDash:[6,3],pointRadius:3,pointBackgroundColor:'#e6f1ff',tension:.3,fill:false});
   let ctx2=document.getElementById('chartEffRate').getContext('2d');
-  chartB=new Chart(ctx2,{type:'line',data:{labels,datasets:ds2},options:{
-    responsive:true,maintainAspectRatio:false,
+  chartB=new Chart(ctx2,{type:'line',data:{labels,datasets:ds2},plugins:[glowPF,crossPF],options:{
+    responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},
     plugins:{legend:{labels:{color:'#6b7394',font:{size:10,family:'Inter'}}},tooltip:{backgroundColor:'#111521',borderColor:'#1e2740',borderWidth:1,titleColor:'#e6f1ff',bodyColor:'#a0a8c0',callbacks:{label:c=>c.dataset.label+': '+c.raw.toFixed(1)+'%'}}},
     scales:{x:{ticks:{color:'#6b7394',font:{size:9},maxRotation:45},grid:{color:'rgba(30,39,64,.3)'}},y:{ticks:{color:'#6b7394',font:{size:9},callback:v=>v+'%'},grid:{color:'rgba(30,39,64,.3)'}}}
   }});
