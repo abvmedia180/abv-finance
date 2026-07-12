@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free real-estate flip tax calculator: models dealer ordinary income, self-employment tax, NIIT, and state tax for up to 4 investors with split scenarios. 2026 brackets.">
+<meta property="og:title" content="Real Estate Flip Tax Calculator">
+<meta property="og:description" content="What will the IRS take from your flip? Active vs passive investors, SE tax, NIIT, and state tax with 2026 brackets.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abvinvest.com/flip-calculator.html">
 <title>ABV Financial Intelligence — Flip Tax Calculator</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2300d474'/%3E%3Cstop offset='100%25' stop-color='%2300b862'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='6' fill='%23080a0f'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='16' fill='url(%23g)'%3EABV%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -106,7 +111,7 @@ input[type=range]::-moz-range-thumb:active{cursor:grabbing;transform:scale(1.15)
 <div class="hero">
 <div class="htag"><div class="pulse-dot"></div> Financial Intelligence Platform</div>
 <h1>Real Estate Flip <em>Tax Calculator</em></h1>
-<p>Multi-investor scenario analyzer · Federal, state, SE & NIIT · 2025 tax brackets</p>
+<p>Multi-investor scenario analyzer · Federal, state, SE & NIIT · 2026 tax brackets</p>
 </div>
 
 <div class="nb"><div class="ni">
@@ -195,7 +200,7 @@ Even if you hold it for 2 years, it's still ordinary income because flipping is 
 
 <footer class="ft">
 <div class="v">ABV Financial Intelligence Platform · Flip Tax Calculator</div>
-<div class="d">Estimates only · 2025 federal & state brackets · Not tax advice · Does not account for AMT, phase-outs, QBI, or credits<br>Consult a CPA · Built by Abe Varughese</div>
+<div class="d">Estimates only · 2026 federal & state brackets (post-OBBBA, updated July 2026) · Not tax advice · Does not account for AMT, phase-outs, QBI, or credits<br>Consult a CPA · Built by Abe Varughese</div>
 </footer>
 
 <script>
@@ -229,42 +234,30 @@ function fmtMoney(el){
 }
 function getNum(id){let el=document.getElementById(id);return el?parseFloat(el.value.replace(/[,$]/g,''))||0:0}
 
-// ═══ TAX DATA 2025 ═══
+// ═══ TAX DATA TY2026 (post-OBBBA) — keep in sync with index.html ═══
 const FED={
-  single:[[0,11925,.10],[11925,48475,.12],[48475,103350,.22],[103350,197300,.24],[197300,250525,.32],[250525,626350,.35],[626350,1e15,.37]],
-  mfj:[[0,23850,.10],[23850,96950,.12],[96950,206700,.22],[206700,394600,.24],[394600,501050,.32],[501050,751600,.35],[751600,1e15,.37]],
-  mfs:[[0,11925,.10],[11925,48475,.12],[48475,103350,.22],[103350,197300,.24],[197300,250525,.32],[250525,375800,.35],[375800,1e15,.37]],
-  hoh:[[0,17000,.10],[17000,64850,.12],[64850,103350,.22],[103350,197300,.24],[197300,250500,.32],[250500,626350,.35],[626350,1e15,.37]]
+  single:[[0,12400,.10],[12400,50400,.12],[50400,105700,.22],[105700,201775,.24],[201775,256225,.32],[256225,640600,.35],[640600,1e15,.37]],
+  mfj:[[0,24800,.10],[24800,100800,.12],[100800,211400,.22],[211400,403550,.24],[403550,512450,.32],[512450,768700,.35],[768700,1e15,.37]],
+  mfs:[[0,12400,.10],[12400,50400,.12],[50400,105700,.22],[105700,201775,.24],[201775,256225,.32],[256225,384350,.35],[384350,1e15,.37]],
+  hoh:[[0,17700,.10],[17700,67450,.12],[67450,105700,.22],[105700,201775,.24],[201775,256200,.32],[256200,640600,.35],[640600,1e15,.37]]
 };
-const SD={single:15000,mfj:30000,mfs:15000,hoh:22500};
-const SS_CAP=176100;
+const SD={single:16100,mfj:32200,mfs:16100,hoh:24150};
+const SS_CAP=184500;
 const ADD_TH={single:200000,mfj:250000,mfs:125000,hoh:200000};
 const NIIT_TH={single:200000,mfj:250000,mfs:125000,hoh:200000};
-const NY_B=[[0,8500,.04],[8500,11700,.045],[11700,13900,.0525],[13900,80650,.0585],[80650,215400,.0625],[215400,1077550,.0685],[1077550,5000000,.0965],[5000000,25000000,.103],[25000000,1e15,.109]];
-const NYC_B=[[0,12000,.03078],[12000,25000,.03762],[25000,50000,.03819],[50000,1e15,.03876]];
-const CA_B=[[0,10412,.01],[10412,24684,.02],[24684,38959,.04],[38959,54081,.06],[54081,68350,.08],[68350,349137,.093],[349137,418961,.103],[418961,698271,.113],[698271,1000000,.123],[1000000,1e15,.133]];
-const NJ_B=[[0,20000,.014],[20000,35000,.0175],[35000,40000,.035],[40000,75000,.05525],[75000,500000,.0637],[500000,1000000,.0897],[1000000,1e15,.1075]];
-const CT_B=[[0,10000,.03],[10000,50000,.05],[50000,100000,.055],[100000,200000,.06],[200000,250000,.065],[250000,500000,.069],[500000,1e15,.0699]];
-const SC_B=[[0,3460,0],[3460,17330,.03],[17330,1e15,.064]];
-const WV_B=[[0,10000,.0236],[10000,25000,.0315],[25000,40000,.0354],[40000,60000,.0472],[60000,1e15,.0512]];
-const NM_B=[[0,5500,.017],[5500,11000,.032],[11000,16500,.047],[16500,22000,.049],[22000,1e15,.059]];
-
-const STATES=[
-  {c:'NY',n:'New York',b:NY_B,city:1},{c:'NJ',n:'New Jersey',b:NJ_B},{c:'CT',n:'Connecticut',b:CT_B},
-  {c:'PA',n:'Pennsylvania',flat:.0307},{c:'CA',n:'California',b:CA_B},
-  {c:'NC',n:'North Carolina',flat:.0425},{c:'SC',n:'South Carolina',b:SC_B},
-  {c:'GA',n:'Georgia',flat:.0539},{c:'IL',n:'Illinois',flat:.0495},
-  {c:'WV',n:'West Virginia',b:WV_B},{c:'NM',n:'New Mexico',b:NM_B},
-  {c:'FL',n:'Florida',flat:0},{c:'TX',n:'Texas',flat:0},
-  {c:'NV',n:'Nevada',flat:0},{c:'WA',n:'Washington',flat:0},{c:'WY',n:'Wyoming',flat:0}
-];
+// TY2026 per-filing-status state schedules (CA = TY2025, latest published). Keep in sync with index.html.
+const ST={NY:{n:'New York',sd:{single:8000,mfj:16050,mfs:8000,hoh:11200},single:[[0,8500,.039],[8500,11700,.044],[11700,13900,.0515],[13900,80650,.054],[80650,215400,.059],[215400,1077550,.0685],[1077550,5000000,.0965],[5000000,25000000,.103],[25000000,1e15,.109]],mfj:[[0,17150,.039],[17150,23600,.044],[23600,27900,.0515],[27900,161550,.054],[161550,323200,.059],[323200,2155350,.0685],[2155350,5000000,.0965],[5000000,25000000,.103],[25000000,1e15,.109]]},NJ:{n:'New Jersey',sd:{},single:[[0,20000,.014],[20000,35000,.0175],[35000,40000,.035],[40000,75000,.05525],[75000,500000,.0637],[500000,1000000,.0897],[1000000,1e15,.1075]],mfj:[[0,20000,.014],[20000,50000,.0175],[50000,70000,.0245],[70000,80000,.035],[80000,150000,.05525],[150000,500000,.0637],[500000,1000000,.0897],[1000000,1e15,.1075]]},CT:{n:'Connecticut',sd:{},single:[[0,10000,.02],[10000,50000,.045],[50000,100000,.055],[100000,200000,.06],[200000,250000,.065],[250000,500000,.069],[500000,1e15,.0699]],mfj:[[0,20000,.02],[20000,100000,.045],[100000,200000,.055],[200000,400000,.06],[400000,500000,.065],[500000,1000000,.069],[1000000,1e15,.0699]]},PA:{n:'Pennsylvania',flat:.0307},NC:{n:'North Carolina',flat:.0399,sd:{single:12750,mfj:25500,mfs:12750,hoh:19125}},SC:{n:'South Carolina',sd:{single:15000,mfj:30000,mfs:15000,hoh:22500},single:[[0,30000,.0199],[30000,1e15,.0521]],mfj:[[0,30000,.0199],[30000,1e15,.0521]]},WV:{n:'West Virginia',sd:{},single:[[0,10000,.0211],[10000,25000,.0281],[25000,40000,.0316],[40000,60000,.0422],[60000,1e15,.0458]],mfj:[[0,10000,.0211],[10000,25000,.0281],[25000,40000,.0316],[40000,60000,.0422],[60000,1e15,.0458]]},FL:{n:'Florida',flat:0},CA:{n:'California',sd:{single:5706,mfj:11412,mfs:5706,hoh:11412},single:[[0,11079,.01],[11079,26264,.02],[26264,41452,.04],[41452,57542,.06],[57542,72724,.08],[72724,371479,.093],[371479,445771,.103],[445771,742953,.113],[742953,1000000,.123],[1000000,1e15,.133]],mfj:[[0,22158,.01],[22158,52528,.02],[52528,82904,.04],[82904,115084,.06],[115084,145448,.08],[145448,742958,.093],[742958,891542,.103],[891542,1000000,.113],[1000000,1485906,.123],[1485906,1e15,.133]]},TX:{n:'Texas',flat:0},NV:{n:'Nevada',flat:0},WA:{n:'Washington',flat:0},IL:{n:'Illinois',flat:.0495},WY:{n:'Wyoming',flat:0},NM:{n:'New Mexico',sd:{single:16100,mfj:32200,mfs:16100,hoh:24150},single:[[0,5500,.015],[5500,16500,.032],[16500,33500,.043],[33500,66500,.047],[66500,210000,.049],[210000,1e15,.059]],mfj:[[0,8000,.015],[8000,25000,.032],[25000,50000,.043],[50000,100000,.047],[100000,315000,.049],[315000,1e15,.059]]},GA:{n:'Georgia',flat:.0499,sd:{single:15000,mfj:30000,mfs:15000,hoh:15000}}};
+const NYC_B={single:[[0,12000,.03078],[12000,25000,.03762],[25000,50000,.03819],[50000,1e15,.03876]],mfj:[[0,21600,.03078],[21600,45000,.03762],[45000,90000,.03819],[90000,1e15,.03876]]};
+const STATES=[{c:'NY',n:'New York',city:1},{c:'NJ',n:'New Jersey'},{c:'CT',n:'Connecticut'},{c:'PA',n:'Pennsylvania'},{c:'CA',n:'California'},{c:'NC',n:'North Carolina'},{c:'SC',n:'South Carolina'},{c:'GA',n:'Georgia'},{c:'IL',n:'Illinois'},{c:'WV',n:'West Virginia'},{c:'NM',n:'New Mexico'},{c:'FL',n:'Florida'},{c:'TX',n:'Texas'},{c:'NV',n:'Nevada'},{c:'WA',n:'Washington'},{c:'WY',n:'Wyoming'}];
 
 // ═══ TAX CALC ═══
 function calcBrk(inc,brk){let t=0;for(const[lo,hi,r]of brk){if(inc<=lo)break;t+=(Math.min(inc,hi)-lo)*r}return t}
-function calcSt(inc,code){
-  let s=STATES.find(x=>x.c===code);if(!s)return 0;
-  if(s.flat!==undefined)return inc*s.flat;
-  return s.b?calcBrk(inc,s.b):0;
+function calcSt(inc,code,fs){
+  const s=ST[code];if(!s)return 0;
+  let ti=inc;if(s.sd&&s.sd[fs])ti=Math.max(0,inc-s.sd[fs]);
+  if(s.flat!==undefined)return ti*s.flat;
+  const brk=s[fs]||s.single||[];
+  return calcBrk(ti,brk);
 }
 
 function calcTax(inv,alloc){
@@ -273,22 +266,23 @@ function calcTax(inv,alloc){
   if(act&&alloc>0){
     let base=alloc*0.9235;
     let ssInc=Math.max(0,Math.min(base,SS_CAP-Math.max(0,other)));
-    seTax=ssInc*0.124+base*0.029;
+    let seCore=ssInc*0.124+base*0.029;
     let th=ADD_TH[fs]||200000, tot=other+base;
-    if(tot>th)seTax+=Math.min(base,tot-th)*0.009;
-    seDed=seTax*0.5;
+    let addMed=tot>th?Math.min(base,tot-th)*0.009:0;
+    seTax=seCore+addMed;
+    seDed=seCore*0.5; // 0.9% additional Medicare is NOT deductible
   }
   let agi=other+alloc-seDed;
   let ded=SD[fs]||15000;
   let ti=Math.max(0,agi-ded);
-  let tw=Math.max(0,(other-seDed)-ded);
+  let tw=Math.max(0,other-ded); // baseline WITHOUT the flip (no SE deduction exists then)
   let brk=FED[fs]||FED.single;
   let fed=calcBrk(ti,brk)-calcBrk(Math.max(0,tw),brk);
   let niit=0;
   if(!act){let nth=NIIT_TH[fs]||200000;if(agi>nth)niit=Math.min(alloc,agi-nth)*0.038}
-  let st=calcSt(ti,inv.state)-calcSt(Math.max(0,tw),inv.state);
+  let st=calcSt(Math.max(0,agi),inv.state,fs)-calcSt(Math.max(0,other),inv.state,fs);
   let city=0;
-  if(inv.state==='NY'&&inv.nyc)city=calcBrk(ti,NYC_B)-calcBrk(Math.max(0,tw),NYC_B);
+  if(inv.state==='NY'&&inv.nyc){const nysd=ST.NY.sd[fs]||8000,nycB=NYC_B[fs]||NYC_B.single;city=calcBrk(Math.max(0,agi-nysd),nycB)-calcBrk(Math.max(0,other-nysd),nycB)}
   let total=fed+seTax+niit+st+city;
   let eff=alloc>0?(total/alloc)*100:0;
   let marg=0;for(let i=brk.length-1;i>=0;i--){if(ti>brk[i][0]){marg=brk[i][2]*100;break}}
@@ -296,7 +290,7 @@ function calcTax(inv,alloc){
 }
 
 function compute(sp){
-  let p=getNum('flipProfit'), res=[];
+  let p=Math.max(0,getNum('flipProfit')), res=[];
   for(let i=0;i<invCount;i++)res.push(calcTax(investors[i],p*(sp[i]||0)/100));
   let cTax=res.reduce((s,r)=>s+r.total,0), cNet=res.reduce((s,r)=>s+r.net,0);
   return{results:res,cTax,cNet,cRate:p>0?(cTax/p)*100:0};
@@ -404,7 +398,7 @@ function adjustSplits(changedIdx, newVal){
 }
 
 function updateSplitDisplay(dragIdx){
-  let p=getNum('flipProfit');
+  let p=Math.max(0,getNum('flipProfit'));
   let tot=splits.slice(0,invCount).reduce((a,b)=>a+b,0);
   // Update stacked bar segments
   var barSegs=document.querySelectorAll('#splitControls .split-bar-seg');
@@ -423,7 +417,7 @@ function updateSplitDisplay(dragIdx){
 }
 
 function buildSplitUI(){
-  let p=getNum('flipProfit');
+  let p=Math.max(0,getNum('flipProfit'));
   let tot=splits.slice(0,invCount).reduce((a,b)=>a+b,0);
 
   // Visual: stacked bar showing split allocation
@@ -459,7 +453,7 @@ function buildSplitUI(){
 
 // ═══ RESULTS ═══
 function renderResults(){
-  let p=getNum('flipProfit'), res=compute(splits);
+  let p=Math.max(0,getNum('flipProfit')), res=compute(splits);
   let el=document.getElementById('investorResults');
   el.style.gridTemplateColumns=invCount<=2?'1fr 1fr':'repeat('+invCount+',1fr)';
   let h='';
@@ -504,7 +498,7 @@ function renderResults(){
 
 // ═══ SCENARIOS ═══
 function renderScenarios(){
-  let p=getNum('flipProfit'), allSp=getSplits();
+  let p=Math.max(0,getNum('flipProfit')), allSp=getSplits();
   let scenarios=allSp.map(sp=>{
     let pad=[sp[0]||0,sp[1]||0,sp[2]||0,sp[3]||0];
     let r=compute(pad);
@@ -544,7 +538,7 @@ function renderScenarios(){
 
 // ═══ CHARTS ═══
 function renderCharts(){
-  let p=getNum('flipProfit'), allSp=getSplits();
+  let p=Math.max(0,getNum('flipProfit')), allSp=getSplits();
   let scenarios=allSp.map(sp=>{
     let pad=[sp[0]||0,sp[1]||0,sp[2]||0,sp[3]||0];
     let r=compute(pad);

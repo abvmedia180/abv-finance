@@ -2,6 +2,11 @@
 <html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ABV Financial Intelligence</title>
+<meta name="description" content="Free interactive personal-finance tools: compound growth and retirement calculators, net worth builder, 2026 federal + state tax calculator, and state-to-state tax comparison. Educational only.">
+<meta property="og:title" content="ABV Financial Intelligence">
+<meta property="og:description" content="Interactive calculators for investing, retirement, net worth, and 2026 taxes. See exactly how your money compounds and where your taxes go.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abvinvest.com/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2300d474'/%3E%3Cstop offset='100%25' stop-color='%2300b862'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='6' fill='%23080a0f'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='16' fill='url(%23g)'%3EABV%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700;9..144,800&family=Fraunces:ital,opsz,wght@1,9..144,400&display=swap" rel="stylesheet">
@@ -49,8 +54,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--tx);min-height:100
 .hero h1 em{font-family:var(--disp);font-style:italic;color:var(--ac)}
 .hero>p{font-size:13px;color:var(--mt);max-width:560px;margin:0 auto}
 .hdiscl{font-size:10px;color:var(--mt);max-width:480px;margin:10px auto 0;padding:6px 12px;border:1px solid var(--bd);border-radius:var(--Rs);background:var(--bg3);opacity:.7}
-.nb{position:sticky;top:48px;z-index:100;background:rgba(8,10,15,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);padding:0 16px}
-.ni{max-width:1400px;margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}.ni::-webkit-scrollbar{display:none}
+.nb{position:sticky;top:48px;z-index:100;overflow:hidden;background:rgba(8,10,15,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);padding:0 16px}
+.ni{max-width:1400px;margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}.ni::-webkit-scrollbar{display:none}.nb::after{content:'';position:absolute;top:0;right:0;bottom:0;width:64px;background:linear-gradient(90deg,transparent,rgba(8,10,15,.96) 70%);pointer-events:none;transition:opacity .2s}.nb::before{content:'\203A';position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--ac);font-size:18px;font-weight:700;pointer-events:none;z-index:1;transition:opacity .2s}.nb.at-end::after,.nb.at-end::before{opacity:0}
 .nt{padding:11px 14px;font-size:11.5px;font-weight:600;color:var(--mt);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;user-select:none}
 .nt:hover{color:var(--tx)}.nt.a{color:var(--ac);border-bottom-color:var(--ac)}
 .con{max-width:1400px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
@@ -173,7 +178,7 @@ div[style*='grid-template-columns:repeat(auto-fit']{grid-template-columns:1fr!im
 <div class="htag"><div class="pulse-dot"></div> Financial Intelligence Platform</div>
 <h1>ABV <em>Financial Intelligence</em></h1>
 <p>Tax analysis · Retirement projections · Net worth modeling · Investment education</p>
-<div class="hdiscl">⚠️ Educational purposes only. Not financial advice. Consult a licensed professional. Tax laws as of February 2026.</div>
+<div class="hdiscl">⚠️ Educational purposes only. Not financial advice. Consult a licensed professional. Tax year 2026 numbers (post-OBBBA). Updated July 2026.</div>
 </div>
 
 <div class="nb"><div class="ni">
@@ -232,7 +237,7 @@ div[style*='grid-template-columns:repeat(auto-fit']{grid-template-columns:1fr!im
 <div class="slider-group"><div class="slider-label"><span class="sn">Withdrawal Rate</span><span class="sv" id="rWV">4%</span></div><input type="range" id="rW" min="2" max="8" value="4" step="0.5" oninput="runRet()"><div class="tooltip">The 4% rule: withdraw 4% per year in retirement. Historically lasts 30+ years.</div></div>
 <div class="ct" style="margin-top:16px">Additional Retirement Income (Optional)</div>
 <div class="tooltip" style="margin-bottom:8px">These are supplemental. Your investments are the foundation  - SS and pension are just extra.</div>
-<div class="igrp"><label>Expected Social Security ($/month)</label><input type="number" class="ninput" id="rSS" value="0" min="0" step="100" oninput="runRet()"><div class="tooltip">Average is ~$2,000/mo. High earners: ~$3,000-$4,000. Check ssa.gov/myaccount for your estimate.</div></div>
+<div class="igrp"><label>Expected Social Security ($/month)</label><input type="number" class="ninput" id="rSS" value="0" min="0" step="100" oninput="runRet()"><div class="tooltip">Average is ~$2,100/mo (2026). Max at full retirement age 67: ~$4,150; claiming at 70: ~$5,200. Check ssa.gov/myaccount for your estimate.</div></div>
 <div class="igrp"><label>Pension ($/month, if any)</label><input type="number" class="ninput" id="rPen" value="0" min="0" step="100" oninput="runRet()"><div class="tooltip">If your employer provides a pension, enter your expected monthly benefit at retirement.</div></div>
 </div></div>
 <div><div id="retRes"></div><div class="chart-wrap"><canvas id="retChart"></canvas></div></div>
@@ -257,12 +262,12 @@ div[style*='grid-template-columns:repeat(auto-fit']{grid-template-columns:1fr!im
 <div class="igrp"><label>Current Balance</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nw401" value="0" min="0" oninput="fmtMoney(this);runNW()"></div>
 <div class="igrp"><label>Annual Salary</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nw401sal" value="0" min="0" oninput="fmtMoney(this);runNW()"></div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px" class="igrp"><div><label>Your Contribution %</label><input type="number" class="ninput" id="nw401pct" value="0" min="0" max="100" step="1" oninput="runNW()"><div class="tooltip">% of salary you contribute</div></div><div><label>Employer Match %</label><input type="number" class="ninput" id="nw401mp" value="0" min="0" max="25" step="1" oninput="runNW()"><div class="tooltip">% of salary employer adds</div></div></div>
-<div class="tooltip" style="margin-bottom:6px;padding:6px 8px;background:var(--bg3);border-radius:var(--Rs);border:1px solid var(--bd)"><b style="color:var(--am)">⚠️ IRS Caps:</b> Employee max is <b>$23,500/yr</b>. Total (you + employer) max is <b>$69,000/yr</b>. We automatically stop at these limits no matter what % you enter.</div>
+<div class="tooltip" style="margin-bottom:6px;padding:6px 8px;background:var(--bg3);border-radius:var(--Rs);border:1px solid var(--bd)"><b style="color:var(--am)">⚠️ IRS Caps (2026):</b> Employee max is <b>$24,500/yr</b>. Total (you + employer) max is <b>$72,000/yr</b>. We automatically stop at these limits no matter what % you enter.</div>
 <div style="margin-bottom:4px"><div style="font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">Return Rate</div>
 <div class="tg nwrg" id="nw401rg"><button class="on" data-v="7">7%</button><button data-v="10">10%</button><button data-v="12">12%</button></div></div></div>
 <div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border:1px solid var(--bd)"><div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">🛡️ IRA</div>
 <div class="igrp"><label>Current Balance</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwRoth" value="0" min="0" oninput="fmtMoney(this);runNW()"></div>
-<div class="igrp"><label>Annual Contribution</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwRothA" value="0" min="0" max="8000" oninput="fmtMoney(this);runNW()"><div class="tooltip">Max: $7,000/yr ($8,000 if 50+)</div></div>
+<div class="igrp"><label>Annual Contribution</label><input type="text" inputmode="decimal" pattern="[0-9,]*" class="ninput" id="nwRothA" value="0" min="0" max="8600" oninput="fmtMoney(this);runNW()"><div class="tooltip">Max (2026): $7,500/yr ($8,600 if 50+)</div></div>
 <div style="margin-bottom:4px"><div style="font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mt);margin-bottom:4px">Return Rate</div>
 <div class="tg nwrg" id="nwRothRg"><button class="on" data-v="7">7%</button><button data-v="10">10%</button><button data-v="12">12%</button></div></div></div>
 <div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border:1px solid var(--bd)"><div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">📈 BROKERAGE (Taxable)</div>
@@ -430,7 +435,7 @@ div[style*='grid-template-columns:repeat(auto-fit']{grid-template-columns:1fr!im
 <div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);margin-bottom:14px">
 <div style="font-size:11px;font-weight:700;color:var(--am);margin-bottom:6px">⚠️ WHO CAN INVEST? (Accredited Investors Only)</div>
 <div style="font-size:12px;color:var(--br);line-height:1.8">The SEC restricts private investments to <b>accredited investors</b>  - people who meet at least one of these criteria:
-<div style="margin:8px 0;padding:8px;background:var(--bg3);border-radius:var(--Rs)"><b style="color:var(--wh)">&bull; Income:</b> $200,000+/year individually<br><b style="color:var(--wh)">&bull; Net Worth:</b> $1,000,000+ in assets</div></div>
+<div style="margin:8px 0;padding:8px;background:var(--bg3);border-radius:var(--Rs)"><b style="color:var(--wh)">&bull; Income:</b> $200,000+/year individually ($300,000+ with spouse)<br><b style="color:var(--wh)">&bull; Net Worth:</b> $1,000,000+ <b>excluding your primary residence</b></div></div>
 <div style="font-size:12px;color:var(--br);line-height:1.8;margin-top:8px"></div>
 
 <div class="ic-b" style="margin-bottom:12px"><b style="color:var(--wh)">Here's the thing nobody tells you:</b> Getting INTO venture capital deals is nearly impossible. The best deals  - the ones that produce those 1,000x returns  - are incredibly competitive. Thousands of investors are trying to get into the same hot startup. It's like a <b>secret society</b>. The top VC firms (Sequoia, Andreessen Horowitz, Benchmark) get first access. Then their network of partners and friends. By the time a deal reaches "regular" accredited investors, it's usually late-stage at a high valuation with much smaller return potential.</div>
@@ -479,7 +484,7 @@ div[style*='grid-template-columns:repeat(auto-fit']{grid-template-columns:1fr!im
 <div class="ct" style="margin-top:16px">How Are You Paid?</div>
 <div class="tg" id="txType"><button class="on" data-v="w2">W-2 Employee</button><button data-v="1099">1099 Contractor</button><button data-v="scorp">S-Corp Owner</button></div>
 <div id="txScorpWrap" style="display:none"><div class="igrp"><label>S-Corp Salary ($)</label><input type="number" class="ninput" id="txScSal" value="100000" min="0" step="5000" oninput="runTax()"><div class="tooltip">The "reasonable salary" you pay yourself. Rest is distribution.</div></div></div>
-<div class="igrp"><label>Pre-Tax 401(k) Contribution ($)</label><input type="number" class="ninput" id="tx401k" value="0" min="0" max="69000" step="500" oninput="runTax()"><div class="tooltip">This reduces your taxable income dollar-for-dollar (max $23,500 for employee, $69,000 total for Solo)</div></div>
+<div class="igrp"><label>Pre-Tax 401(k) Contribution ($)</label><input type="number" class="ninput" id="tx401k" value="0" min="0" max="72000" step="500" oninput="runTax()"><div class="tooltip">This reduces your taxable income dollar-for-dollar (2026 max: $24,500 employee deferral; $72,000 total for Solo 401(k))</div></div>
 </div></div>
 <div><div id="txRes"></div></div>
 </div></div>
@@ -536,11 +541,12 @@ const $k=v=>{if(Math.abs(v)>=1e6)return(v<0?'-':'')+'$'+(Math.abs(v)/1e6).toFixe
 const pct2=(v,t)=>t>0?(v/t*100).toFixed(1)+'%':'0%';
 const CY=new Date().getFullYear();
 
-// TAX DATA (2025)
-const FED={single:[[0,11925,.10],[11925,48475,.12],[48475,103350,.22],[103350,197300,.24],[197300,250525,.32],[250525,626350,.35],[626350,1e15,.37]],mfj:[[0,23850,.10],[23850,96950,.12],[96950,206700,.22],[206700,394600,.24],[394600,501050,.32],[501050,751600,.35],[751600,1e15,.37]],mfs:[[0,11925,.10],[11925,48475,.12],[48475,103350,.22],[103350,197300,.24],[197300,250525,.32],[250525,375800,.35],[375800,1e15,.37]],hoh:[[0,17000,.10],[17000,64850,.12],[64850,103350,.22],[103350,197300,.24],[197300,250500,.32],[250500,626350,.35],[626350,1e15,.37]]};
-const FED_SD={single:15000,mfj:30000,mfs:15000,hoh:22500};
-const FICA={ssR:.062,ssC:176100,medR:.0145,addMedR:.009,addMedT:{single:200000,mfj:250000,mfs:125000,hoh:200000}};
-const ST={NY:{n:'New York',sd:{single:8000,mfj:16050,mfs:8000,hoh:11200},single:[[0,8500,.04],[8500,11700,.045],[11700,13900,.0525],[13900,80650,.055],[80650,215400,.06],[215400,1077550,.0685],[1077550,5000000,.0965],[5000000,25000000,.103],[25000000,1e15,.109]],mfj:[[0,17150,.04],[17150,23600,.045],[23600,27900,.0525],[27900,161550,.055],[161550,323200,.06],[323200,2155350,.0685],[2155350,5000000,.0965],[5000000,25000000,.103],[25000000,1e15,.109]]},NJ:{n:'New Jersey',sd:{},single:[[0,20000,.014],[20000,35000,.0175],[35000,40000,.035],[40000,75000,.05525],[75000,500000,.0637],[500000,1000000,.0897],[1000000,1e15,.1075]],mfj:[[0,20000,.014],[20000,50000,.0175],[50000,70000,.035],[70000,80000,.05525],[80000,150000,.0637],[150000,500000,.0637],[500000,1000000,.0897],[1000000,1e15,.1075]]},CT:{n:'Connecticut',sd:{},single:[[0,10000,.03],[10000,50000,.05],[50000,100000,.055],[100000,200000,.06],[200000,250000,.065],[250000,500000,.069],[500000,1e15,.0699]],mfj:[[0,20000,.03],[20000,100000,.05],[100000,200000,.055],[200000,400000,.06],[400000,500000,.065],[500000,1000000,.069],[1000000,1e15,.0699]]},PA:{n:'Pennsylvania',flat:.0307},NC:{n:'North Carolina',flat:.0425},SC:{n:'South Carolina',sd:{},single:[[0,3460,0],[3460,17330,.03],[17330,1e15,.064]],mfj:[[0,3460,0],[3460,17330,.03],[17330,1e15,.064]]},WV:{n:'West Virginia',sd:{},single:[[0,10000,.0236],[10000,25000,.0315],[25000,40000,.0354],[40000,60000,.0472],[60000,1e15,.0512]],mfj:[[0,10000,.0236],[10000,25000,.0315],[25000,40000,.0354],[40000,60000,.0472],[60000,1e15,.0512]]},FL:{n:'Florida',flat:0},CA:{n:'California',sd:{single:5540,mfj:11080,mfs:5540,hoh:5540},single:[[0,10412,.01],[10412,24684,.02],[24684,38959,.04],[38959,54081,.06],[54081,68350,.08],[68350,349137,.093],[349137,418961,.103],[418961,698271,.113],[698271,1000000,.123],[1000000,1e15,.133]],mfj:[[0,20824,.01],[20824,49368,.02],[49368,77918,.04],[77918,108162,.06],[108162,136700,.08],[136700,698274,.093],[698274,837922,.103],[837922,1396542,.113],[1396542,1e15,.123]]},TX:{n:'Texas',flat:0},NV:{n:'Nevada',flat:0},WA:{n:'Washington',flat:0},IL:{n:'Illinois',flat:.0495},WY:{n:'Wyoming',flat:0},NM:{n:'New Mexico',sd:{},single:[[0,5500,.017],[5500,11000,.032],[11000,16500,.047],[16500,22000,.049],[22000,1e15,.059]],mfj:[[0,8000,.017],[8000,16000,.032],[16000,24000,.047],[24000,33500,.049],[33500,1e15,.059]]},GA:{n:'Georgia',flat:.0539}};
+// TAX DATA (TY2026, post-OBBBA — Rev. Proc. 2025-32 / IRS Notice 2025-67)
+const FED={single:[[0,12400,.10],[12400,50400,.12],[50400,105700,.22],[105700,201775,.24],[201775,256225,.32],[256225,640600,.35],[640600,1e15,.37]],mfj:[[0,24800,.10],[24800,100800,.12],[100800,211400,.22],[211400,403550,.24],[403550,512450,.32],[512450,768700,.35],[768700,1e15,.37]],mfs:[[0,12400,.10],[12400,50400,.12],[50400,105700,.22],[105700,201775,.24],[201775,256225,.32],[256225,384350,.35],[384350,1e15,.37]],hoh:[[0,17700,.10],[17700,67450,.12],[67450,105700,.22],[105700,201775,.24],[201775,256200,.32],[256200,640600,.35],[640600,1e15,.37]]};
+const FED_SD={single:16100,mfj:32200,mfs:16100,hoh:24150};
+const FICA={ssR:.062,ssC:184500,medR:.0145,addMedR:.009,addMedT:{single:200000,mfj:250000,mfs:125000,hoh:200000}};
+// TY2026 state schedules (CA = TY2025, latest published). Keep in sync with flip-calculator.html.
+const ST={NY:{n:'New York',sd:{single:8000,mfj:16050,mfs:8000,hoh:11200},single:[[0,8500,.039],[8500,11700,.044],[11700,13900,.0515],[13900,80650,.054],[80650,215400,.059],[215400,1077550,.0685],[1077550,5000000,.0965],[5000000,25000000,.103],[25000000,1e15,.109]],mfj:[[0,17150,.039],[17150,23600,.044],[23600,27900,.0515],[27900,161550,.054],[161550,323200,.059],[323200,2155350,.0685],[2155350,5000000,.0965],[5000000,25000000,.103],[25000000,1e15,.109]]},NJ:{n:'New Jersey',sd:{},single:[[0,20000,.014],[20000,35000,.0175],[35000,40000,.035],[40000,75000,.05525],[75000,500000,.0637],[500000,1000000,.0897],[1000000,1e15,.1075]],mfj:[[0,20000,.014],[20000,50000,.0175],[50000,70000,.0245],[70000,80000,.035],[80000,150000,.05525],[150000,500000,.0637],[500000,1000000,.0897],[1000000,1e15,.1075]]},CT:{n:'Connecticut',sd:{},single:[[0,10000,.02],[10000,50000,.045],[50000,100000,.055],[100000,200000,.06],[200000,250000,.065],[250000,500000,.069],[500000,1e15,.0699]],mfj:[[0,20000,.02],[20000,100000,.045],[100000,200000,.055],[200000,400000,.06],[400000,500000,.065],[500000,1000000,.069],[1000000,1e15,.0699]]},PA:{n:'Pennsylvania',flat:.0307},NC:{n:'North Carolina',flat:.0399,sd:{single:12750,mfj:25500,mfs:12750,hoh:19125}},SC:{n:'South Carolina',sd:{single:15000,mfj:30000,mfs:15000,hoh:22500},single:[[0,30000,.0199],[30000,1e15,.0521]],mfj:[[0,30000,.0199],[30000,1e15,.0521]]},WV:{n:'West Virginia',sd:{},single:[[0,10000,.0211],[10000,25000,.0281],[25000,40000,.0316],[40000,60000,.0422],[60000,1e15,.0458]],mfj:[[0,10000,.0211],[10000,25000,.0281],[25000,40000,.0316],[40000,60000,.0422],[60000,1e15,.0458]]},FL:{n:'Florida',flat:0},CA:{n:'California',sd:{single:5706,mfj:11412,mfs:5706,hoh:11412},single:[[0,11079,.01],[11079,26264,.02],[26264,41452,.04],[41452,57542,.06],[57542,72724,.08],[72724,371479,.093],[371479,445771,.103],[445771,742953,.113],[742953,1000000,.123],[1000000,1e15,.133]],mfj:[[0,22158,.01],[22158,52528,.02],[52528,82904,.04],[82904,115084,.06],[115084,145448,.08],[145448,742958,.093],[742958,891542,.103],[891542,1000000,.113],[1000000,1485906,.123],[1485906,1e15,.133]]},TX:{n:'Texas',flat:0},NV:{n:'Nevada',flat:0},WA:{n:'Washington',flat:0},IL:{n:'Illinois',flat:.0495},WY:{n:'Wyoming',flat:0},NM:{n:'New Mexico',sd:{single:16100,mfj:32200,mfs:16100,hoh:24150},single:[[0,5500,.015],[5500,16500,.032],[16500,33500,.043],[33500,66500,.047],[66500,210000,.049],[210000,1e15,.059]],mfj:[[0,8000,.015],[8000,25000,.032],[25000,50000,.043],[50000,100000,.047],[100000,315000,.049],[315000,1e15,.059]]},GA:{n:'Georgia',flat:.0499,sd:{single:15000,mfj:30000,mfs:15000,hoh:15000}}};
 const NYC_B={single:[[0,12000,.03078],[12000,25000,.03762],[25000,50000,.03819],[50000,1e15,.03876]],mfj:[[0,21600,.03078],[21600,45000,.03762],[45000,90000,.03819],[90000,1e15,.03876]]};
 
 function calcBrk(inc,brk){let t=0,bd=[];for(const[lo,hi,r]of brk){if(inc<=lo)break;const tx=Math.min(inc,hi)-lo,tax=tx*r;if(tax>0)bd.push({lo,hi:Math.min(inc,hi),r,tx,tax});t+=tax}return{t,bd}}
@@ -548,6 +554,8 @@ function calcST(inc,code,fs){const s=ST[code];if(!s)return{t:0,bd:[],n:'?',eff:0
 
 // COMPOUND INTEREST
 function calcFV(P,PMT,rate,yrs){const r=rate/100/12,n=yrs*12;if(rate===0)return{bal:P+PMT*n,contrib:P+PMT*n,interest:0};return{bal:P*Math.pow(1+r,n)+PMT*((Math.pow(1+r,n)-1)/r),contrib:P+PMT*n,interest:P*Math.pow(1+r,n)+PMT*((Math.pow(1+r,n)-1)/r)-(P+PMT*n)}}
+function yearByYearPhased(P,PMT,rate,contribYrs,totalYrs,annualWd){const r=rate/100/12;let bal=P,tc=P,data=[];for(let y=1;y<=totalYrs;y++){const acc=y<=contribYrs,pmt=acc?PMT:0,wdm=acc?0:(annualWd||0)/12;for(let m=0;m<12;m++){bal+=bal*r+pmt-wdm;if(bal<0)bal=0}if(acc)tc+=PMT*12;data.push({yr:y,bal,contrib:tc})}return data}
+function mkPhaseLine(idx,txt,val){return{id:'phline'+idx,afterDraw:function(chart){var xS=chart.scales.x,yS=chart.scales.y;if(!xS||!yS||idx<0)return;var x=xS.getPixelForValue(idx);var ctx=chart.ctx;ctx.save();ctx.beginPath();ctx.setLineDash([6,4]);ctx.strokeStyle='rgba(255,193,7,.6)';ctx.lineWidth=1.5;ctx.moveTo(x,yS.top);ctx.lineTo(x,yS.bottom);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='rgba(255,193,7,.9)';ctx.font='bold 11px Inter';ctx.textAlign='center';var midY=(yS.top+yS.bottom)/2;ctx.fillText(txt,x,midY-14);if(val){ctx.font='bold 12px Fraunces';ctx.fillStyle='#e6f1ff';ctx.fillText($f(val),x,midY+4)}ctx.restore()}}}
 function yearByYear(P,PMT,rate,yrs){const r=rate/100/12;let bal=P,tc=P,data=[];for(let y=1;y<=yrs;y++){let yi=0;for(let m=0;m<12;m++){const i=bal*r;yi+=i;bal+=i+PMT}tc+=PMT*12;data.push({yr:y,bal,contrib:tc,interest:bal-tc,yi})}return data}
 
 // CHARTS
@@ -562,9 +570,9 @@ function runCalc(){
   const Y=Math.max(retAge-cAge,1),R=+(document.querySelector('#cRateGroup .on')?.dataset.v||10);
   document.getElementById('cMV').textContent=$f(PMT);document.getElementById('cAgeV').textContent=cAge;document.getElementById('cRetAgeV').textContent=retAge;
   const res=calcFV(P,PMT,R,Y);
-  // Project to age 90 for chart
+  // Project to age 90 for chart; contributions stop at the target age (growth-only after)
   const projTo=90,projYrs=Math.max(projTo-cAge,Y);
-  const yd=yearByYear(P,PMT,R,projYrs);
+  const yd=yearByYearPhased(P,PMT,R,Y,projYrs,0);
   const cPct=res.bal>0?res.contrib/res.bal*100:0,iPct=res.bal>0?res.interest/res.bal*100:0;
   let ms=[];[100000,250000,500000,1000000,2000000,5000000].forEach(function(t){const h=yd.find(function(y){return y.bal>=t});if(h)ms.push({t:t,yr:h.yr})});
   const wait=calcFV(P,PMT,R,Math.max(Y-5,1)),cost=res.bal-wait.bal;
@@ -580,9 +588,10 @@ function runCalc(){
   var calcLabels=yd.map(function(y){var age=cAge+y.yr;return age%5===0||y.yr===Y?'Age '+age+' ('+(CY+y.yr)+')':''});
   
   if(calcChartObj)calcChartObj.destroy();var cc=getCC();
-  calcChartObj=new Chart(document.getElementById('calcChart'),{type:'line',data:{labels:calcLabels,datasets:[{label:'Total Balance',data:yd.map(function(y){return y.bal}),borderColor:cc.c2,backgroundColor:cc.c2b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Your Contributions',data:yd.map(function(y){return y.contrib}),borderColor:cc.c1,backgroundColor:cc.c1b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2}]},plugins:[],options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:cc.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:cc.wh,bodyColor:cc.mt,padding:12,cornerRadius:6,callbacks:{label:function(ctx){return ctx.dataset.label+': '+$f(ctx.parsed.y)}}}},scales:{x:{ticks:{color:cc.mt,maxTicksLimit:10,autoSkip:true,font:{size:10},maxTicksLimit:12},grid:{color:cc.grid}},y:{ticks:{color:cc.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:cc.grid}}}}});
+  var msDots=yd.map(function(y){var hit=ms.find(function(m){return m.yr===y.yr});return hit?y.bal:null});
+  calcChartObj=new Chart(document.getElementById('calcChart'),{type:'line',data:{labels:calcLabels,datasets:[{label:'Total Balance',data:yd.map(function(y){return y.bal}),borderColor:cc.c2,backgroundColor:cc.c2b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Your Contributions',data:yd.map(function(y){return y.contrib}),borderColor:cc.c1,backgroundColor:cc.c1b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Milestones',data:msDots,borderColor:'#ffc107',backgroundColor:'#ffc107',pointRadius:4,pointHoverRadius:6,showLine:false,fill:false}]},plugins:[mkPhaseLine(Y-1,'Age '+retAge,res.bal)],options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:cc.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:cc.wh,bodyColor:cc.mt,padding:12,cornerRadius:6,callbacks:{label:function(ctx){return ctx.dataset.label+': '+$f(ctx.parsed.y)}}}},scales:{x:{ticks:{color:cc.mt,maxTicksLimit:10,autoSkip:true,font:{size:10},maxTicksLimit:12},grid:{color:cc.grid}},y:{ticks:{color:cc.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:cc.grid}}}}});
   let ex='';
-  if(ms.length){ex+='<div style="margin-top:12px"><div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt);margin-bottom:6px">Milestones</div>';ms.forEach(function(m){ex+='<div class="ms"><div class="ms-i">'+(m.t>=1e6?'\u{1F3C6}':'\u{1F3AF}')+'</div><div class="ms-t">Hit <b>'+$f(m.t)+'</b></div><div class="ms-v">Year '+m.yr+' &middot; '+(CY+m.yr)+' &middot; Age '+(cAge+m.yr)+'</div></div>'});ex+='</div>'}
+  if(ms.length){ex+='<div style="margin-top:12px"><div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mt);margin-bottom:6px">Milestones</div>';ms.forEach(function(m){var after=m.yr>Y;ex+='<div class="ms"><div class="ms-i">'+(m.t>=1e6?'\u{1F3C6}':'\u{1F3AF}')+'</div><div class="ms-t">Hit <b>'+$f(m.t)+'</b>'+(after?' <span style="font-size:9px;color:var(--mt)">(growth only, no new money)</span>':'')+'</div><div class="ms-v">Year '+m.yr+' &middot; '+(CY+m.yr)+' &middot; Age '+(cAge+m.yr)+'</div></div>'});ex+='</div>'}
   if(Y>5){ex+='<div style="padding:10px 12px;background:var(--rdd);border:1px solid rgba(255,82,82,.1);border-radius:var(--Rs);margin-top:10px"><div style="font-size:11px;font-weight:700;color:var(--rd);margin-bottom:3px">\u23F0 What If You Wait 5 Years?</div><div style="font-size:12px;color:var(--tx)">Starting at age '+(cAge+5)+' instead: <b>'+$f(wait.bal)+'</b>  - that\'s <b style="color:var(--rd)">'+$f(cost)+' less</b>. Time is your biggest asset.</div></div>'}
   document.getElementById('calcExtra').innerHTML=ex;
 }
@@ -596,7 +605,9 @@ function runRet(){
   document.getElementById('rAV').textContent=age;document.getElementById('rRV').textContent=rAge;document.getElementById('rMV').textContent=$f(mon);document.getElementById('rWV').textContent=wd+'%';
   const yrs=Math.max(rAge-age,1),projTo=90,projYrs=Math.max(projTo-age,yrs);
   const res=calcFV(cur,mon,R,yrs),portInc=res.bal*(wd/100),totalAnn=portInc+extraAnn,totalMo=totalAnn/12;
-  const yd=yearByYear(cur,mon,R,projYrs);
+  const yd=yearByYearPhased(cur,mon,R,yrs,projYrs,portInc);
+  var depl=null;for(var di=yrs;di<yd.length;di++){if(yd[di].bal<=0){depl=yd[di];break}}
+  var endBal=yd[yd.length-1]?yd[yd.length-1].bal:0;
   var h='<div class="rg"><div class="rc"><div class="rc-l">Nest Egg at '+rAge+'</div><div class="rc-v">'+$f(res.bal)+'</div></div>';
   h+='<div class="rc"><div class="rc-l">Portfolio Income</div><div class="rc-v">'+$f(portInc)+'</div><div class="rc-s">'+$f(portInc/12)+'/mo at '+wd+'%</div></div>';
   if(extraAnn>0){h+='<div class="rc"><div class="rc-l">SS + Pension</div><div class="rc-v">'+$f(extraAnn)+'</div><div class="rc-s">'+$f(extraMo)+'/mo extra</div></div>';
@@ -615,12 +626,15 @@ function runRet(){
   h+='<div class="tw"><table class="tbl"><thead><tr><th>Lifestyle Goal</th><th>Need From Portfolio</th><th>Savings Required</th><th>You\'ll Have</th><th>Status</th></tr></thead><tbody>';
   [10000,20000,30000,50000,75000,100000,150000,200000,300000,500000].forEach(function(goal){var fromPort=Math.max(0,goal-extraAnn),need=fromPort/(wd/100),ok=res.bal>=need;h+='<tr><td style="color:var(--wh)">'+$f(goal)+'/yr</td><td>'+$f(fromPort)+'</td><td>'+$f(need)+'</td><td style="color:var(--ac);font-weight:600">'+$f(res.bal)+'</td><td style="color:'+(ok?'var(--ac)':'var(--rd)')+';font-weight:600">'+(ok?'\u2705 On Track':'\u274C '+$f(need-res.bal)+' short')+'</td></tr>'});
   h+='</tbody></table></div></div>';
-  if(ssMo===0)h+='<div class="note"><b>About Social Security:</b> Average benefit is ~$2,000/mo. High earners who max out SS taxes: ~$3,800-$4,800/mo at age 67. Check <b>ssa.gov/myaccount</b> for your personal estimate. Enter it above to see how it supplements your retirement.</div>';
+  if(depl)h+='<div style="padding:10px 12px;background:var(--rdd);border:1px solid rgba(255,82,82,.15);border-radius:var(--Rs);margin-bottom:10px;font-size:12px;color:var(--tx)">\u26A0\uFE0F <b style="color:var(--rd)">At a '+wd+'% withdrawal ('+$f(portInc)+'/yr), this portfolio runs out at age '+(age+depl.yr)+'.</b> Lower the withdrawal rate, retire later, or save more.</div>';
+  else h+='<div style="padding:10px 12px;background:var(--acd);border:1px solid var(--ac15);border-radius:var(--Rs);margin-bottom:10px;font-size:12px;color:var(--tx)">\u2705 <b style="color:var(--ac)">Withdrawing '+$f(portInc)+'/yr, you\'d still have '+$f(endBal)+' at age 90</b> \u2014 growth outpaces the withdrawals. (Fixed-dollar withdrawals, nominal returns, no taxes modeled.)</div>';
+  if(ssMo===0)h+='<div class="note"><b>About Social Security:</b> Average benefit is ~$2,100/mo (2026). Max at full retirement age 67: ~$4,150/mo; waiting until 70: ~$5,200/mo. Check <b>ssa.gov/myaccount</b> for your personal estimate. Enter it above to see how it supplements your retirement.</div>';
   document.getElementById('retRes').innerHTML=h;
   var retLabels=yd.map(function(y){var a=age+y.yr;return a%5===0||y.yr===yrs?'Age '+a+' ('+(CY+y.yr)+')':''});
   
   if(retChartObj)retChartObj.destroy();var rc=getCC();
-  retChartObj=new Chart(document.getElementById('retChart'),{type:'line',data:{labels:retLabels,datasets:[{label:'Total Balance',data:yd.map(function(y){return y.bal}),borderColor:rc.c2,backgroundColor:rc.c2b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Your Contributions',data:yd.map(function(y){return y.contrib}),borderColor:rc.c1,backgroundColor:rc.c1b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2}]},plugins:[],options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:rc.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:rc.wh,bodyColor:rc.mt,padding:12,cornerRadius:6,callbacks:{label:function(ctx){return ctx.dataset.label+': '+$f(ctx.parsed.y)}}}},scales:{x:{ticks:{color:rc.mt,maxTicksLimit:10,autoSkip:true,font:{size:10},maxTicksLimit:12},grid:{color:rc.grid}},y:{ticks:{color:rc.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:rc.grid}}}}});
+  var accD=yd.map(function(y){return y.yr<=yrs?y.bal:null}),wdD=yd.map(function(y){return y.yr>=yrs?y.bal:null});
+  retChartObj=new Chart(document.getElementById('retChart'),{type:'line',data:{labels:retLabels,datasets:[{label:'Saving (to '+rAge+')',data:accD,borderColor:rc.c2,backgroundColor:rc.c2b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Withdrawing '+wd+'%/yr',data:wdD,borderColor:'#ffc107',backgroundColor:'rgba(255,193,7,.08)',fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2},{label:'Your Contributions',data:yd.map(function(y){return y.contrib}),borderColor:rc.c1,backgroundColor:rc.c1b,fill:true,tension:.3,pointRadius:0,pointHoverRadius:5,borderWidth:2}]},plugins:[mkPhaseLine(yrs-1,'Retire at '+rAge,res.bal)],options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{labels:{color:rc.mt,font:{size:11,family:'Inter'},boxWidth:12,padding:16}},tooltip:{backgroundColor:'rgba(0,0,0,.85)',titleColor:rc.wh,bodyColor:rc.mt,padding:12,cornerRadius:6,callbacks:{label:function(ctx){return ctx.dataset.label+': '+$f(ctx.parsed.y)}}}},scales:{x:{ticks:{color:rc.mt,maxTicksLimit:10,autoSkip:true,font:{size:10},maxTicksLimit:12},grid:{color:rc.grid}},y:{ticks:{color:rc.mt,font:{size:10},callback:function(v){return $k(v)}},grid:{color:rc.grid}}}}});
 }
 
 // ========== NET WORTH BUILDER ==========
@@ -647,13 +661,13 @@ function runDual(){
   var ret=+document.getElementById('dualRet').value||65;
   var rate=(+document.getElementById('dualRate').value||7)/100;
   var yrs=Math.max(ret-age,1);
-  var annual1=23500,annual2=47000;
+  var annual1=24500,annual2=49000;
   var bal1=0,bal2=0;
   for(var y=0;y<yrs;y++){for(var m=0;m<12;m++){bal1=bal1*(1+rate/12)+annual1/12;bal2=bal2*(1+rate/12)+annual2/12}}
   var diff=bal2-bal1;
   var h='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px">';
-  h+='<div style="padding:10px;background:var(--bg4);border-radius:var(--Rs);text-align:center"><div style="font-size:10px;font-weight:700;color:var(--mt)">ONE PLAN ($23,500/yr)</div><div style="font-family:var(--disp);font-size:18px;font-weight:700;color:var(--wh);margin-top:4px">'+$f(bal1)+'</div></div>';
-  h+='<div style="padding:10px;background:var(--bg4);border-radius:var(--Rs);text-align:center"><div style="font-size:10px;font-weight:700;color:var(--mt)">TWO PLANS ($47,000/yr)</div><div style="font-family:var(--disp);font-size:18px;font-weight:700;color:var(--ac);margin-top:4px">'+$f(bal2)+'</div></div>';
+  h+='<div style="padding:10px;background:var(--bg4);border-radius:var(--Rs);text-align:center"><div style="font-size:10px;font-weight:700;color:var(--mt)">ONE PLAN ($24,500/yr)</div><div style="font-family:var(--disp);font-size:18px;font-weight:700;color:var(--wh);margin-top:4px">'+$f(bal1)+'</div></div>';
+  h+='<div style="padding:10px;background:var(--bg4);border-radius:var(--Rs);text-align:center"><div style="font-size:10px;font-weight:700;color:var(--mt)">TWO PLANS ($49,000/yr)</div><div style="font-family:var(--disp);font-size:18px;font-weight:700;color:var(--ac);margin-top:4px">'+$f(bal2)+'</div></div>';
   h+='<div style="padding:10px;background:var(--bg4);border-radius:var(--Rs);text-align:center"><div style="font-size:10px;font-weight:700;color:var(--mt)">THE DIFFERENCE</div><div style="font-family:var(--disp);font-size:18px;font-weight:700;color:var(--am);margin-top:4px">+'+$f(diff)+'</div></div>';
   h+='</div>';
   h+='<div style="font-size:10px;color:var(--mt);margin-top:6px;text-align:center">Both scenarios assume max contributions at '+((rate*100).toFixed(1))+'% annual return over '+(ret-age)+' years. No employer match included.</div>';
@@ -667,7 +681,7 @@ function runSL(){
   var targetYrs=+document.getElementById('slYrSlider').value||10;
   document.getElementById('slYrLabel').textContent=targetYrs+(targetYrs===1?' year':' years');
   
-  if(bal<=0){var slResEl=document.getElementById('slRes'),slPSLFEl=document.getElementById('slPSLF');if(!slResEl)return;slResEl.innerHTML='';if(slPSLFEl)slPSLFEl.style.display='none';return}
+  if(bal<=0){var slResEl=document.getElementById('slRes'),slPSLFEl=document.getElementById('slPSLF');if(!slResEl)return;slResEl.innerHTML='';if(slPSLFEl)slPSLFEl.style.display='none';runNW();return}
   var slPSLFEl2=document.getElementById('slPSLF');if(slPSLFEl2)slPSLFEl2.style.display='block';
   
   var mr=rate/12,n=targetYrs*12;
@@ -727,9 +741,9 @@ function runNW(){
   var sal401=getNum('nw401sal');
   var empPct=+document.getElementById('nw401pct').value||0;
   var matchPct=+document.getElementById('nw401mp').value||0;
-  var empContrib=Math.min(sal401*(empPct/100),23500); // Cap employee at $23,500
+  var empContrib=Math.min(sal401*(empPct/100),24500); // Cap employee at $24,500 (2026)
   var empMatch=sal401*(matchPct/100); // Employer match
-  var total401yr=Math.min(empContrib+empMatch,69000); // Cap total at $69,000
+  var total401yr=Math.min(empContrib+empMatch,72000); // Cap total at $72,000 (2026)
   var r401=(+(document.querySelector('#nw401rg .on')?.dataset.v||10))/100/12;
   // IRA
   var bRoth=getNum('nwRoth'),aRoth=+document.getElementById('nwRothA').value||0;
@@ -745,19 +759,24 @@ function runNW(){
   var nwAge=+document.getElementById('nwAge').value||31,nwTo=+document.getElementById('nwTo').value||65;
   var yrs=Math.max(nwTo-nwAge,1),projYrs=Math.max(90-nwAge,yrs);
   var vChk=cChk,vCD=cCD,vHY=cHY,v401=b401,vRoth=bRoth,vBrok=bBrok,vHome=bHome,vRE=bRE;
+  // Student loans amortize down and REDUCE net worth until paid off
+  var slBal=getNum('slBal'),slRatePct=(+document.getElementById('slRate')?.value||0)/100,slCurPay=getNum('slPay'),slTgtYrs=+document.getElementById('slYrSlider')?.value||10;
+  var slMr=slRatePct/12,slN=slTgtYrs*12;
+  var slReq=slMr>0?slBal*(slMr*Math.pow(1+slMr,slN))/(Math.pow(1+slMr,slN)-1):(slN>0?slBal/slN:0);
+  var slPmt=(slCurPay>slBal*slMr)?slCurPay:slReq;
+  var vSL=slBal;
   var labels=[],dTotal=[],retirementIdx=yrs-1;
   for(var y=1;y<=projYrs;y++){
     vChk=vChk*(1+rChk);vCD=vCD*(1+rCD);vHY=vHY*(1+rHY);
-    for(var m=0;m<12;m++){v401=v401*(1+r401)+total401yr/12;vRoth=vRoth*(1+rIRA)+aRoth/12;vBrok=vBrok*(1+rBrok)+mBrok}
+    for(var m=0;m<12;m++){v401=v401*(1+r401)+total401yr/12;vRoth=vRoth*(1+rIRA)+aRoth/12;vBrok=vBrok*(1+rBrok)+mBrok;if(vSL>0)vSL=Math.max(0,vSL+vSL*slMr-slPmt)}
     vHome=vHome*(1+rHome);vRE=vRE*(1+rRE);
     var age=nwAge+y,yr=CY+y;
     labels.push('Age '+age+' ('+yr+')');
-    dTotal.push(vChk+vCD+vHY+v401+vRoth+vBrok+Math.max(0,vHome-mort)+Math.max(0,vRE-reDebt));
+    dTotal.push(vChk+vCD+vHY+v401+vRoth+vBrok+Math.max(0,vHome-mort)+Math.max(0,vRE-reDebt)-vSL);
   }
-  var slBal=getNum('slBal');
   var totalCash=vChk+vCD+vHY;
   var totalAtTarget=dTotal[yrs-1]||0;
-  var capHit=sal401*(empPct/100)>23500;
+  var capHit=sal401*(empPct/100)>24500;
   var h='<div class="rg" style="margin-top:14px"><div class="rc"><div class="rc-l">Net Worth at Age '+nwTo+' ('+( CY+yrs)+')</div><div class="rc-v">'+$f(totalAtTarget)+'</div></div>';
   
   h+='<div class="rc"><div class="rc-l">IRA</div><div class="rc-v">'+$f(vRoth)+'</div></div>';
@@ -765,10 +784,10 @@ function runNW(){
   h+='<div class="rc"><div class="rc-l">Brokerage</div><div class="rc-v">'+$f(vBrok)+'</div></div>';
   var homeEquity=Math.max(0,vHome-mort),reEquity=Math.max(0,vRE-reDebt);
   if(bHome>0)h+='<div class="rc"><div class="rc-l">Home Equity</div><div class="rc-v" style="color:var(--am)">'+$f(homeEquity)+'</div></div>';
-  if(slBal>0)h+='<div class="rc"><div class="rc-l">Student Loans</div><div class="rc-v" style="color:var(--rd)">-'+$f(slBal)+'</div><div class="rc-s">Current balance (paying down)</div></div>';
+  if(slBal>0)h+='<div class="rc"><div class="rc-l">Student Loans</div><div class="rc-v" style="color:var(--rd)">-'+$f(slBal)+'</div><div class="rc-s">Subtracted from net worth until paid off</div></div>';
   if(bRE>0)h+='<div class="rc"><div class="rc-l">Investment Property</div><div class="rc-v" style="color:var(--am)">'+$f(reEquity)+'</div></div>';
   h+='</div>';
-  h+='<div class="note"><b>401(k) Breakdown:</b> You contribute '+empPct+'% of '+$f(sal401)+' = <b>'+$f(sal401*(empPct/100))+'</b>'+(capHit?' → <b style="color:var(--am)">capped at $23,500</b>':'')+'. Employer adds '+matchPct+'% = <b>'+$f(empMatch)+'</b>. Total: <b style="color:var(--ac)">'+$f(total401yr)+'/yr</b>'+(total401yr>=69000?' (hit $69K IRS max)':'')+'.</div>';
+  h+='<div class="note"><b>401(k) Breakdown:</b> You contribute '+empPct+'% of '+$f(sal401)+' = <b>'+$f(sal401*(empPct/100))+'</b>'+(capHit?' → <b style="color:var(--am)">capped at $24,500</b>':'')+'. Employer adds '+matchPct+'% = <b>'+$f(empMatch)+'</b>. Total: <b style="color:var(--ac)">'+$f(total401yr)+'/yr</b>'+(total401yr>=72000?' (hit $72K IRS max)':'')+'.</div>';
   document.getElementById('nwRes').innerHTML=h;
   // Chart with retirement annotation line
   if(nwChartObj)nwChartObj.destroy();var c=getCC();
@@ -782,15 +801,15 @@ function runTax(){
   var gross=+document.getElementById('txInc').value||0,fs=document.getElementById('txFS').value,stCode=document.getElementById('txSt').value;
   var empType=document.querySelector('#txType .on')?.dataset.v||'w2';
   var isNYC=stCode==='NY'&&document.getElementById('txNYC').classList.contains('checked');
-  var k401=Math.min(+document.getElementById('tx401k').value||0,69000);
+  var k401Cap=empType==='1099'?72000:24500;var k401=Math.min(+document.getElementById('tx401k').value||0,k401Cap);
   var scorpSal=empType==='scorp'?Math.min(+document.getElementById('txScSal').value||0,gross):0;
   document.getElementById('txNYCwrap').style.display=stCode==='NY'?'block':'none';
   document.getElementById('txScorpWrap').style.display=empType==='scorp'?'block':'none';
   var ficaInc=gross;if(empType==='scorp')ficaInc=scorpSal;if(empType==='1099')ficaInc=gross*0.9235;
   var fR=empType==='w2'?1:2,ssTax=Math.min(ficaInc,FICA.ssC)*FICA.ssR*fR,medTax=ficaInc*FICA.medR*fR;
   var addMedTh=FICA.addMedT[fs]||200000,addMed=ficaInc>addMedTh?(ficaInc-addMedTh)*FICA.addMedR:0;
-  var totalFICA=ssTax+medTax+addMed,seDed=empType==='1099'?totalFICA/2:0;
-  var fedDed=FED_SD[fs]||15000,fedTaxable=Math.max(0,gross-k401-seDed-fedDed);
+  var totalFICA=ssTax+medTax+addMed,seDed=empType==='1099'?(ssTax+medTax)/2:0; // 0.9% addl Medicare is NOT deductible
+  var fedDed=FED_SD[fs]||16100,fedTaxable=Math.max(0,gross-k401-seDed-fedDed);
   var fedRes=calcBrk(fedTaxable,FED[fs]||FED.single);
   var stRes=calcST(Math.max(0,gross-k401-seDed),stCode,fs);
   var nycRes={t:0,bd:[]};if(isNYC){var nycSD=ST.NY.sd[fs]||8000;nycRes=calcBrk(Math.max(0,gross-k401-seDed-nycSD),NYC_B[fs]||NYC_B.single)}
@@ -827,7 +846,7 @@ function runTax(){
 function runSC(){
   var inc=+document.getElementById('scInc').value||0,fs=document.getElementById('scFS').value;
   var sA=document.getElementById('scA').value,sB=document.getElementById('scB').value;
-  function fc(code){var st=calcST(inc,code,fs);var fedDed=FED_SD[fs]||15000;var fed=calcBrk(Math.max(0,inc-fedDed),FED[fs]||FED.single);var ss=Math.min(inc,FICA.ssC)*FICA.ssR,med=inc*FICA.medR,am=inc>FICA.addMedT[fs]?(inc-FICA.addMedT[fs])*FICA.addMedR:0;var fica=ss+med+am;var total=fed.t+st.t+fica;return{fed:fed.t,state:st.t,n:ST[code]?.n||code,fica:fica,total:total,take:inc-total,eff:inc>0?total/inc*100:0,stEff:inc>0?st.t/inc*100:0}}
+  function fc(code){var st=calcST(inc,code,fs);var fedDed=FED_SD[fs]||16100;var fed=calcBrk(Math.max(0,inc-fedDed),FED[fs]||FED.single);var ss=Math.min(inc,FICA.ssC)*FICA.ssR,med=inc*FICA.medR,am=inc>FICA.addMedT[fs]?(inc-FICA.addMedT[fs])*FICA.addMedR:0;var fica=ss+med+am;var total=fed.t+st.t+fica;return{fed:fed.t,state:st.t,n:ST[code]?.n||code,fica:fica,total:total,take:inc-total,eff:inc>0?total/inc*100:0,stEff:inc>0?st.t/inc*100:0}}
   var a=fc(sA),b=fc(sB),diff=a.total-b.total;
   var h='<div class="card" style="margin-top:14px"><div class="ct">Side-by-Side</div><div class="tw"><table class="tbl"><thead><tr><th></th><th>'+a.n+'</th><th>'+b.n+'</th><th>Difference</th></tr></thead><tbody>';
   h+='<tr><td style="color:var(--wh)">State Tax</td><td style="color:var(--rd);font-weight:600">'+$f(a.state)+'</td><td style="color:var(--rd);font-weight:600">'+$f(b.state)+'</td><td style="color:'+(b.state<a.state?'var(--ac)':'var(--rd)')+';font-weight:600">'+$f(b.state-a.state)+'</td></tr>';
@@ -837,6 +856,7 @@ function runSC(){
   h+='<tr><td>Monthly Take-Home</td><td>'+$f(a.take/12)+'</td><td>'+$f(b.take/12)+'</td><td style="color:'+(b.take>a.take?'var(--ac)':'var(--rd)')+'">'+$f((b.take-a.take)/12)+'/mo</td></tr>';
   h+='</tbody></table></div>';
   if(Math.abs(diff)>100)h+='<div class="note" style="margin-top:8px"><b>'+(diff>0?b.n:a.n)+' saves you '+$f(Math.abs(diff))+'/year.</b> Over 10 years that\'s <b style="color:var(--ac)">'+$f(Math.abs(diff)*10)+'</b>.</div>';
+  h+='<div style="font-size:10px;color:var(--mt);margin-top:6px">State schedules: TY2026 (California: TY2025, the latest published). Simplified \u2014 state credits, exemptions, recapture, and phase-outs not modeled.</div>';
   h+='</div>';
   h+='<div class="card"><div class="ct">At Different Income Levels</div><div class="tw"><table class="tbl"><thead><tr><th>Income</th><th>'+ST[sA]?.n+'</th><th>'+ST[sB]?.n+'</th><th>Annual Savings</th></tr></thead><tbody>';
   [100000,150000,200000,300000,500000,750000,1000000].forEach(function(i){var sa=calcST(i,sA,fs),sb=calcST(i,sB,fs),d=sa.t-sb.t;h+='<tr><td style="color:var(--wh)">'+$f(i)+'</td><td style="color:var(--rd)">'+$f(sa.t)+'</td><td style="color:var(--rd)">'+$f(sb.t)+'</td><td style="color:'+(d>0?'var(--ac)':'var(--rd)')+';font-weight:600">'+(d>0?'Save ':'')+''+$f(Math.abs(d))+'</td></tr>'});
@@ -846,8 +866,9 @@ function runSC(){
 
 // ========== COMPARE ==========
 function runCmp(){
-  var a={P:+document.getElementById('aI').value||0,PMT:+document.getElementById('aM').value||0,Y:+document.getElementById('aY').value||30,R:+document.getElementById('aR').value||10};
-  var b={P:+document.getElementById('bI').value||0,PMT:+document.getElementById('bM').value||0,Y:+document.getElementById('bY').value||30,R:+document.getElementById('bR').value||10};
+  function numOr(id,def){var v=document.getElementById(id).value;return v===''||isNaN(+v)?def:+v}
+  var a={P:+document.getElementById('aI').value||0,PMT:+document.getElementById('aM').value||0,Y:Math.max(1,numOr('aY',30)),R:numOr('aR',10)};
+  var b={P:+document.getElementById('bI').value||0,PMT:+document.getElementById('bM').value||0,Y:Math.max(1,numOr('bY',30)),R:numOr('bR',10)};
   var ra=calcFV(a.P,a.PMT,a.R,a.Y),rb=calcFV(b.P,b.PMT,b.R,b.Y);
   var yaD=yearByYear(a.P,a.PMT,a.R,a.Y),ybD=yearByYear(b.P,b.PMT,b.R,b.Y);
   var w=ra.bal>rb.bal?'A':'B',diff=Math.abs(ra.bal-rb.bal);
@@ -872,7 +893,7 @@ var rules=[
 {t:"Don't Pick Stocks. Don't Time the Market.",b:"I invest in diversified funds. Boring. Works.",hl:"The S&P 500 has returned ~10% annually over 30+ years including every crash."},
 {t:"Take the Employer Match",b:"If your employer matches, take ALL of it. It's an instant 50-100% return.",hl:"Not taking the match = declining a raise."},
 {t:"Solo 401(k) for Business Owners",b:"Self-employed or S-Corp? This is your single best tax tool.",hl:"$40K/year at a 30% rate saves ~$12K in taxes annually."},
-{t:"Backdoor Roth for High Earners",b:"Above income limits? Contribute to Traditional IRA, convert to Roth. Legal. 15 minutes/year.",hl:"$14K/year (couple) at 10% for 30 years = ~$2.5M tax-free."},
+{t:"Backdoor Roth for High Earners",b:"Above income limits? Contribute to Traditional IRA, convert to Roth. Legal. 15 minutes/year.",hl:"$15K/year (couple, 2026) at 10% for 30 years = ~$2.5M tax-free."},
 {t:"Keep the Low-Rate Mortgage",b:"Mortgage under 5%? Keep it. Market returns beat it.",hl:"Mortgage 3.5% vs S&P 10% = 6.5% annual arbitrage."}
 ];
 var h='';rules.forEach(function(r,i){h+='<div class="ic"><div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><span style="font-family:var(--disp);font-size:20px;font-weight:700;color:var(--ac);min-width:24px">'+(i+1)+'</span><div class="ic-t">'+r.t+'</div></div><div class="ic-b">'+r.b+'</div>'+(r.hl?'<div class="ic-hl"><b style="color:var(--ac)">My take:</b> '+r.hl+'</div>':'')+'</div>'});
@@ -903,7 +924,7 @@ h+='<div style="display:flex;justify-content:space-between;padding:4px 0"><span 
 h+='</div>';
 
 h+='<b style="color:var(--ac)">Employee Max (IRS Limits)</b><br>';
-h+='The IRS caps how much you can contribute each year. For 2025: <b style="color:var(--wh)">$23,500/yr</b>. If you\'re 50 or older, you get a catch-up contribution of $7,500, bringing your max to $31,000. The total combined limit (your contribution + employer match) is <b style="color:var(--wh)">$69,000/yr</b>. Once you hit the employee cap, contributions stop automatically regardless of what percentage you elected.<br><br>';
+h+='The IRS caps how much you can contribute each year. For 2026: <b style="color:var(--wh)">$24,500/yr</b>. If you\'re 50 or older, you get a catch-up contribution of $8,000, bringing your max to $32,500 \u2014 and at ages 60-63 the \u201csuper catch-up\u201d is $11,250, so your max is $35,750. The total combined limit (your contribution + employer match) is <b style="color:var(--wh)">$72,000/yr</b>. Once you hit the employee cap, contributions stop automatically regardless of what percentage you elected.<br><br>';
 
 h+='<b style="color:var(--ac)">Age Limits</b><br>';
 h+='You cannot withdraw from your 401(k) without penalty until age <b style="color:var(--wh)">59\u00BD</b>. Early withdrawal = 10% penalty + income tax on the full amount. Limited exceptions exist: hardship withdrawals, Rule of 55 (leave your job at 55+), or loans against your balance (which I generally would not do).';
@@ -913,13 +934,13 @@ h+='</div></div>';
 // PRIORITY 2: Roth IRA
 h+='<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border-left:3px solid var(--ac);margin-bottom:12px">';
 h+='<div style="font-size:10px;font-weight:700;color:var(--ac);margin-bottom:6px">PRIORITY 2: MAX YOUR ROTH IRA</div>';
-h+='<div style="font-size:12px;color:var(--br);line-height:1.8">$7,000/year ($8,000 if 50+). You pay tax NOW, but it grows <b>tax-free forever</b>. No tax when you withdraw in retirement. This is the single best account for young high-earners who expect their tax rate to go up.</div>';
+h+='<div style="font-size:12px;color:var(--br);line-height:1.8">$7,500/year in 2026 ($8,600 if 50+). You pay tax NOW, but it grows <b>tax-free forever</b>. No tax when you withdraw in retirement. This is the single best account for young high-earners who expect their tax rate to go up.</div>';
 
 h+='<div style="margin-top:8px;padding:8px;background:var(--bg3);border-radius:var(--Rs);font-size:11px;color:var(--br);line-height:1.7"><b style="color:var(--wh)">Age Limits:</b> You can withdraw your <b>contributions</b> anytime, tax-free and penalty-free (it\'s your money  - you already paid tax on it). However, <b>earnings</b> (the growth) can\'t come out until age <b>59½</b> AND the account has been open for 5+ years. Early withdrawal of earnings = 10% penalty + income tax.<br><br>';
 h+='<b style="color:var(--am)">⚠️ RMDs (Required Minimum Distributions):</b> Roth IRAs have <b>NO RMDs</b> during your lifetime. This is huge. Traditional 401(k)s and Traditional IRAs force you to start withdrawing at age 73 (and pay tax on every dollar). Roth IRAs let your money grow tax-free forever  - you never have to touch it if you don\'t want to. That\'s why Roth is king for generational wealth.</div>';
 
 // Income limit warning
-h+='<div style="margin-top:8px;padding:8px;background:var(--rdd);border:1px solid rgba(255,82,82,.12);border-radius:var(--Rs);font-size:11px;color:var(--br)"><b style="color:var(--rd)">Income Limits:</b> You <b>cannot</b> contribute directly to a Roth IRA if your income exceeds <b>$150,000</b> (single) or <b>$236,000</b> (married filing jointly).</div>';
+h+='<div style="margin-top:8px;padding:8px;background:var(--rdd);border:1px solid rgba(255,82,82,.12);border-radius:var(--Rs);font-size:11px;color:var(--br)"><b style="color:var(--rd)">Income Limits (2026):</b> Direct Roth contributions <b>phase out</b> between <b>$153,000\u2013$168,000</b> (single) and <b>$242,000\u2013$252,000</b> (married filing jointly) \u2014 partial contributions allowed inside the range, none above it. Above the range, use the backdoor Roth.</div>';
 
 // Backdoor Roth
 h+='<div style="margin-top:8px;padding:10px;background:var(--bg3);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--ac);margin-bottom:4px">THE BACKDOOR ROTH (Legal Workaround)</div>';
@@ -936,7 +957,7 @@ h+='<div style="font-size:12px;color:var(--br);line-height:1.8">No contribution 
 h+='<div style="margin-top:8px;padding:8px;background:var(--bg3);border-radius:var(--Rs);font-size:11px;color:var(--br);line-height:1.7"><b style="color:var(--wh)">The Trade-Off: Capital Gains Tax</b><br>When you <b>sell</b> an investment for a profit, you owe capital gains tax on the gain (not the full amount  - just the profit). There are two types:<br><br>';
 h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0">';
 h+='<div style="padding:8px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--ac)">SHORT-TERM GAINS</div><div style="font-size:11px;color:var(--br);margin-top:4px">Held <b>less than 1 year</b>. Taxed at your <b>ordinary income rate</b> (up to 37%). This is why day trading is expensive  - Uncle Sam takes the same cut as your paycheck.</div></div>';
-h+='<div style="padding:8px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--ac)">LONG-TERM GAINS</div><div style="font-size:11px;color:var(--br);margin-top:4px">Held <b>1 year or longer</b>. Taxed at preferential rates: <b>0%, 15%, or 20%</b> depending on income. Most people pay 15%. This is why buy-and-hold beats trading  - the tax rate is literally half.</div></div>';
+h+='<div style="padding:8px;background:var(--bg4);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--ac)">LONG-TERM GAINS</div><div style="font-size:11px;color:var(--br);margin-top:4px">Held <b>1 year or longer</b>. Taxed at preferential rates: <b>0%, 15%, or 20%</b> depending on income. Most people pay 15%. High earners add the 3.8% NIIT surtax above $200K single / $250K MFJ, making the real top rate 23.8%. This is why buy-and-hold beats trading  - the tax rate is literally half.</div></div>';
 h+='</div>';
 h+='<b style="color:var(--wh)">Key point:</b> You only pay tax when you SELL. If you buy and hold forever, you pay $0 in capital gains. Unrealized gains are not taxed. That\'s the power of long-term investing  - let it compound without triggering tax events.</div>';
 h+='</div>';
@@ -955,7 +976,7 @@ h+='<div class="card"><div class="ct">For Your Kids</div>';
 h+='<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);border-left:3px solid var(--am);margin-bottom:12px">';
 h+='<div style="font-size:11px;font-weight:700;color:var(--am);margin-bottom:6px">TRUMP ACCOUNTS (NEW  - 2026)</div>';
 h+='<div style="font-size:12px;color:var(--br);line-height:1.8">Created under the One Big Beautiful Bill Act (2025). A <b>tax-deferred savings account</b> for children under 18.</div>';
-h+='<div style="margin-top:8px;font-size:11px;color:var(--br);line-height:1.8"><b style="color:var(--wh)">How it works:</b> $1,000 free from the government for babies born 2025-2028. Anyone can contribute up to $5,000/year (parents, grandparents, employers). No withdrawals before age 18. Investments limited to low-cost index funds. Available starting July 4, 2026. Converts to a Traditional IRA at age 18.</div>';
+h+='<div style="margin-top:8px;font-size:11px;color:var(--br);line-height:1.8"><b style="color:var(--wh)">How it works:</b> $1,000 free from the government for babies born 2025-2028. Anyone can contribute up to $5,000/year (parents, grandparents, employers). No withdrawals before age 18. Investments limited to low-cost index funds. Contributions opened July 4, 2026. Converts to a Traditional IRA at age 18.</div>';
 
 // WHAT YOU CAN USE IT FOR
 h+='<div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px">';
@@ -963,7 +984,7 @@ h+='<div style="padding:8px;background:var(--bg3);border-radius:var(--Rs)"><div 
 h+='<div style="padding:8px;background:var(--rdd);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--rd);margin-bottom:4px">❌ WHAT YOU CAN\'T USE IT FOR</div><div style="font-size:11px;color:var(--br);line-height:1.7">Before age 18:<br>&bull; Anything. Period. Money is locked.<br>&bull; No early withdrawals<br>&bull; No loans against the balance<br>&bull; No transfers to parents<br><br>After 18 (before 59½): 10% penalty + tax on non-qualified withdrawals</div></div>';
 h+='</div>';
 
-h+='<div style="margin-top:8px;padding:8px;background:var(--bg3);border-radius:var(--Rs);font-size:11px;color:var(--br);line-height:1.7"><b style="color:var(--wh)">Projected growth:</b> Just the free $1K at 10%: Age 18 = $5,560, Age 65 = $490K+. If you max $5K/yr for 18 years: Age 18 = $279K, Age 65 = $13.5M+.</div>';
+h+='<div style="margin-top:8px;padding:8px;background:var(--bg3);border-radius:var(--Rs);font-size:11px;color:var(--br);line-height:1.7"><b style="color:var(--wh)">Projected growth:</b> Just the free $1K at 10%: Age 18 = $5,560, Age 65 = $490K+. If you max $5K/yr for 18 years: Age 18 \u2248 $250K \u2014 and if it\'s never touched after that, \u2248 $20M at 65. That\'s what 47 extra years of compounding does.</div>';
 h+='<div style="margin-top:6px;font-size:12px;color:var(--ac);font-weight:600">My take: File Form 4547 and get the free $1,000. It\'s free money. Even if you never contribute another dollar, that $1K becomes almost half a million by retirement.</div></div>';
 
 // 529 PLAN
@@ -973,7 +994,7 @@ h+='<div style="font-size:12px;color:var(--br);line-height:1.8">Tax-free growth 
 
 // WHAT YOU CAN USE IT FOR
 h+='<div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px">';
-h+='<div style="padding:8px;background:var(--bg3);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--ac);margin-bottom:4px">✅ QUALIFIED EXPENSES (Tax-Free)</div><div style="font-size:11px;color:var(--br);line-height:1.7">&bull; College tuition, fees, room & board<br>&bull; K-12 tuition (up to $10K/yr)<br>&bull; Trade school / vocational programs<br>&bull; Books, supplies, computers, internet<br>&bull; Student loan repayment ($10K lifetime)<br>&bull; Study abroad programs<br>&bull; After 15 years: roll $35K to Roth IRA</div></div>';
+h+='<div style="padding:8px;background:var(--bg3);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--ac);margin-bottom:4px">✅ QUALIFIED EXPENSES (Tax-Free)</div><div style="font-size:11px;color:var(--br);line-height:1.7">&bull; College tuition, fees, room & board<br>&bull; K-12 tuition (up to $20K/yr as of 2026, doubled by OBBBA)<br>&bull; Trade school / vocational programs<br>&bull; Books, supplies, computers, internet<br>&bull; Student loan repayment ($10K lifetime)<br>&bull; Study abroad programs<br>&bull; After 15 years: roll $35K to Roth IRA</div></div>';
 h+='<div style="padding:8px;background:var(--rdd);border-radius:var(--Rs)"><div style="font-size:10px;font-weight:700;color:var(--rd);margin-bottom:4px">❌ NON-QUALIFIED (Penalty)</div><div style="font-size:11px;color:var(--br);line-height:1.7">&bull; Buying a car<br>&bull; Rent (off-campus, non-school housing)<br>&bull; Travel / transportation costs<br>&bull; Health insurance or medical bills<br>&bull; Paying off credit card debt<br>&bull; Anything not directly tied to education<br><br><b>Penalty:</b> 10% + income tax on earnings for non-qualified withdrawals</div></div>';
 h+='</div>';
 
@@ -983,8 +1004,8 @@ h+='<div style="margin-top:8px;padding:8px;background:var(--bg3);border-radius:v
 // OTHER ACCOUNTS
 h+='<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);margin-bottom:12px">';
 h+='<div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:6px">OTHER KEY ACCOUNTS</div>';
-h+='<div style="font-size:12px;color:var(--br);line-height:1.8"><b style="color:var(--wh)">Solo 401(k):</b> If you\'re self-employed or own an S-Corp  - this is your best tax weapon. Contribute up to $69,000/yr ($76,500 if 50+). Same age 59½ withdrawal rule as regular 401(k).</div>';
-h+='<div style="font-size:12px;color:var(--br);line-height:1.8;margin-top:8px"><b style="color:var(--wh)">HSA · Triple Tax-Advantaged:</b> Pre-tax in. Tax-free growth. Tax-free out for medical. Limit: $4,300 individual / $8,550 family (2025). I don\'t use one  - honestly, I\'m too busy with 100 other things to keep track of medical receipts. But if you have the time and your plan qualifies, this is objectively the most tax-advantaged account in America. Triple tax benefit is unmatched. If you can do it, do it.</div>';
+h+='<div style="font-size:12px;color:var(--br);line-height:1.8"><b style="color:var(--wh)">Solo 401(k):</b> If you\'re self-employed or own an S-Corp  - this is your best tax weapon. Contribute up to $72,000/yr in 2026 ($80,000 if 50+). Same age 59½ withdrawal rule as regular 401(k).</div>';
+h+='<div style="font-size:12px;color:var(--br);line-height:1.8;margin-top:8px"><b style="color:var(--wh)">HSA · Triple Tax-Advantaged:</b> Pre-tax in. Tax-free growth. Tax-free out for medical. Limit: $4,400 individual / $8,750 family (2026). I don\'t use one  - honestly, I\'m too busy with 100 other things to keep track of medical receipts. But if you have the time and your plan qualifies, this is objectively the most tax-advantaged account in America. Triple tax benefit is unmatched. If you can do it, do it.</div>';
 h+='</div>';
 
 // TRADITIONAL IRA / RMDs
@@ -1010,7 +1031,7 @@ h+='<div style="font-size:14px;font-weight:700;color:var(--wh);margin-bottom:6px
 h+='<div style="font-size:12px;color:var(--br);line-height:1.8">';
 h+='<b style="color:var(--ac)">What it is:</b> A retirement savings account offered by <b>for-profit companies</b>. This is the most common retirement plan in America. Money comes out of your paycheck before taxes (Traditional) or after taxes (Roth), goes into investments you choose, and grows until retirement.<br><br>';
 h+='<b style="color:var(--ac)">Who gets it:</b> Employees of private, for-profit companies - corporations, startups, law firms, accounting firms, most businesses.<br><br>';
-h+='<b style="color:var(--ac)">2025 Limits:</b> $23,500/yr employee contribution ($31,000 if 50+). Total with employer match: $69,000/yr.<br>';
+h+='<b style="color:var(--ac)">2026 Limits:</b> $24,500/yr employee contribution ($32,500 if 50+; $35,750 at ages 60-63). Total with employer match: $72,000/yr.<br>';
 h+='<b style="color:var(--ac)">Withdrawal:</b> Age 59\u00BD without penalty. Early withdrawal = 10% penalty + income tax.';
 h+='</div></div>';
 
@@ -1020,7 +1041,7 @@ h+='<div style="font-size:14px;font-weight:700;color:var(--wh);margin-bottom:6px
 h+='<div style="font-size:12px;color:var(--br);line-height:1.8">';
 h+='<b style="color:var(--ac)">What it is:</b> Essentially the same thing as a 401(k), but for <b>nonprofit organizations</b>. Same contribution limits, same tax advantages, same withdrawal rules. If you work at a hospital, school, university, or church - this is probably what you have.<br><br>';
 h+='<b style="color:var(--ac)">Who gets it:</b> Employees of nonprofits, hospitals, public schools, universities, churches, and 501(c)(3) organizations.<br><br>';
-h+='<b style="color:var(--ac)">2025 Limits:</b> $23,500/yr ($31,000 if 50+). Same as a 401(k).<br>';
+h+='<b style="color:var(--ac)">2026 Limits:</b> $24,500/yr ($32,500 if 50+). Same as a 401(k).<br>';
 h+='<b style="color:var(--ac)">Withdrawal:</b> Age 59\u00BD without penalty. Same rules as 401(k).<br><br>';
 h+='<b style="color:var(--wh)">Bottom line:</b> If someone tells you they have a 401(k) and you have a 403(b), you are not missing out on anything. They are functionally the same plan. Different number, same rules, same limits, same tax benefits.';
 h+='</div></div>';
@@ -1031,11 +1052,11 @@ h+='<div style="font-size:14px;font-weight:700;color:var(--wh);margin-bottom:6px
 h+='<div style="font-size:12px;color:var(--br);line-height:1.8">';
 h+='<b style="color:var(--ac)">What it is:</b> A retirement plan offered by <b>state and local government employers</b> and some nonprofits. It looks and feels like a 401(k)/403(b), but it has one massive advantage.<br><br>';
 h+='<b style="color:var(--ac)">Who gets it:</b> Government employees (state, county, city, public universities) and some nonprofit/hospital employees.<br><br>';
-h+='<b style="color:var(--ac)">2025 Limits:</b> $23,500/yr ($31,000 if 50+).<br>';
+h+='<b style="color:var(--ac)">2026 Limits:</b> $24,500/yr ($32,500 if 50+).<br>';
 h+='<div style="margin:8px 0;padding:10px;background:var(--bg3);border-radius:var(--Rs);border:1px solid var(--am)">';
 h+='<b style="color:var(--am)">THE BIG PERK:</b> No 10% early withdrawal penalty before age 59\u00BD. If you leave your employer, you can access this money at any age without the 10% penalty that 401(k) and 403(b) plans charge. You still owe income tax, but no penalty. This makes the 457(b) the most flexible retirement account available.</div><br>';
 h+='<b style="color:var(--wh)">Can you have both a 403(b) AND a 457(b)?</b><br>';
-h+='Some employers - especially hospitals and government entities - offer both. If yours does, this is a <b style="color:var(--ac)">massive opportunity</b> most people don\'t realize they have. The limits are <b>separate</b>. You can max both: $23,500 into the 403(b) + $23,500 into the 457(b) = <b style="color:var(--ac)">$47,000 per year</b> in tax-advantaged retirement savings. Not every institution offers this, but if yours does, take full advantage.';
+h+='Some employers - especially hospitals and government entities - offer both. If yours does, this is a <b style="color:var(--ac)">massive opportunity</b> most people don\'t realize they have. The limits are <b>separate</b>. You can max both: $24,500 into the 403(b) + $24,500 into the 457(b) = <b style="color:var(--ac)">$49,000 per year</b> (2026) in tax-advantaged retirement savings. Not every institution offers this, but if yours does, take full advantage.';
 h+='</div></div>';
 
 // 403(b) vs 457(b) comparison
@@ -1043,14 +1064,14 @@ h+='<div style="padding:12px;background:var(--bg3);border-radius:var(--Rs);margi
 h+='<div style="font-size:11px;font-weight:700;color:var(--ac);margin-bottom:8px">403(b) vs 457(b) - SIDE BY SIDE</div>';
 h+='<div class="tw"><table class="tbl"><thead><tr><th></th><th>403(b)</th><th>457(b)</th></tr></thead><tbody>';
 h+='<tr><td style="color:var(--wh)">Offered by</td><td>Nonprofits, hospitals, schools</td><td>Government, some nonprofits</td></tr>';
-h+='<tr><td style="color:var(--wh)">2025 Limit</td><td>$23,500</td><td>$23,500</td></tr>';
+h+='<tr><td style="color:var(--wh)">2026 Limit</td><td>$24,500</td><td>$24,500</td></tr>';
 h+='<tr><td style="color:var(--wh)">Employer Match</td><td>Common</td><td>Less common</td></tr>';
 h+='<tr><td style="color:var(--wh)">Early Withdrawal Penalty</td><td style="color:var(--rd)">10% before 59\u00BD</td><td style="color:var(--ac)">No penalty</td></tr>';
 h+='<tr><td style="color:var(--wh)">Roth Option</td><td>Yes</td><td>Yes</td></tr>';
 h+='<tr><td style="color:var(--wh)">Loan Provision</td><td>Usually yes</td><td>Usually no</td></tr>';
 h+='<tr><td style="color:var(--wh)">Stack with other plan?</td><td>Yes, with 457(b)</td><td>Yes, with 403(b) or 401(k)</td></tr>';
 h+='</tbody></table></div>';
-h+='<div style="font-size:11px;color:var(--br);margin-top:8px;line-height:1.6"><b style="color:var(--wh)">Which should you prioritize?</b> If your employer matches on the 403(b), always contribute enough to get the full match first - that is free money. After that, the 457(b)\'s no-penalty withdrawal makes it more flexible. If you can afford to max both, do both. $47,000/yr in tax-advantaged space is hard to beat.</div>';
+h+='<div style="font-size:11px;color:var(--br);margin-top:8px;line-height:1.6"><b style="color:var(--wh)">Which should you prioritize?</b> If your employer matches on the 403(b), always contribute enough to get the full match first - that is free money. After that, the 457(b)\'s no-penalty withdrawal makes it more flexible. If you can afford to max both, do both. $49,000/yr in tax-advantaged space is hard to beat.</div>';
 h+='</div>';
 
 // Solo 401(k)
@@ -1059,7 +1080,7 @@ h+='<div style="font-size:14px;font-weight:700;color:var(--wh);margin-bottom:6px
 h+='<div style="font-size:12px;color:var(--br);line-height:1.8">';
 h+='<b style="color:var(--ac)">What it is:</b> A 401(k) designed for self-employed individuals or business owners with no employees (other than a spouse). You act as both the employee AND the employer, so you can contribute on both sides.<br><br>';
 h+='<b style="color:var(--ac)">Who gets it:</b> Freelancers, consultants, sole proprietors, single-member LLCs, S-Corp owners with no W-2 employees.<br><br>';
-h+='<b style="color:var(--ac)">2025 Limits:</b> Up to $69,000/yr ($76,500 if 50+). Employee side: $23,500. Employer side: up to 25% of compensation.<br>';
+h+='<b style="color:var(--ac)">2026 Limits:</b> Up to $72,000/yr ($80,000 if 50+). Employee side: $24,500. Employer side: up to 25% of compensation.<br>';
 h+='<b style="color:var(--ac)">Withdrawal:</b> Same as 401(k) - age 59\u00BD, 10% penalty for early withdrawal.';
 h+='</div></div>';
 
@@ -1073,7 +1094,7 @@ h+='<div style="padding:12px;background:var(--bg4);border-radius:var(--Rs);borde
 h+='<div style="font-size:13px;font-weight:700;color:var(--am);margin-bottom:6px">Traditional (Pre-Tax)</div>';
 h+='<div style="font-size:11px;color:var(--br);line-height:1.7">';
 h+='Tax break <b>now</b>. Contributions reduce your taxable income today. You pay income tax when you withdraw in retirement.<br><br>';
-h+='<b style="color:var(--wh)">Example:</b> You earn $200K. You put $23,500 into Traditional. Your taxable income drops to $176,500. At a 32% bracket, that saves you roughly <b style="color:var(--ac)">$7,520 on this year\'s tax bill</b>.<br><br>';
+h+='<b style="color:var(--wh)">Example:</b> You earn $200K (single). You put $24,500 into Traditional. Your taxable income drops from ~$183,900 to ~$159,400 \u2014 all inside the 24% bracket, so that saves you roughly <b style="color:var(--ac)">$5,880 on this year\'s tax bill</b>.<br><br>';
 h+='<b style="color:var(--am)">Best for:</b> High-income earners. The higher your tax bracket now, the more valuable the immediate deduction.';
 h+='</div></div>';
 // Roth card
@@ -1143,7 +1164,7 @@ document.getElementById('acctRes').innerHTML=h;
 }
 document.addEventListener('DOMContentLoaded',function(){
   // Nav
-  document.querySelectorAll('.nt').forEach(function(t){t.addEventListener('click',function(){document.querySelectorAll('.nt').forEach(function(x){x.classList.remove('a')});document.querySelectorAll('.sec').forEach(function(x){x.classList.remove('a')});t.classList.add('a');document.getElementById('sec-'+t.dataset.s).classList.add('a')})});
+  document.querySelectorAll('.nt').forEach(function(t){t.addEventListener('click',function(){document.querySelectorAll('.nt').forEach(function(x){x.classList.remove('a')});document.querySelectorAll('.sec').forEach(function(x){x.classList.remove('a')});t.classList.add('a');document.getElementById('sec-'+t.dataset.s).classList.add('a');t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'nearest'})})});var niEl=document.querySelector('.ni'),nbEl=document.querySelector('.nb');function updNb(){if(!niEl||!nbEl)return;nbEl.classList.toggle('at-end',niEl.scrollLeft+niEl.clientWidth>=niEl.scrollWidth-6)}if(niEl){niEl.addEventListener('scroll',updNb);window.addEventListener('resize',updNb);updNb()}
   // Rate toggle buttons
   ['cRateGroup','rRateGroup'].forEach(function(gid){document.querySelectorAll('#'+gid+' button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('#'+gid+' button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');if(gid==='cRateGroup')runCalc();else runRet()})})});
   // Tax type toggles
